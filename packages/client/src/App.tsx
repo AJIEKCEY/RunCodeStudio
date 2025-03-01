@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 import './App.css'
+import Container from './components/Layout'
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
   useEffect(() => {
@@ -12,7 +14,11 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)</div>
+  return (
+    <Routes>
+      <Route element={<Container />}></Route>
+    </Routes>
+  )
 }
 
 export default App
