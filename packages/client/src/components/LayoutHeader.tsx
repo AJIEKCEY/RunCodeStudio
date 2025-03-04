@@ -27,11 +27,6 @@ const items = [
     title: 'Форум',
   },
   {
-    key: 'forum-topic',
-    path: 'forum-topic',
-    title: 'Топик форума',
-  },
-  {
     key: 'leader-board',
     path: 'leader-board',
     title: 'Лидборд',
