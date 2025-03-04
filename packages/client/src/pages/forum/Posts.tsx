@@ -93,6 +93,7 @@ const Posts: React.FC = () => {
                       {item.img.map(url => {
                         return (
                           <Image
+                            alt={`картинка взятая с адреса: ${url}`}
                             height={200}
                             src={url}
                             key={url}

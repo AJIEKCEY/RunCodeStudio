@@ -5,17 +5,16 @@ import { Link } from 'react-router-dom'
 import ForumNavigation from './components/ForumNavigation'
 import { useAppSelector } from '../../store/hooks/deriveTypes'
 import styles from './/styles/thread.module.css'
-
 import { Thread } from '../../store/features/forum/types'
 import CreateThreadModal from './components/CreateThreadModal'
 import { IconText } from './components/IconText'
-import AppRoutes, { routConfig } from '../../AppRoutes'
 
-function Threads() {
+const Threads: React.FC = () => {
   const { categories, threads } = useAppSelector(state => state.forum)
   const [categoryFilter, setcategoryFilter] = useState<number[]>([])
   const [search, setSearch] = useState<string>('')
   const [showModal, setShowModal] = useState(false)
+
   const filterThreads = useMemo(() => {
     let result: Thread[] = [...threads]
     if (categoryFilter.length)
@@ -30,6 +29,7 @@ function Threads() {
     }
     return result
   }, [categoryFilter, search])
+
   return (
     <Flex vertical gap="large">
       <ForumNavigation
