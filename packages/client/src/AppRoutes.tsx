@@ -2,6 +2,7 @@ import React from 'react'
 import Container from './components/Layout'
 
 import { Route, Routes } from 'react-router-dom'
+import Landing from './pages/Landing/Landing'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -11,6 +12,7 @@ export const AppRoutes = {
   FORUM: 'forum',
   FORUM_TOPIC: 'forum-topic',
   LEADER_BOARD: 'leader-board',
+  LANDING: 'landing',
 }
 
 export const routConfig: Record<
@@ -32,6 +34,10 @@ export const routConfig: Record<
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
     element: <></>,
+  },
+  [AppRoutes.LANDING]: {
+    path: AppRoutes.LANDING,
+    element: <Landing />,
   },
   [AppRoutes.FORUM]: {
     path: AppRoutes.FORUM,

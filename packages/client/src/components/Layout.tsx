@@ -7,24 +7,36 @@ import { Outlet } from 'react-router-dom'
 
 function Container() {
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = theme.useToken()
 
   return (
     <Layout
       style={{
+        display: 'flex',
+        flexDirection: 'column',
         height: '100vh',
-        paddingTop: 0,
         maxWidth: '1280px',
         marginInline: 'auto',
+        borderRadius: 0,
+        overflow: 'hidden',
       }}>
       <LayoutHeader />
-      <Content style={{ padding: '0 10px' }}>
+      <Content
+        style={{
+          padding: 0,
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
         <div
           style={{
             background: colorBgContainer,
-            minHeight: '100vh',
-            borderRadius: borderRadiusLG,
+            flex: 1,
+            borderRadius: 0,
+            overflowY: 'auto',
+            margin: 0,
+            padding: 0,
           }}>
           <Outlet />
         </div>
