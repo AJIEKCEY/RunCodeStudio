@@ -1,0 +1,10 @@
+.nav {
+  height: '3rem';
+  paddinginline: '1rem';
+  position: 'sticky';
+  top: 0;
+  backgroundcolor: '#ffffff';
+  zindex: 1;
+  marginbottom: '1rem';
+  borderbottom: '1px solid #8076a3';
+}
