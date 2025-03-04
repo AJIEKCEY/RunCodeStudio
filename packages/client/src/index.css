@@ -1,0 +1,24 @@
+*,
+::before,
+::after,
+html,
+body {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+body {
+  font-family: Inter, sans-serif;
+  line-height: 1.6;
+  margin: 0 auto;
+  max-width: 1280px;
+}
