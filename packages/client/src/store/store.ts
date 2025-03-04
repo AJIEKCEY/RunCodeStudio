@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import forumSlice from './features/forumSlice'
+import forumSlice from './features/forum/forumSlice'
 const rootReducer = combineReducers({
   forum: forumSlice,
 })
