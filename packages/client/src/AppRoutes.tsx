@@ -2,6 +2,8 @@ import React from 'react'
 import Container from './components/Layout'
 
 import { Route, Routes } from 'react-router-dom'
+import Threads from './pages/forum/Threads'
+import Posts from './pages/forum/Posts'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -9,7 +11,7 @@ export const AppRoutes = {
   REGISTRATION: 'registration',
   PLAY: 'play',
   FORUM: 'forum',
-  FORUM_TOPIC: 'forum-topic',
+  FORUM_TOPIC: 'forum-topic/:id',
   LEADER_BOARD: 'leader-board',
 }
 
@@ -35,11 +37,11 @@ export const routConfig: Record<
   },
   [AppRoutes.FORUM]: {
     path: AppRoutes.FORUM,
-    element: <></>,
+    element: <Threads />,
   },
   [AppRoutes.FORUM_TOPIC]: {
-    path: AppRoutes.FORUM_TOPIC,
-    element: <></>,
+    path: `${AppRoutes.FORUM}/:id`,
+    element: <Posts />,
   },
   [AppRoutes.LEADER_BOARD]: {
     path: AppRoutes.LEADER_BOARD,

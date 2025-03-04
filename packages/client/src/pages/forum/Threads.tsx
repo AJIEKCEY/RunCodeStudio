@@ -9,6 +9,7 @@ import styles from './/styles/thread.module.css'
 import { Thread } from '../../store/features/forum/types'
 import CreateThreadModal from './components/CreateThreadModal'
 import { IconText } from './components/IconText'
+import AppRoutes, { routConfig } from '../../AppRoutes'
 
 function Threads() {
   const { categories, threads } = useAppSelector(state => state.forum)
@@ -73,7 +74,7 @@ function Threads() {
                   <Link
                     style={{ color: '#8076a3' }}
                     to={{
-                      pathname: `/forum/${item.id}`,
+                      pathname: `${item.id}`,
                     }}>
                     {item.title}
                   </Link>
