@@ -63,7 +63,11 @@ const Threads: React.FC = () => {
                       ? 'processing'
                       : 'cyan'
                   }>
-                  {categories.find(cat => cat.id === item.categoryId)?.title}
+                  {
+                    categories.find(
+                      (cat: { id: number }) => cat.id === item.categoryId
+                    )?.title
+                  }
                 </Tag>
               </div>,
             ]}>
