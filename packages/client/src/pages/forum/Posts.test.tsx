@@ -39,8 +39,8 @@ describe('Posts компонент', () => {
       </Provider>
     )
   })
-  it('должен отрендерить дату создания поста из тестовых данных', () => {
-    const testStr = '03.03.2025'
+  it('должен отрендерить имя автора сообщения', () => {
+    const testStr = 'Имя автора с id 2'
     const regex = new RegExp(`.*${testStr}.*`, 'i')
     expect(screen.getAllByText(regex)).toBeTruthy()
   })
