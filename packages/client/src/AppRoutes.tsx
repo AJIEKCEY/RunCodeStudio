@@ -12,7 +12,6 @@ export const AppRoutes = {
   FORUM: 'forum',
   FORUM_TOPIC: 'forum-topic',
   LEADER_BOARD: 'leader-board',
-  LANDING: 'landing',
 }
 
 export const routConfig: Record<
@@ -34,10 +33,6 @@ export const routConfig: Record<
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
     element: <></>,
-  },
-  [AppRoutes.LANDING]: {
-    path: AppRoutes.LANDING,
-    element: <Landing />,
   },
   [AppRoutes.FORUM]: {
     path: AppRoutes.FORUM,
@@ -62,10 +57,7 @@ const AppRouter = () => {
     <div>
       <Routes>
         <Route path="/" element={<Container />}>
-          <Route
-            index
-            element={<div>Вот тут будет жить ваше приложение :)</div>}
-          />
+          <Route index element={<Landing />} />
           {Object.values(routConfig).map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
