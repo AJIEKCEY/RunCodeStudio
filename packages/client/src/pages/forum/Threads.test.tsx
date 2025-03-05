@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
-import Threads from './Threads' // Adjust the import path as necessary
+import Threads from './Threads'
 import { Provider } from 'react-redux'
 import { store } from '../../store/store'
 import userEvent from '@testing-library/user-event'

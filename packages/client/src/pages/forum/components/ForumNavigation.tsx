@@ -50,7 +50,6 @@ const ForumNavigation: FC<navigationProps> = ({
       <Search
         placeholder="поиск по тексу в описании темы"
         allowClear
-        // onChange={event => handleSearch(event.target.value)}
         onSearch={handleSearch}
         style={{ width: 300 }}
       />
