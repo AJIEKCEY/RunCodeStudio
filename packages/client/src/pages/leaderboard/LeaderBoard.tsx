@@ -16,7 +16,7 @@ const columns: TableColumnsType<DataType> = [
     showSorterTooltip: { target: 'full-header' },
     sorter: (a, b) => a.userId - b.userId,
     sortDirections: ['descend'],
-    render: (iserId: string) => (
+    render: (userId: string) => (
       <Text
         strong
         color="red">{`Здесь будет имя или никнейм игрока с id ${userId}`}</Text>
