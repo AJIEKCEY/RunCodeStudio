@@ -42,7 +42,9 @@ describe('Posts компонент', () => {
   it('должен отрендерить имя автора сообщения', () => {
     const testStr = 'Имя автора с id 2'
     const regex = new RegExp(`.*${testStr}.*`, 'i')
-    expect(screen.getAllByText(regex)).toBeTruthy()
+    const result = screen.getAllByText(regex)
+    expect(result).toBeTruthy()
+    expect(result.length).toEqual(1)
   })
 
   it('должен отрендерить изображения из тестовых данных', () => {
