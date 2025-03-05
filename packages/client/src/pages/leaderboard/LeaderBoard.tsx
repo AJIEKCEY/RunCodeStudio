@@ -1,11 +1,4 @@
-import {
-  Flex,
-  Table,
-  TableColumnsType,
-  TableProps,
-  theme,
-  Typography,
-} from 'antd'
+import { Flex, Table, TableColumnsType, TableProps, Typography } from 'antd'
 const { Title, Text } = Typography
 import React from 'react'
 import { useAppSelector } from '../../store/hooks/deriveTypes'
@@ -41,9 +34,7 @@ const columns: TableColumnsType<DataType> = [
 
 const LeaderBoard: React.FC = () => {
   const leaderboard = useAppSelector(state => state.leaderboard)
-  const {
-    token: { colorPrimary },
-  } = theme.useToken()
+
   const onChange: TableProps<DataType>['onChange'] = (
     pagination,
     sorter,
@@ -53,16 +44,22 @@ const LeaderBoard: React.FC = () => {
   }
   return (
     <Flex vertical justify="center" style={{ paddingTop: '3rem' }}>
-      <Title level={2} style={{ alignSelf: 'center' }}>
+      <Title
+        level={2}
+        style={{ alignSelf: 'center' }}
+        data-testid="leaderbord-title">
         Таблица результатов игроков
       </Title>
       <Table<DataType>
+        data-testid="leaderbord-table"
         style={{ paddingInline: '2rem' }}
         columns={columns}
         dataSource={leaderboard as DataType[]}
         rowKey="id"
         onChange={onChange}
         showSorterTooltip={{ target: 'sorter-icon' }}
+        pagination={{ pageSize: 25 }}
+        scroll={{ y: 25 * 5 }}
       />
     </Flex>
   )
