@@ -8,7 +8,7 @@ import { store } from '../../store/store'
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: () => ({
-    postId: '1',
+    id: '1',
   }),
 }))
 

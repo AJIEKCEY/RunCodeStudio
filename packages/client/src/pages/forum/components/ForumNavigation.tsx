@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import { Category } from '../../../store/features/forum/types'
-import { Flex, Select } from 'antd'
+import { Flex, Select, Input } from 'antd'
 import { DefaultOptionType } from 'antd/es/select'
-import Search from 'antd/es/input/Search'
 
+const { Search } = Input
 type navigationProps = {
   categories: Category[]
   handlerCategory: (categoryID: number[]) => void
