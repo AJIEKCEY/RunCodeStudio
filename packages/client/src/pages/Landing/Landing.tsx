@@ -13,11 +13,10 @@ const Landing: React.FC = () => {
   return (
     <div className={styles.landing}>
       <h1 className={styles.title}>
-        Добро пожаловать в<br></br>
-        <span className={styles.pixel}>RunCode!</span>
+        Добро пожаловать в<span className={styles.pixelBlock}>RunCode!</span>
       </h1>
       <p className={styles.text}>
-        <span className={styles.pixel}>RunCode</span> — это захватывающая
+        <span className={styles.pixelInline}>RunCode</span> — это захватывающая
         аркадная игра, где вам предстоит управлять героем, преодолевая
         препятствия и собирая бонусы. Игра вдохновлена классическими играми,
         такими как Mario, Sonic Dash.

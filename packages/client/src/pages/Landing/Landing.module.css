@@ -19,8 +19,14 @@
   line-height: 2;
 }
 
-.pixel {
+.pixelBlock {
   font-family: 'Press Start 2P', cursive;
+  display: block;
+}
+
+.pixelInline {
+  font-family: 'Press Start 2P', cursive;
+  display: inline;
 }
 
 .text {
