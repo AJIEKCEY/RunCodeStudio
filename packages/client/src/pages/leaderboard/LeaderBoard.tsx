@@ -59,7 +59,6 @@ const LeaderBoard: React.FC = () => {
         onChange={onChange}
         showSorterTooltip={{ target: 'sorter-icon' }}
         pagination={{ pageSize: 25 }}
-        scroll={{ y: 25 * 5 }}
       />
     </Flex>
   )
