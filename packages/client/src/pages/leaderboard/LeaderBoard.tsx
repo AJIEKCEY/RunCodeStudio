@@ -4,22 +4,22 @@ import React from 'react'
 import { useAppSelector } from '../../store/hooks/deriveTypes'
 
 interface DataType {
-  iserId: number
+  userId: number
   score: number
 }
 
 const columns: TableColumnsType<DataType> = [
   {
-    key: 'iserId',
+    key: 'userId',
     title: 'Имя игрока',
     dataIndex: 'iserId',
     showSorterTooltip: { target: 'full-header' },
-    sorter: (a, b) => a.iserId - b.iserId,
+    sorter: (a, b) => a.userId - b.userId,
     sortDirections: ['descend'],
     render: (iserId: string) => (
       <Text
         strong
-        color="red">{`Здесь будет имя или никнейм игрока с id ${iserId}`}</Text>
+        color="red">{`Здесь будет имя или никнейм игрока с id ${userId}`}</Text>
     ),
   },
   {
