@@ -97,6 +97,7 @@ const Threads: React.FC = () => {
       />
       <Button
         className={styles['pulsing-button']}
+        data-testid="create-thread-btn"
         color="primary"
         variant="outlined"
         size="large"
