@@ -18,6 +18,6 @@ export const leaderBoardSlice = createSlice({
 
 export const { addNewRec } = leaderBoardSlice.actions
 
-export const getLeaderBoardData = (state: RootState) => state
+export const getLeaderBoardData = (state: RootState) => state.leaderboard
 
 export default leaderBoardSlice.reducer
