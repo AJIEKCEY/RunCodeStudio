@@ -14,10 +14,13 @@ function Container() {
   return (
     <Layout
       style={{
+        display: 'flex',
+        flexDirection: 'column',
         height: '100vh',
-        paddingTop: 0,
         maxWidth: '1280px',
         marginInline: 'auto',
+        borderRadius: 0,
+        overflow: 'hidden',
       }}>
       <LayoutHeader />
       <Content

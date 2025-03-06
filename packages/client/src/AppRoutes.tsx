@@ -4,6 +4,7 @@ import Container from './components/Layout'
 import { Route, Routes } from 'react-router-dom'
 import Threads from './pages/forum/Threads'
 import Posts from './pages/forum/Posts'
+import Landing from './pages/Landing/Landing'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -58,10 +59,7 @@ const AppRouter = () => {
     <div>
       <Routes>
         <Route path="/" element={<Container />}>
-          <Route
-            index
-            element={<div>Вот тут будет жить ваше приложение :)</div>}
-          />
+          <Route index element={<Landing />} />
           {Object.values(routConfig).map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
