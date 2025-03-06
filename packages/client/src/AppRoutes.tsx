@@ -4,6 +4,7 @@ import Container from './components/Layout'
 import { Route, Routes } from 'react-router-dom'
 import Threads from './pages/forum/Threads'
 import Posts from './pages/forum/Posts'
+import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Landing from './pages/Landing/Landing'
 
 export const AppRoutes = {
@@ -46,7 +47,7 @@ export const routConfig: Record<
   },
   [AppRoutes.LEADER_BOARD]: {
     path: AppRoutes.LEADER_BOARD,
-    element: <></>,
+    element: <LeaderBoard />,
   },
   NOT_FOUND: {
     path: '*',
