@@ -9,23 +9,26 @@ import { Thread } from '../../store/features/forum/types'
 import CreateThreadModal from './components/CreateThreadModal'
 import { IconText } from './components/IconText'
 
+const categoryColors: { [key: number]: string } = {
+  3: 'volcano',
+  4: 'gold',
+  2: 'processing',
+}
 const Threads: React.FC = () => {
   const { categories, threads } = useAppSelector(state => state.forum)
   const [categoryFilter, setcategoryFilter] = useState<number[]>([])
-  const [search, setSearch] = useState<string>('')
+  const [search, setSearch] = useState('')
   const [showModal, setShowModal] = useState(false)
 
   const filterThreads = useMemo(() => {
-    let result: Thread[] = [...threads]
+    let result: Thread[] = threads
     if (categoryFilter.length)
-      result = [...threads].filter(thread =>
+      result = result.filter(thread =>
         categoryFilter.includes(thread.categoryId)
       )
     if (search !== '') {
       const searchRegex = new RegExp(search, 'i')
-      result = [...result].filter(thread =>
-        searchRegex.test(thread.description)
-      )
+      result = result.filter(thread => searchRegex.test(thread.description))
     }
     return result
   }, [categoryFilter, search])
@@ -43,7 +46,7 @@ const Threads: React.FC = () => {
         dataSource={filterThreads}
         renderItem={item => (
           <List.Item
-            onClick={() => console.log(item.id)}
+            onClick={() => ({})}
             className={styles['thread-list-item']}
             key={item.id}
             actions={[
@@ -53,16 +56,7 @@ const Threads: React.FC = () => {
                   text={String(item.posts.length)}
                   key="list-vertical-message"
                 />
-                <Tag
-                  color={
-                    item.categoryId === 3
-                      ? 'volcano'
-                      : item.categoryId === 4
-                      ? 'gold'
-                      : item.categoryId === 2
-                      ? 'processing'
-                      : 'cyan'
-                  }>
+                <Tag color={categoryColors[item.categoryId] || 'cyan'}>
                   {
                     categories.find(
                       (cat: { id: number }) => cat.id === item.categoryId

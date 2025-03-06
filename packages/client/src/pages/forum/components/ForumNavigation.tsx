@@ -42,7 +42,9 @@ const ForumNavigation: FC<navigationProps> = ({
         mode="tags"
         placeholder="Выбор желаемых категорий"
         style={{ minWidth: '30%', height: ' 2rem' }}
-        onChange={values => handlerCategory([...values].map(id => Number(id)))}
+        onChange={values =>
+          handlerCategory(values.map((id: number) => Number(id)))
+        }
         tokenSeparators={[',']}
         options={options}
       />
