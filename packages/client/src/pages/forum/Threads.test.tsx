@@ -33,7 +33,7 @@ describe('Тест компонента Threads', () => {
     )
   })
 
-  it('по нажатию кнопки появляеться диалоговой окно с формой', async () => {
+  it('по нажатию кнопки появляется диалоговое окно с формой', async () => {
     const user = userEvent.setup()
     const btn = screen.getByTestId('create-thread-btn')
     const createThreadSpy = jest.spyOn(user, 'click')

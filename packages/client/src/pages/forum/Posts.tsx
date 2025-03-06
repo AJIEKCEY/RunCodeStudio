@@ -20,7 +20,7 @@ const Posts: React.FC = () => {
   const { id: threadId } = useParams()
   const [showModal, setShowModal] = useState(false)
   const filteredPosts = useMemo(() => {
-    let result: Post[] = [...posts]
+    let result: Post[] = posts
     if (threadId)
       result = result.filter(post => post.threadId === Number(threadId))
     return result
