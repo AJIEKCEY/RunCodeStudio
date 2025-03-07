@@ -8,6 +8,9 @@ import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
+// Добавлен только для демонстрации
+// TODO: удалить, как будет сверстан экран самой игры
+import GameOver from './pages/Game/GameOver/GameOver'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -17,6 +20,9 @@ export const AppRoutes = {
   FORUM: 'forum',
   FORUM_TOPIC: 'forum-topic/:id',
   LEADER_BOARD: 'leader-board',
+  // Добавлен только для демонстрации
+  // TODO: удалить, как будет сверстан экран самой игры
+  GAME_OVER: 'game-over',
 }
 
 export const routConfig: Record<
@@ -58,6 +64,18 @@ export const routConfig: Record<
   SERVER_ERROR: {
     path: 'server-error',
     element: <ServerError />,
+  },
+  // Добавлен только для демонстрации
+  // TODO: удалить, как будет сверстан экран самой игры
+  [AppRoutes.GAME_OVER]: {
+    path: AppRoutes.GAME_OVER,
+    element: (
+      <GameOver
+        onRepeat={() => {
+          /* to-be-deleted */
+        }}
+      />
+    ),
   },
 }
 
