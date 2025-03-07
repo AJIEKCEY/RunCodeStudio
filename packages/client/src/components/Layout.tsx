@@ -1,7 +1,7 @@
 import { Layout, theme } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 
-import LayoutHeader from './LayoutHeader'
+import LayoutHeader from './LayoutHeader/LayoutHeader'
 import LayoutFooter from './LayoutFooter'
 import { Outlet } from 'react-router-dom'
 import styles from './layout.module.css'
