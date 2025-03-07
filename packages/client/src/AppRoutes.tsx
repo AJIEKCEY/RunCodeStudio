@@ -8,6 +8,7 @@ import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
+import Registration from './pages/Registration/Registration'
 // только для демонстрации
 // TODO: удалить
 import GameStart from './pages/Game/GameStart/GameStart'
