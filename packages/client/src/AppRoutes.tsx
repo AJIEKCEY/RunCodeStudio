@@ -8,6 +8,7 @@ import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
+import Registration from './pages/Registration/Registration'
 // Добавлен только для демонстрации
 // TODO: удалить, как будет сверстан экран самой игры
 import GameOver from './pages/Game/GameOver/GameOver'
@@ -39,7 +40,7 @@ export const routConfig: Record<
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
-    element: <></>,
+    element: <Registration />,
   },
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
