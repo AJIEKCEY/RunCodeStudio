@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/Button/Button'
 import styles from './Landing.module.css'
 import { AppRoutes } from '../../AppRoutes'
+import { Flex } from 'antd'
 
 const Landing: React.FC = () => {
   const navigate = useNavigate()
@@ -11,7 +12,7 @@ const Landing: React.FC = () => {
   }
 
   return (
-    <div className={styles.landing}>
+    <Flex vertical gap="large" align="center" className="page">
       <h1 className={styles.title}>
         Добро пожаловать в<span className={styles.pixelBlock}>RunCode!</span>
       </h1>
@@ -24,7 +25,7 @@ const Landing: React.FC = () => {
       <div className={styles.LandingButton}>
         <Button onClick={handleButtonClick}>Начать игру</Button>
       </div>
-    </div>
+    </Flex>
   )
 }
 

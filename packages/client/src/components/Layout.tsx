@@ -1,7 +1,7 @@
 import { Layout, theme } from 'antd'
 import { Content } from 'antd/es/layout/layout'
 
-import LayoutHeader from './LayoutHeader'
+import LayoutHeader from './LayoutHeader/LayoutHeader'
 import LayoutFooter from './LayoutFooter'
 import { Outlet } from 'react-router-dom'
 import styles from './layout.module.css'
@@ -25,12 +25,13 @@ function Container() {
       <LayoutHeader />
       <Content
         className={styles['layout-container']}
-        style={{ padding: '0 10px', overflowY: 'auto' }}>
+        style={{ overflowY: 'auto' }}>
         <div
           style={{
             background: colorBgContainer,
             minHeight: '100%',
             borderRadius: borderRadiusLG,
+            height: '100%',
           }}>
           <Outlet />
         </div>

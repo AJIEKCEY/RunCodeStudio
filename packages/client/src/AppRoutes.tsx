@@ -6,6 +6,9 @@ import Threads from './pages/forum/Threads'
 import Posts from './pages/forum/Posts'
 import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Landing from './pages/Landing/Landing'
+import NotFound from './pages/ErrorPages/NotFound'
+import ServerError from './pages/ErrorPages/ServerError'
+import Registration from './pages/Registration/Registration'
 import Profile from './pages/profile/Profile'
 
 export const AppRoutes = {
@@ -32,7 +35,7 @@ export const routConfig: Record<
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
-    element: <></>,
+    element: <Registration />,
   },
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
@@ -52,7 +55,11 @@ export const routConfig: Record<
   },
   NOT_FOUND: {
     path: '*',
-    element: <></>,
+    element: <NotFound />,
+  },
+  SERVER_ERROR: {
+    path: 'server-error',
+    element: <ServerError />,
   },
 }
 
