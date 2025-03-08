@@ -6,6 +6,7 @@ import Threads from './pages/forum/Threads'
 import Posts from './pages/forum/Posts'
 import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Landing from './pages/Landing/Landing'
+import Profile from './pages/profile/Profile'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -27,7 +28,7 @@ export const routConfig: Record<
   },
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
-    element: <></>,
+    element: <Profile />,
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
