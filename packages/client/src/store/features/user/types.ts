@@ -36,9 +36,9 @@ export type BadRequest = {
 }
 export enum PractikumEndpoints {
   BASE = 'https://ya-praktikum.tech/api/v2',
-  AUTH = `${PractikumEndpoints.BASE}/auth`,
-  USER = `${PractikumEndpoints.BASE}/user`,
-  PROFILE = `${PractikumEndpoints.USER}/profile`,
+  AUTH = `https://ya-praktikum.tech/api/v2/auth`,
+  USER = `https://ya-praktikum.tech/api/v2/user`,
+  PROFILE = `https://ya-praktikum.tech/api/v2/user/profile`,
 }
 export type ErrorResponse = {
   status: number | string

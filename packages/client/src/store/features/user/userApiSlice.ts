@@ -10,7 +10,7 @@ import { isBadRequest } from '../../../utils/typeguard/isBadRequest'
 export const userApiSlice = createApi({
   reducerPath: 'userApiSlice',
   baseQuery: fetchBaseQuery({
-    baseUrl: PractikumEndpoints.BASE,
+    baseUrl: `${PractikumEndpoints.BASE}`,
     credentials: 'include',
   }),
   tagTypes: ['user'],
