@@ -64,14 +64,6 @@ export const routConfig: Record<
     path: AppRoutes.LEADER_BOARD,
     element: <LeaderBoard />,
   },
-  NOT_FOUND: {
-    path: '*',
-    element: <NotFound />,
-  },
-  SERVER_ERROR: {
-    path: 'server-error',
-    element: <ServerError />,
-  },
   // Добавлен только для демонстрации
   // TODO: удалить, как будет сверстан экран самой игры
   [AppRoutes.GAME_OVER]: {
@@ -83,11 +75,20 @@ export const routConfig: Record<
         }}
       />
     ),
-  // только для демонстрации
-  // TODO: удалить
-  GAME_START: {
+  },
+  // Добавлен только для демонстрации
+  // TODO: удалить, как будет сверстан экран самой игры
+  [AppRoutes.GAME_START]: {
     path: 'game-start',
     element: <GameStart />,
+  },
+  NOT_FOUND: {
+    path: '*',
+    element: <NotFound />,
+  },
+  SERVER_ERROR: {
+    path: 'server-error',
+    element: <ServerError />,
   },
 }
 
