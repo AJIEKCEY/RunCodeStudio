@@ -44,6 +44,10 @@ export const userApiSlice = createApi({
     updateUserInfo: builder.mutation<UserProfile | BadRequest, FormData>({
       query: data => ({
         url: `${PractikumEndpoints.USER}/profile`,
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
         method: 'PUT',
         body: data,
       }),
@@ -58,6 +62,10 @@ export const userApiSlice = createApi({
     updateUserPassword: builder.mutation<UserProfile | BadRequest, FormData>({
       query: data => ({
         url: `${PractikumEndpoints.USER}/password`,
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
         method: 'PUT',
         body: data,
       }),
