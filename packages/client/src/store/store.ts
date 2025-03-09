@@ -11,7 +11,9 @@ const rootReducer = combineReducers({
 export const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(userApiSlice.middleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(userApiSlice.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

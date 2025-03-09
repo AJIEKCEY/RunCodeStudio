@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { BadRequest, PractikumEndpoints, UserProfile } from './types'
+import {
+  BadRequest,
+  ErrorResponse,
+  PractikumEndpoints,
+  UserProfile,
+} from './types'
+import { isBadRequest } from '../../../utils/typeguard/isBadRequest'
 
 export const userApiSlice = createApi({
   reducerPath: 'userApiSlice',
@@ -27,10 +33,48 @@ export const userApiSlice = createApi({
         method: 'PUT',
         body: avatar,
       }),
-      transformErrorResponse: response => console.log(response.status),
+      transformErrorResponse: (response): ErrorResponse => {
+        if (isBadRequest(response)) {
+          return { status: response.status, msg: response.data.reason }
+        }
+        return { status: response.status, msg: ' Ошибка, попробуйте еще раз' }
+      },
+      invalidatesTags: ['user'],
+    }),
+    updateUserInfo: builder.mutation<UserProfile | BadRequest, FormData>({
+      query: data => ({
+        url: `${PractikumEndpoints.USER}/profile`,
+        method: 'PUT',
+        body: data,
+      }),
+      transformErrorResponse: (response): ErrorResponse => {
+        if (isBadRequest(response)) {
+          return { status: response.status, msg: response.data.reason }
+        }
+        return { status: response.status, msg: ' Ошибка, попробуйте еще раз' }
+      },
+      invalidatesTags: ['user'],
+    }),
+    updateUserPassword: builder.mutation<UserProfile | BadRequest, FormData>({
+      query: data => ({
+        url: `${PractikumEndpoints.USER}/password`,
+        method: 'PUT',
+        body: data,
+      }),
+      transformErrorResponse: (response): ErrorResponse => {
+        if (isBadRequest(response)) {
+          return { status: response.status, msg: response.data.reason }
+        }
+        return { status: response.status, msg: ' Ошибка, попробуйте еще раз' }
+      },
       invalidatesTags: ['user'],
     }),
   }),
 })
 
-export const { useGetUserQuery, useUpdateUserAvatarMutation } = userApiSlice
+export const {
+  useGetUserQuery,
+  useUpdateUserAvatarMutation,
+  useUpdateUserInfoMutation,
+  useUpdateUserPasswordMutation,
+} = userApiSlice
