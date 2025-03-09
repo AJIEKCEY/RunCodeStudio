@@ -40,7 +40,7 @@ export const routConfig: Record<
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
-    element: <></>,
+    element: <Registration />,
   },
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
