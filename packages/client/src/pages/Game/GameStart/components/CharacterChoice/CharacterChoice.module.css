@@ -1,0 +1,7 @@
+.characterSelect {
+  text-align: center;
+}
+
+.radioGroup :global(.ant-radio-wrapper) span {
+  color: #fff;
+}
