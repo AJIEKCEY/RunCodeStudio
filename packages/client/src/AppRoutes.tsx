@@ -12,6 +12,9 @@ import Registration from './pages/Registration/Registration'
 // Добавлен только для демонстрации
 // TODO: удалить, как будет сверстан экран самой игры
 import GameOver from './pages/Game/GameOver/GameOver'
+// только для демонстрации
+// TODO: удалить
+import GameStart from './pages/Game/GameStart/GameStart'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -24,6 +27,9 @@ export const AppRoutes = {
   // Добавлен только для демонстрации
   // TODO: удалить, как будет сверстан экран самой игры
   GAME_OVER: 'game-over',
+  // только для демонстрации
+  // TODO: удалить
+  GAME_START: 'game-start',
 }
 
 export const routConfig: Record<
@@ -77,6 +83,11 @@ export const routConfig: Record<
         }}
       />
     ),
+  // только для демонстрации
+  // TODO: удалить
+  GAME_START: {
+    path: 'game-start',
+    element: <GameStart />,
   },
 }
 
