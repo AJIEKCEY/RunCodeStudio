@@ -13,11 +13,3 @@
   justify-content: center;
   padding: 0;
 }
-
-.characterSelect {
-  text-align: center;
-}
-
-.radioGroup :global(.ant-radio-wrapper) span {
-  color: #fff;
-}
