@@ -9,6 +9,7 @@ import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
+import Auth from './pages/Auth/Auth'
 // Добавлен только для демонстрации
 // TODO: удалить, как будет сверстан экран самой игры
 import GameOver from './pages/Game/GameOver/GameOver'
@@ -38,7 +39,7 @@ export const routConfig: Record<
 > = {
   [AppRoutes.LOGIN]: {
     path: AppRoutes.LOGIN,
-    element: <></>,
+    element: <Auth />,
   },
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
