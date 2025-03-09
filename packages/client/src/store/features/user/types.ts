@@ -21,6 +21,7 @@ export type UserProfile = {
   display_name: string
   email: string
   phone: string
+  avatar: string
   login: string
 }
 
@@ -30,11 +31,16 @@ export type UserProfilePassword = {
 }
 
 export type BadRequest = {
-  reason: string
+  data: { reason: string }
+  status: number | string
 }
 export enum PractikumEndpoints {
   BASE = 'https://ya-praktikum.tech/api/v2',
   AUTH = `${PractikumEndpoints.BASE}/auth`,
   USER = `${PractikumEndpoints.BASE}/user`,
   PROFILE = `${PractikumEndpoints.USER}/profile`,
+}
+export type ErrorResponse = {
+  status: number | string
+  msg: string
 }
