@@ -8,6 +8,7 @@ import {
 } from '../../../utils/validation'
 import { useUpdateUserInfoMutation } from '../../../store/features/user/userApiSlice'
 import { isErrorResponse } from '../../../utils/typeguard/isErrorResponse'
+
 const formItemLayout = {
   labelCol: {
     xs: { span: 8 },
