@@ -1,7 +1,8 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react'
+import { Flex, Typography } from 'antd'
 
 interface Props {
-  children?: ReactNode
+  children: ReactNode
 }
 
 interface State {
@@ -14,7 +15,6 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public static getDerivedStateFromError(_: Error): State {
-    // Update state so the next render will show the fallback UI.
     return { hasError: true }
   }
 
@@ -24,7 +24,13 @@ class ErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
-      return <h1>Что-то пошло не так.</h1>
+      return (
+        <Flex vertical gap="large" align="center" className="page">
+          <Typography.Title style={{ color: '#fff' }}>
+            Что-то пошло не так ...
+          </Typography.Title>
+        </Flex>
+      )
     }
 
     return this.props.children

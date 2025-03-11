@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Button, Flex, Typography } from 'antd'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-const NotFound: FC = () => {
+const NotFound = () => {
   const navigate = useNavigate()
 
   return (

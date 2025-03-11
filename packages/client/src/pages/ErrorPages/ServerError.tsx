@@ -1,7 +1,7 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Flex, Typography } from 'antd'
 
-const ServerError: FC = () => {
+const ServerError = () => {
   return (
     <Flex vertical gap="large" align="center" className="page">
       <Typography.Title style={{ color: '#fff' }}>Error 500</Typography.Title>
