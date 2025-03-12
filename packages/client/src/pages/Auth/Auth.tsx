@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Typography, Flex } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { useAuth } from "../../hooks/useAuth";
+
 import styles from './Auth.module.css'
 
 const { Title } = Typography
@@ -10,16 +12,26 @@ interface LoginFormValues {
   password: string
 }
 
-const Auth: React.FC = () => {
-  const [form] = Form.useForm<LoginFormValues>()
-  const [clientReady, setClientReady] = useState<boolean>(false)
+const Auth= () => {
+  const [form] = Form.useForm<LoginFormValues>();
+  const [clientReady, setClientReady] = useState<boolean>(false);
+  const { login } = useAuth();
 
   useEffect(() => {
     setClientReady(true)
   }, [])
 
-  const onFinish = (values: LoginFormValues) => {
-    console.log('Finish:', values)
+  const onFinish = async (values: LoginFormValues) => {
+    console.log('Finish:', values);
+
+    const {username, password} = values
+
+    if (username === "user" && password === "password") {
+      // Здесь будет реализована логика авторизации после добавление бэкенда.
+      await login({ id: 1, name: username, isAuthenticated: true });
+    } else {
+      alert("Invalid username or password");
+    }
   }
 
   return (

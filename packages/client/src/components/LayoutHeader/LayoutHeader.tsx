@@ -2,6 +2,7 @@ import { Header } from 'antd/es/layout/layout'
 import { Menu } from 'antd'
 import { Link } from 'react-router-dom'
 import styles from './LayoutHeader.module.css'
+import { useAuth } from "../../hooks/useAuth";
 
 const items = [
   {
@@ -14,7 +15,6 @@ const items = [
     path: 'play',
     title: 'Игра',
   },
-
   {
     key: 'profile',
     path: 'profile',
@@ -33,6 +33,9 @@ const items = [
 ]
 
 function LayoutHeader() {
+
+  const { logout } = useAuth();
+
   return (
     <Header style={{ display: 'flex', alignItems: 'center' }}>
       <div className="demo-logo" />
@@ -46,6 +49,7 @@ function LayoutHeader() {
       <div className={styles.header_auth}>
         <Link to="login">Вход</Link>
         <Link to="registration">Регистрация</Link>
+        <Link to="/" onClick={logout}>Выход</Link>
       </div>
     </Header>
   )

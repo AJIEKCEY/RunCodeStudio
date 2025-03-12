@@ -13,7 +13,7 @@ interface RegistrationFormValues {
   confirmPassword: string
 }
 
-const Registration: React.FC = () => {
+const Registration = () => {
   const [form] = Form.useForm<RegistrationFormValues>()
 
   const onFinish = (values: RegistrationFormValues) => {
