@@ -10,12 +10,8 @@ import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
 import Profile from './pages/profile/Profile'
-// Добавлен только для демонстрации
-// TODO: удалить, как будет сверстан экран самой игры
-import GameOver from './pages/Game/GameOver/GameOver'
-// только для демонстрации
-// TODO: удалить
-import GameStart from './pages/Game/GameStart/GameStart'
+import CanvasGame from './pages/Game/CanvasGame/CanvasGame'
+import Auth from './pages/Auth/Auth'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -25,12 +21,6 @@ export const AppRoutes = {
   FORUM: 'forum',
   FORUM_TOPIC: 'forum-topic/:id',
   LEADER_BOARD: 'leader-board',
-  // Добавлен только для демонстрации
-  // TODO: удалить, как будет сверстан экран самой игры
-  GAME_OVER: 'game-over',
-  // только для демонстрации
-  // TODO: удалить
-  GAME_START: 'game-start',
 }
 
 export const routConfig: Record<
@@ -39,7 +29,7 @@ export const routConfig: Record<
 > = {
   [AppRoutes.LOGIN]: {
     path: AppRoutes.LOGIN,
-    element: <></>,
+    element: <Auth />,
   },
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
@@ -51,7 +41,7 @@ export const routConfig: Record<
   },
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
-    element: <></>,
+    element: <CanvasGame />,
   },
   [AppRoutes.FORUM]: {
     path: AppRoutes.FORUM,
@@ -64,24 +54,6 @@ export const routConfig: Record<
   [AppRoutes.LEADER_BOARD]: {
     path: AppRoutes.LEADER_BOARD,
     element: <LeaderBoard />,
-  },
-  // Добавлен только для демонстрации
-  // TODO: удалить, как будет сверстан экран самой игры
-  [AppRoutes.GAME_OVER]: {
-    path: AppRoutes.GAME_OVER,
-    element: (
-      <GameOver
-        onRepeat={() => {
-          /* to-be-deleted */
-        }}
-      />
-    ),
-  },
-  // Добавлен только для демонстрации
-  // TODO: удалить, как будет сверстан экран самой игры
-  [AppRoutes.GAME_START]: {
-    path: 'game-start',
-    element: <GameStart />,
   },
   NOT_FOUND: {
     path: '*',
