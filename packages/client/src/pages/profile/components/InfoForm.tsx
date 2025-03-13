@@ -48,9 +48,11 @@ const InfoForm = (props: UserInfoProps) => {
   }
   useEffect(() => {
     if (isError) {
-      messageApi.error(
-        isErrorResponse(error) ? error.msg : 'Ошибка, попробуйте еще раз'
-      )
+      if (error && isErrorResponse(error)) {
+        messageApi.error(error.msg)
+      } else {
+        messageApi.error('Ошибка, попробуйте еще раз')
+      }
     }
     if (isSuccess) {
       messageApi.success('Данные сохранены')
