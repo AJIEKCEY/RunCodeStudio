@@ -1,13 +1,19 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import forumSlice from './features/forum/forumSlice'
 import leaderBoardSlice from './features/leaderboard/leaderboardSlice'
+import { userApiSlice } from './features/user/userApiSlice'
 const rootReducer = combineReducers({
   forum: forumSlice,
   leaderboard: leaderBoardSlice,
+  [userApiSlice.reducerPath]: userApiSlice.reducer,
 })
 
 export const store = configureStore({
   reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(userApiSlice.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

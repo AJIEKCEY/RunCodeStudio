@@ -9,6 +9,7 @@ import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
+import Profile from './pages/profile/Profile'
 import CanvasGame from './pages/Game/CanvasGame/CanvasGame'
 import Auth from './pages/Auth/Auth'
 
@@ -32,7 +33,7 @@ export const routConfig: Record<
   },
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
-    element: <></>,
+    element: <Profile />,
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
