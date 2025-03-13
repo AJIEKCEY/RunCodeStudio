@@ -34,7 +34,7 @@ const tailFormItemLayout = {
 }
 type UserInfoProps = Partial<UserProfile>
 
-const InfoForm: React.FC<UserInfoProps> = props => {
+const InfoForm = (props: UserInfoProps) => {
   const [formInfo] = Form.useForm<UserProfile>()
   const [update, { isError, isSuccess, error }] = useUpdateUserInfoMutation()
   const [messageApi, contextHolder] = message.useMessage()
@@ -51,9 +51,9 @@ const InfoForm: React.FC<UserInfoProps> = props => {
       messageApi.error(
         isErrorResponse(error) ? error.msg : 'Ошибка, попробуйте еще раз'
       )
-      if (isSuccess) {
-        messageApi.success('Данные сохранены')
-      }
+    }
+    if (isSuccess) {
+      messageApi.success('Данные сохранены')
     }
   }, [isError, error])
   return (

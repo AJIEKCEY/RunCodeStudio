@@ -33,7 +33,7 @@ const tailFormItemLayout = {
   },
 }
 
-const PasswordForm: React.FC = () => {
+const PasswordForm = () => {
   const [form] = Form.useForm<UserProfilePassword>()
   const [update, { isError, isSuccess, error }] =
     useUpdateUserPasswordMutation()
@@ -50,9 +50,9 @@ const PasswordForm: React.FC = () => {
       messageApi.error(
         isErrorResponse(error) ? error.msg : 'Ошибка, попробуйте еще раз'
       )
-      if (isSuccess) {
-        messageApi.success('Данные сохранены')
-      }
+    }
+    if (isSuccess) {
+      messageApi.success('Данные сохранены')
     }
   }, [isError, error])
 

@@ -5,7 +5,7 @@ import InfoForm from './InfoForm'
 import PasswordForm from './PasswordForm.tsx'
 
 type UserInfoProps = Partial<UserProfile>
-const Userinfo: React.FC<UserInfoProps> = props => {
+const Userinfo = (props: UserInfoProps) => {
   const [selectedForm, setSelectedForm] = useState('password')
 
   return (

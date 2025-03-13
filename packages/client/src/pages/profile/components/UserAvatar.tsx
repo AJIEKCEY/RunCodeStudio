@@ -16,7 +16,7 @@ type userAvatarProps = {
   src: string
 }
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
-const UserAvatar: React.FC<userAvatarProps> = ({ src }) => {
+const UserAvatar = ({ src }: userAvatarProps) => {
   const [update, { isError, isSuccess, error }] = useUpdateUserAvatarMutation()
   const [messageApi, contextHolder] = message.useMessage()
   const [fileList, setFileList] = useState<UploadFile[]>([])

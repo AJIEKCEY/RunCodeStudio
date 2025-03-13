@@ -6,7 +6,7 @@ import Userinfo from './components/UserInfo'
 import UserAvatar from './components/UserAvatar'
 import { useGetUserQuery } from '../../store/features/user/userApiSlice'
 
-const Profile: React.FC = () => {
+const Profile = () => {
   const { isSuccess, data: user } = useGetUserQuery('')
 
   return (
