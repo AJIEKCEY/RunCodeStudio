@@ -41,9 +41,9 @@ sw.addEventListener('fetch', event => {
 })
 
 function update(request: Request) {
-  return caches
-    .open(cacheName)
-    .then(cache =>
-      fetch(request).then(response => cache.put(request, response))
-    )
+  return caches.open(cacheName).then(cache => {
+    if (!request.url.startsWith('http')) {
+      return
+    } else return fetch(request).then(response => cache.put(request, response))
+  })
 }
