@@ -56,7 +56,7 @@ const PasswordForm = () => {
     if (isSuccess) {
       messageApi.success('Данные сохранены')
     }
-  }, [isError, error])
+  }, [isError, error, isSuccess])
 
   return (
     <>
@@ -111,7 +111,7 @@ const PasswordForm = () => {
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
+                if (!value || getFieldValue('oldPassword') === value) {
                   return Promise.resolve()
                 }
                 return Promise.reject(new Error('пароли не совпадают'))

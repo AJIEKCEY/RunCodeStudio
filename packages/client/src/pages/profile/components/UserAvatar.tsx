@@ -36,7 +36,7 @@ const UserAvatar = ({ src }: userAvatarProps) => {
     if (isSuccess) {
       messageApi.success('Данные сохранены')
     }
-  }, [isError, error])
+  }, [isError, error, isSuccess])
   const beforeUpload = (file: FileType) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
     if (!isJpgOrPng) {

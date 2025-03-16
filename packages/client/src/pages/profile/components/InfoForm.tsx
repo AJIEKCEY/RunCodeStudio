@@ -57,7 +57,7 @@ const InfoForm = (props: UserInfoProps) => {
     if (isSuccess) {
       messageApi.success('Данные сохранены')
     }
-  }, [isError, error])
+  }, [isError, error, isSuccess])
   return (
     <>
       {contextHolder}
