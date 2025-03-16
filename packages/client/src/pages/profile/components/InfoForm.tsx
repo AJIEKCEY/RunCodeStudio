@@ -66,7 +66,7 @@ const InfoForm = (props: UserInfoProps) => {
         form={formInfo}
         layout="vertical"
         variant="underlined"
-        size="large"
+        size="middle"
         labelWrap={false}
         name="profile"
         onFinish={onFinish}

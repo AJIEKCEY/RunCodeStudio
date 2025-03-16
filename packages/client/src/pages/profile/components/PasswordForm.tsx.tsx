@@ -66,7 +66,7 @@ const PasswordForm = () => {
         layout="vertical"
         form={form}
         variant="underlined"
-        size="large"
+        size="middle"
         labelWrap={false}
         name="password"
         onFinish={onFinish}
