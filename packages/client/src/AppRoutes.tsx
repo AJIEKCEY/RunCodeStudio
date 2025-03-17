@@ -9,7 +9,7 @@ import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
-import CanvasGame from './pages/Game/CanvasGame/CanvasGame'
+import GameMain from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 
@@ -55,7 +55,7 @@ export const routConfig: Record<
     path: AppRoutes.PLAY,
     element: (
       <ErrorBoundary>
-        <CanvasGame />
+        <GameMain />
       </ErrorBoundary>
     ),
   },

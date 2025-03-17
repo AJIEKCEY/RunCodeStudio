@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Radio, Typography } from 'antd'
 import styles from './CharacterChoice.module.css'
 import characters from './Characters'
 
-const CharacterChoice: React.FC = () => {
-  const [selectedCharacter, setSelectedCharacter] = useState(characters[0].id)
+interface CharacterChoiceProps {
+  selected: string
+  onSelect: (value: string) => void
+}
+
+const CharacterChoice = ({ selected, onSelect }: CharacterChoiceProps) => {
+  const handleChange = (e: any) => {
+    onSelect(e.target.value)
+  }
 
   return (
     <div className={styles.characterSelect}>
@@ -12,8 +19,8 @@ const CharacterChoice: React.FC = () => {
         Выберите персонажа:
       </Typography.Title>
       <Radio.Group
-        onChange={e => setSelectedCharacter(e.target.value)}
-        value={selectedCharacter}
+        onChange={handleChange}
+        value={selected}
         className={styles.radioGroup}>
         {characters.map(character => (
           <Radio key={character.id} value={character.id}>
@@ -30,10 +37,7 @@ const CharacterChoice: React.FC = () => {
             marginTop: '1rem',
             display: 'block',
           }}>
-          {
-            characters.find(character => character.id === selectedCharacter)
-              ?.description
-          }
+          {characters.find(character => character.id === selected)?.description}
         </Typography.Text>
       </div>
     </div>

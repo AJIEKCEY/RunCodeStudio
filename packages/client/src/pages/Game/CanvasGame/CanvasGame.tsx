@@ -1,9 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Game } from './core/Game'
 import style from './game.module.css'
 import { Button } from 'antd'
 
-const CanvasGame = () => {
+interface CanvasGameProps {
+  characterId: string
+  onGameOver: () => void
+  onCoinsChange: (coins: number) => void
+}
+
+const CanvasGame = ({
+  characterId,
+  onGameOver,
+  onCoinsChange,
+}: CanvasGameProps) => {
   const [isEnd, setIsEnd] = useState<boolean>(false)
   const [isStart, setIsStart] = useState<boolean>(true)
   const [gameKey, setGameKey] = useState(0)
@@ -25,7 +35,7 @@ const CanvasGame = () => {
     }
 
     const game = new Game(canvas, {
-      playerId: 'player_1',
+      playerId: characterId,
       themeId: 'theme_1',
       canvasWidth: window.innerWidth,
       canvasHeight: 720,
@@ -39,12 +49,14 @@ const CanvasGame = () => {
     game.onGameOver(isEnd => {
       setIsStart(false)
       setIsEnd(isEnd)
+      onGameOver()
+      onCoinsChange(game.getCoins())
     })
 
     return () => {
       game.destroy()
     }
-  }, [gameKey])
+  }, [gameKey, characterId, onGameOver, onCoinsChange])
 
   return (
     <>
