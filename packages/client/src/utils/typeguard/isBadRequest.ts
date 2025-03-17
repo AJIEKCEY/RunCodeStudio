@@ -1,6 +1,8 @@
 import { BadRequest } from '../../store/features/user/types'
 
 export function isBadRequest(obj: object): obj is BadRequest {
-  if ('data' in obj) return true
+  if (typeof obj === 'object' && 'status' in obj) {
+    return obj.status !== 200
+  }
   return false
 }
