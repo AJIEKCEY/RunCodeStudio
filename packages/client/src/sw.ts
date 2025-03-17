@@ -27,6 +27,25 @@ sw.addEventListener('install', (event: ExtendableEvent) => {
     })
   )
 })
+sw.addEventListener('activate', (event: ExtendableEvent) => {
+  console.info('service worker активирован!')
+  event.waitUntil(
+    caches
+      .keys()
+      .then(cacheNames => {
+        return Promise.all(
+          cacheNames.map(name => {
+            if (name !== cacheName) {
+              return caches.delete(name)
+            }
+          })
+        )
+      })
+      .catch(() => {
+        console.error(`Ошибка очистки старого кэша `)
+      })
+  )
+})
 sw.addEventListener('fetch', event => {
   event.respondWith(
     caches
