@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Flex, Radio } from 'antd'
 import { UserProfile } from '../../../store/features/user/types'
 import InfoForm from './InfoForm'
-import PasswordForm from './PasswordForm.tsx'
+import PasswordForm from './PasswordForm'
 
 type UserInfoProps = Partial<UserProfile>
 const Userinfo = (props: UserInfoProps) => {

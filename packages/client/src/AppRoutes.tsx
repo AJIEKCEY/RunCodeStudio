@@ -12,6 +12,7 @@ import Registration from './pages/Registration/Registration'
 import Profile from './pages/profile/Profile'
 import CanvasGame from './pages/Game/CanvasGame/CanvasGame'
 import Auth from './pages/Auth/Auth'
+import ErrorBoundary from './components/ErrorBoundary'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -29,7 +30,11 @@ export const routConfig: Record<
 > = {
   [AppRoutes.LOGIN]: {
     path: AppRoutes.LOGIN,
-    element: <Auth />,
+    element: (
+      <ErrorBoundary>
+        <Auth />
+      </ErrorBoundary>
+    ),
   },
   [AppRoutes.PROFILE]: {
     path: AppRoutes.PROFILE,
@@ -37,31 +42,59 @@ export const routConfig: Record<
   },
   [AppRoutes.REGISTRATION]: {
     path: AppRoutes.REGISTRATION,
-    element: <Registration />,
+    element: (
+      <ErrorBoundary>
+        <Registration />
+      </ErrorBoundary>
+    ),
   },
   [AppRoutes.PLAY]: {
     path: AppRoutes.PLAY,
-    element: <CanvasGame />,
+    element: (
+      <ErrorBoundary>
+        <CanvasGame />
+      </ErrorBoundary>
+    ),
   },
   [AppRoutes.FORUM]: {
     path: AppRoutes.FORUM,
-    element: <Threads />,
+    element: (
+      <ErrorBoundary>
+        <Threads />
+      </ErrorBoundary>
+    ),
   },
   [AppRoutes.FORUM_TOPIC]: {
     path: `${AppRoutes.FORUM}/:id`,
-    element: <Posts />,
+    element: (
+      <ErrorBoundary>
+        <Posts />
+      </ErrorBoundary>
+    ),
   },
   [AppRoutes.LEADER_BOARD]: {
     path: AppRoutes.LEADER_BOARD,
-    element: <LeaderBoard />,
+    element: (
+      <ErrorBoundary>
+        <LeaderBoard />
+      </ErrorBoundary>
+    ),
   },
   NOT_FOUND: {
     path: '*',
-    element: <NotFound />,
+    element: (
+      <ErrorBoundary>
+        <NotFound />
+      </ErrorBoundary>
+    ),
   },
   SERVER_ERROR: {
     path: 'server-error',
-    element: <ServerError />,
+    element: (
+      <ErrorBoundary>
+        <ServerError />
+      </ErrorBoundary>
+    ),
   },
 }
 

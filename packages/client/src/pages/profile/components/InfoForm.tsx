@@ -57,7 +57,7 @@ const InfoForm = (props: UserInfoProps) => {
     if (isSuccess) {
       messageApi.success('Данные сохранены')
     }
-  }, [isError, error])
+  }, [isError, error, isSuccess])
   return (
     <>
       {contextHolder}
@@ -66,7 +66,7 @@ const InfoForm = (props: UserInfoProps) => {
         form={formInfo}
         layout="vertical"
         variant="underlined"
-        size="large"
+        size="middle"
         labelWrap={false}
         name="profile"
         onFinish={onFinish}

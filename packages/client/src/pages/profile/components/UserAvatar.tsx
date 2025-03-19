@@ -36,16 +36,19 @@ const UserAvatar = ({ src }: userAvatarProps) => {
     if (isSuccess) {
       messageApi.success('Данные сохранены')
     }
-  }, [isError, error])
+  }, [isError, error, isSuccess])
   const beforeUpload = (file: FileType) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
     if (!isJpgOrPng) {
       message.error(
         'Для аватара можно загужать только  файлы с расширениемJPG/PNG.'
       )
-      return false
     }
-    return true
+    const isLt2M = file.size / 1024 / 1024 < 2
+    if (!isLt2M) {
+      message.error('Изображение должно быть меньше 2MB!')
+    }
+    return isJpgOrPng && isLt2M
   }
   return (
     <Flex vertical gap="small" align="center">
