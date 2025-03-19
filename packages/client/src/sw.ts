@@ -47,6 +47,10 @@ sw.addEventListener('activate', (event: ExtendableEvent) => {
   )
 })
 sw.addEventListener('fetch', event => {
+  const requestUrl = new URL(event.request.url)
+  if (!requestUrl.protocol.startsWith('http')) {
+    return
+  }
   event.respondWith(
     caches
       .match(event.request)
@@ -60,9 +64,17 @@ sw.addEventListener('fetch', event => {
 })
 
 function update(request: Request) {
+  console.log('REQUEST', request)
+
   return caches.open(cacheName).then(cache => {
-    if (!request.url.startsWith('http')) {
+    const requestUrl = new URL(request.url)
+    if (!requestUrl.protocol.startsWith('http')) {
       return
-    } else return fetch(request).then(response => cache.put(request, response))
+    } else
+      return fetch(request).then(response => {
+        if (response.ok) {
+          return cache.put(request, response)
+        }
+      })
   })
 }
