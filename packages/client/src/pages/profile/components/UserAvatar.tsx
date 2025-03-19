@@ -43,9 +43,12 @@ const UserAvatar = ({ src }: userAvatarProps) => {
       message.error(
         'Для аватара можно загужать только  файлы с расширениемJPG/PNG.'
       )
-      return false
     }
-    return true
+    const isLt2M = file.size / 1024 / 1024 < 2
+    if (!isLt2M) {
+      message.error('Изображение должно быть меньше 2MB!')
+    }
+    return isJpgOrPng && isLt2M
   }
   return (
     <Flex vertical gap="small" align="center">
