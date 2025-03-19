@@ -10,7 +10,7 @@ import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
 import Profile from './pages/profile/Profile'
-import CanvasGame from './pages/Game/CanvasGame/CanvasGame'
+import GameMain from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 

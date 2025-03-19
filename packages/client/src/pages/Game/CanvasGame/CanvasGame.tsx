@@ -14,17 +14,8 @@ const CanvasGame = ({
   onGameOver,
   onCoinsChange,
 }: CanvasGameProps) => {
-  const [isEnd, setIsEnd] = useState<boolean>(false)
-  const [isStart, setIsStart] = useState<boolean>(true)
-  const [gameKey, setGameKey] = useState(0)
   const ref = useRef<HTMLCanvasElement | null>(null)
   const refGame = useRef<Game | null>(null)
-
-  const handleStartGame = () => {
-    setIsEnd(false)
-    setIsStart(true)
-    setGameKey(prev => prev + 1)
-  }
 
   useEffect(() => {
     const canvas = ref.current
@@ -46,9 +37,7 @@ const CanvasGame = ({
 
     refGame.current = game
 
-    game.onGameOver(isEnd => {
-      setIsStart(false)
-      setIsEnd(isEnd)
+    game.onGameOver(() => {
       onGameOver()
       onCoinsChange(game.getCoins())
     })
@@ -56,19 +45,11 @@ const CanvasGame = ({
     return () => {
       game.destroy()
     }
-  }, [gameKey, characterId, onGameOver, onCoinsChange])
+  }, [characterId, onGameOver, onCoinsChange])
 
   return (
     <>
-      {isStart && (
-        <canvas key={gameKey} className={style.canvas} ref={ref}></canvas>
-      )}
-      {isEnd && (
-        <>
-          <h2>Конец игры</h2>
-          <Button onClick={handleStartGame}>Начать сначала</Button>
-        </>
-      )}
+      <canvas className={style.canvas} ref={ref}></canvas>
     </>
   )
 }
