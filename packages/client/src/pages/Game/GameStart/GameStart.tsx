@@ -3,10 +3,10 @@ import { Flex, Typography } from 'antd'
 import { Button } from '../../../components/Button/Button'
 import CharacterChoice from './components/CharacterChoice/CharacterChoice'
 import Rules from './components/Rules'
-import styles from './GameStart.module.css'
+import { secondsWords } from '../../../utils/singlePluralWords'
 
 interface GameStartProps {
-  onStart: () => void
+  onStart: VoidFunction
   selectedCharacter: string
   setSelectedCharacter: (characterId: string) => void
 }
@@ -16,27 +16,26 @@ const GameStart = ({
   selectedCharacter,
   setSelectedCharacter,
 }: GameStartProps) => {
-  const [countdown, setCountdown] = useState(60)
-  const [isCounting, setIsCounting] = useState(true)
+  const [showCountdown, setShowCountdown] = useState(false)
+  const [countdown, setCountdown] = useState(3)
 
   useEffect(() => {
-    if (!isCounting) return
-    const timer = setInterval(() => setCountdown(prev => prev - 1), 1000)
+    if (!showCountdown) return
+    const timer = setInterval(() => {
+      setCountdown(prev => prev - 1)
+    }, 1000)
     return () => clearInterval(timer)
-  }, [isCounting])
+  }, [showCountdown])
 
   useEffect(() => {
-    if (countdown === 0 && isCounting) {
+    if (countdown === 0 && showCountdown) {
       onStart()
     }
-  }, [countdown, isCounting, onStart])
+  }, [countdown, showCountdown, onStart])
 
-  const handleStopCountdown = () => {
-    setIsCounting(false)
-  }
-
-  const handleStartGame = () => {
-    onStart()
+  const handleStartClick = () => {
+    setCountdown(3)
+    setShowCountdown(true)
   }
 
   return (
@@ -44,28 +43,21 @@ const GameStart = ({
       <Typography.Title style={{ color: '#fff' }}>
         Подготовка к игре
       </Typography.Title>
-      <Flex gap="small" align="center">
-        <Typography.Text style={{ color: '#fff' }}>
-          {isCounting ? (
-            <>
-              Игра начнётся через: <strong>{countdown}</strong>
-            </>
-          ) : (
-            'Отсчёт остановлен'
-          )}
+      {!showCountdown && (
+        <>
+          <CharacterChoice
+            selected={selectedCharacter}
+            onSelect={setSelectedCharacter}
+          />
+          <Rules />
+          <Button onClick={handleStartClick}>Старт</Button>
+        </>
+      )}
+      {showCountdown && (
+        <Typography.Text style={{ color: '#fff', fontSize: '24px' }}>
+          Игра начнётся через {countdown} {secondsWords(countdown)}
         </Typography.Text>
-        {isCounting && (
-          <div className={styles.stopButton}>
-            <Button onClick={handleStopCountdown}>Стоп</Button>
-          </div>
-        )}
-      </Flex>
-      <CharacterChoice
-        selected={selectedCharacter}
-        onSelect={setSelectedCharacter}
-      />
-      <Rules />
-      <Button onClick={handleStartGame}>Старт</Button>
+      )}
     </Flex>
   )
 }

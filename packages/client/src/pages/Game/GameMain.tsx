@@ -6,9 +6,7 @@ import Characters from './GameStart/components/CharacterChoice/Characters'
 
 const Game = () => {
   const [stage, setStage] = useState<'start' | 'play' | 'over'>('start')
-  const [selectedCharacter, setSelectedCharacter] = useState<string>(
-    Characters[0].id
-  )
+  const [selectedCharacter, setSelectedCharacter] = useState(Characters[0].id)
   const [coins, setCoins] = useState(0)
 
   const handleGameStart = () => {

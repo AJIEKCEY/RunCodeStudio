@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Game } from './core/Game'
 import style from './game.module.css'
-import { Button } from 'antd'
 
 interface CanvasGameProps {
   characterId: string
-  onGameOver: () => void
+  onGameOver: VoidFunction
   onCoinsChange: (coins: number) => void
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Radio, Typography } from 'antd'
+import { Radio, Typography, type RadioChangeEvent } from 'antd'
 import styles from './CharacterChoice.module.css'
 import characters from './Characters'
 
@@ -9,7 +9,7 @@ interface CharacterChoiceProps {
 }
 
 const CharacterChoice = ({ selected, onSelect }: CharacterChoiceProps) => {
-  const handleChange = (e: any) => {
+  const handleChange = (e: RadioChangeEvent) => {
     onSelect(e.target.value)
   }
 

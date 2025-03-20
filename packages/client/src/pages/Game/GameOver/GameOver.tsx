@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from '../../../components/Button/Button'
 import { Flex, Typography } from 'antd'
-import { getCoinWord } from '../../../utils/coinsWord'
+import { coinsWords } from '../../../utils/singlePluralWords'
 
 interface GameOverProps {
   onRepeat: () => void
@@ -18,7 +18,7 @@ const GameOver = ({ onRepeat, coins }: GameOverProps) => {
         Поздравляем! Надеемся, вы получили удовольствие от прохождения
       </Typography.Text>
       <Typography.Text style={{ color: '#fff' }}>
-        Вы собрали {coins} {getCoinWord(coins)}.
+        Вы собрали {coins} {coinsWords(coins)}
       </Typography.Text>
       <Button onClick={onRepeat}>Повторить</Button>
     </Flex>
