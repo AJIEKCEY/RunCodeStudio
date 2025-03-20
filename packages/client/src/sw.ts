@@ -6,6 +6,7 @@ const filesToCache = [
   'index.html',
   './assets/index.js',
   './assets/index.css',
+  './fonts/PressStart2P-Regular.ttf',
   './sprite/coin.png',
   'vite.svg',
   './sprite/themes/theme_1/layer-1.png',
