@@ -57,19 +57,25 @@ sw.addEventListener('fetch', event => {
       .then(response => response || fetch(event.request))
       .catch(() => {
         console.warn('Сервер не отвечает')
-        return Promise.reject('сервер не отвечает')
+        return new Response('Не удалось загрузить файл', { status: 404 })
       })
   )
-  event.waitUntil(update(event.request))
+  event.waitUntil(
+    update(event.request).catch(error => {
+      console.warn(` ${error} запрос ${event.request.url}`)
+      return
+    })
+  )
 })
 
 function update(request: Request) {
-  console.log('REQUEST', request)
-
+  if (!navigator.onLine) {
+    return Promise.reject('Обновление кэша невозможно, нет соединение с сетью')
+  }
   return caches.open(cacheName).then(cache => {
     const requestUrl = new URL(request.url)
     if (!requestUrl.protocol.startsWith('http')) {
-      return
+      return Promise.resolve()
     } else
       return fetch(request).then(response => {
         if (response.ok) {
