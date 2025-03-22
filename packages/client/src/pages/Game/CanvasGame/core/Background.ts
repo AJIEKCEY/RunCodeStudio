@@ -20,20 +20,23 @@ export class Backgournd {
   }
 
   draw(props: TypeDataTheme) {
-    this.ctx.drawImage(props.image, props.x, 0, this.width, this.height)
+    const offsetX = Math.round(props.x)
+    this.ctx.drawImage(props.image, offsetX, 0, this.width, this.height)
     this.ctx.drawImage(
       props.image,
-      props.x + this.width,
+      offsetX + this.width,
       0,
       this.width,
       this.height
     )
 
+    console.log(this.speed)
+
     if (props.x <= -this.width) {
       props.x = 0
     }
 
-    props.x -= Math.floor(this.speed * props.speedModifier)
+    props.x -= this.speed * props.speedModifier
   }
 
   animation = (speedGame: number) => {

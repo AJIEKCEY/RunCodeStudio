@@ -46,13 +46,15 @@ export const createThemeData = (themeName: string, countLayers: number) => {
 }
 
 //сюда добовляем нового персонажа если такой будет.
-const players: Record<string, PlayerSpriteData> = {
+export const players: Record<string, PlayerSpriteData> = {
   player_1: createPlayerSprite('player_1', 8, 10, 4, 3),
   player_2: createPlayerSprite('player_2', 8, 12, 4, 3),
+  player_3: createPlayerSprite('player_3', 8, 12, 4, 4),
 }
 
-const themes: Record<string, TypeDataTheme[]> = {
+export const themes: Record<string, TypeDataTheme[]> = {
   theme_1: createThemeData('theme_1', 5),
+  theme_2: createThemeData('theme_2', 5),
 }
 
 export const getPlayerSprite = (playerId: string): PlayerSpriteData => {

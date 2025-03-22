@@ -22,9 +22,12 @@ export class Player {
   private velocityY = 0
   private gravity = 0.3
   private isJumping = false
+  private isAtack = false
+  private isDead = false
   private defaultY: number
   private y: number
   private x: number
+  private lastFramX: number | null = null
 
   constructor(props: EntityProps) {
     const { ctx, settings } = props
@@ -34,7 +37,7 @@ export class Player {
 
     this.settings = settings
     this.speed = this.settings.speed
-    this.staggerFrame = 5 + (5 - this.speed)
+    this.staggerFrame = 8
     this.playerImage = this.sprite.image
     this.frameWidth = this.sprite.frameWidth
     this.frameHeight = this.sprite.frameHeight
@@ -51,13 +54,18 @@ export class Player {
 
   setAnimation(key: keyof PlayerAnimations) {
     const adnimation = this.sprite.animations[key]
+
     this.gameFrame = 0
     this.frameX = adnimation.frameX
     this.frameY = adnimation.frameY
     this.frames = adnimation.frames
+
+    if (key === 'dead') this.isDead = true
   }
 
   _events = (e: KeyboardEvent) => {
+    if (this.isDead) return false
+
     if (e.code === 'Space' && !this.isJumping) {
       this.velocityY = -10
       this.isJumping = true
@@ -67,6 +75,7 @@ export class Player {
     }
 
     if (e.code === 'KeyK') {
+      this.isAtack = true
       this.setAnimation('attack')
     }
   }
@@ -85,16 +94,27 @@ export class Player {
   }
 
   drawAttac() {
-    if (this.frameX === this.frames - 1) {
+    if (this.frameX === this.frames - 1 && this.isAtack) {
       this.setAnimation('run')
+      this.isAtack = false
     }
   }
 
+  drawDead() {
+    if (!this.isDead) return
+    if (this.frameX === this.frames - 1) {
+      this.lastFramX = this.frames - 1
+    }
+
+    if (this.lastFramX) this.frameX = this.lastFramX
+  }
+
   animation = (speedGame: number) => {
-    this.speed = speedGame | this.speed
-    this.frameX = Math.floor((this.gameFrame / this.staggerFrame) % this.frames)
-    // console.log(this.frames)
+    this.speed = speedGame || this.speed
+
     this.drawJump()
+    this.drawAttac()
+    this.drawDead()
 
     this.ctx.drawImage(
       this.playerImage,
@@ -108,6 +128,7 @@ export class Player {
       this.frameHeight
     )
 
+    this.frameX = Math.floor((this.gameFrame / this.staggerFrame) % this.frames)
     this.gameFrame++
   }
 
