@@ -23,7 +23,7 @@ const CreateThreadModal: React.FC<modalProps> = ({
 
   const onCreate = (values: Values) => {
     setFormValues(values)
-    console.log('Данные формы ', formValues)
+    console.info('Данные формы ', formValues)
     closeModal()
   }
 

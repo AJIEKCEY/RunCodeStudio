@@ -17,7 +17,7 @@ const Registration: React.FC = () => {
   const [form] = Form.useForm<RegistrationFormValues>()
 
   const onFinish = (values: RegistrationFormValues) => {
-    console.log('Форма отправлена:', values)
+    console.info('Форма отправлена:', values)
     // Здесь можно добавить логику отправки данных на сервер
   }
 

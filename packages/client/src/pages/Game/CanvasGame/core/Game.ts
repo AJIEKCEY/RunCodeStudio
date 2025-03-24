@@ -51,7 +51,7 @@ export class Game {
 
     this.intervalCoinsId = setInterval(() => {
       const newCoins = Coin.spawn(entityProps)
-      console.log(newCoins)
+      console.info(newCoins)
       this.coins.push(...newCoins)
     }, 5000)
 

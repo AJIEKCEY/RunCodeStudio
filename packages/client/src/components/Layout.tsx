@@ -1,11 +1,11 @@
 import { Layout, theme } from 'antd'
 import { Content } from 'antd/es/layout/layout'
-
 import LayoutHeader from './LayoutHeader/LayoutHeader'
 import LayoutFooter from './LayoutFooter'
 import { Outlet } from 'react-router-dom'
 import styles from './layout.module.css'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
+import useFullScreen from '../hooks/useFullScreen'
 
 function Container() {
   const {
@@ -13,23 +13,7 @@ function Container() {
   } = theme.useToken()
   const container = useRef<HTMLElement | null>(null)
 
-  useEffect(() => {
-    const onFullScreen = (e: KeyboardEvent) => {
-      if (e.code === 'KeyF') {
-        if (document.fullscreenElement) {
-          document.exitFullscreen()
-          return
-        }
-        container.current
-          ?.requestFullscreen()
-          .catch(err => console.log(`Ошибка ${err.message}`))
-      }
-    }
-
-    document.addEventListener('keydown', onFullScreen)
-    return () => document.removeEventListener('keydown', onFullScreen)
-  }, [])
-
+  const { onFullScreen, isFullScreen } = useFullScreen(container)
   return (
     <Layout
       style={{
@@ -56,7 +40,11 @@ function Container() {
           <Outlet />
         </div>
       </Content>
-      <LayoutFooter text="RunCode Studio" />
+      <LayoutFooter
+        text="RunCode Studio"
+        onFullScreen={onFullScreen}
+        isFullScreen={isFullScreen}
+      />
     </Layout>
   )
 }
