@@ -23,7 +23,7 @@ export class Obstacle {
   }
 
   animation(speedGame: number) {
-    this.speed = speedGame | this.speed
+    this.speed = speedGame || this.speed
     this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
     this.x -= this.speed
   }

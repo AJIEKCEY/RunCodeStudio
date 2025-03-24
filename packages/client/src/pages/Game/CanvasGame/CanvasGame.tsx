@@ -26,7 +26,7 @@ const CanvasGame = ({
 
     const game = new Game(canvas, {
       playerId: characterId,
-      themeId: 'theme_1',
+      themeId: 'theme_2',
       canvasWidth: window.innerWidth,
       canvasHeight: 720,
       speed: 4,

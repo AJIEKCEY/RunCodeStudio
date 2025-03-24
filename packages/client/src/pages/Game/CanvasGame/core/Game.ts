@@ -65,8 +65,8 @@ export class Game {
   }
 
   checkSpeedIncrease() {
-    if (this.timeElapsed % 5 === 0) {
-      this.speed += 0.5
+    if (this.timeElapsed % 10 === 0) {
+      this.speed += 1
     }
   }
 
@@ -105,7 +105,12 @@ export class Game {
   updateObstacleWithPlayer() {
     this.obstacles.forEach(obstacle => {
       if (this.checkCollision(this.player, obstacle)) {
-        this.endGame()
+        this.player.setAnimation('dead')
+        this.speed = 0
+        this.settings.speed = 0
+        setTimeout(() => {
+          this.triggerGameOverCallback()
+        }, 2000)
       }
 
       this.obstacles = this.obstacles.filter(
@@ -142,7 +147,6 @@ export class Game {
   triggerGameOverCallback() {
     this.gameOverCallback.forEach(el => el(true))
   }
-
   destroy() {
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId)
