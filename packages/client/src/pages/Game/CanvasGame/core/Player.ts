@@ -112,7 +112,6 @@ export class Player {
   animation = (speedGame: number) => {
     this.speed = speedGame || this.speed
     this.frameX = Math.floor((this.gameFrame / this.staggerFrame) % this.frames)
-    // console.log(this.frames)
     this.drawJump()
     this.drawAttac()
     this.drawDead()

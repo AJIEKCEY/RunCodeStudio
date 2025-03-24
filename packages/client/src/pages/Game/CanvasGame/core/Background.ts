@@ -30,7 +30,7 @@ export class Backgournd {
       this.height
     )
 
-    console.log(this.speed)
+    console.info(this.speed)
 
     if (props.x <= -this.width) {
       props.x = 0
