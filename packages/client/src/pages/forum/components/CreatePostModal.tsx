@@ -24,7 +24,7 @@ const CreatePostModal: React.FC<modalProps> = ({ isOpen, closeModal }) => {
     })
     formData.append('post', values.post)
     for (const pair of formData.entries()) {
-      console.log(pair[0], pair[1])
+      console.info(pair[0], pair[1])
     }
     setFileList([])
     closeModal()

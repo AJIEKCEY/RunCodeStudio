@@ -23,7 +23,7 @@ export const userApiSlice = createApi({
           accept: 'application/json',
         },
       }),
-      transformErrorResponse: response => console.log(response.status),
+      transformErrorResponse: response => console.info(response.status),
 
       providesTags: ['user'],
     }),

@@ -1,16 +1,19 @@
 import { Layout, theme } from 'antd'
 import { Content } from 'antd/es/layout/layout'
-
 import LayoutHeader from './LayoutHeader/LayoutHeader'
 import LayoutFooter from './LayoutFooter'
 import { Outlet } from 'react-router-dom'
 import styles from './layout.module.css'
+import { useRef } from 'react'
+import useFullScreen from '../hooks/useFullScreen'
 
 function Container() {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken()
+  const container = useRef<HTMLElement | null>(null)
 
+  const { onFullScreen, isFullScreen } = useFullScreen(container)
   return (
     <Layout
       style={{
@@ -21,7 +24,8 @@ function Container() {
         marginInline: 'auto',
         borderRadius: 0,
         overflow: 'hidden',
-      }}>
+      }}
+      ref={container}>
       <LayoutHeader />
       <Content
         className={styles['layout-container']}
@@ -36,7 +40,11 @@ function Container() {
           <Outlet />
         </div>
       </Content>
-      <LayoutFooter text="RunCode Studio" />
+      <LayoutFooter
+        text="RunCode Studio"
+        onFullScreen={onFullScreen}
+        isFullScreen={isFullScreen}
+      />
     </Layout>
   )
 }

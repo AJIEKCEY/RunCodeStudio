@@ -19,7 +19,7 @@ const Auth: React.FC = () => {
   }, [])
 
   const onFinish = (values: LoginFormValues) => {
-    console.log('Finish:', values)
+    console.info('Finish:', values)
   }
 
   return (

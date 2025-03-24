@@ -40,7 +40,7 @@ const LeaderBoard: React.FC = () => {
     sorter,
     extra
   ) => {
-    console.log('params', pagination, sorter, extra)
+    console.info('params', pagination, sorter, extra)
   }
   return (
     <Flex vertical justify="center" style={{ paddingTop: '3rem' }}>

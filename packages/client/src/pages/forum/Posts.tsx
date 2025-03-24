@@ -50,7 +50,7 @@ const Posts: React.FC = () => {
                 key="list-vertical-star-o"
               />,
               <Flex
-                onClick={() => console.log('like')}
+                onClick={() => console.info('like')}
                 style={{ cursor: 'pointer' }}>
                 <IconText
                   icon={LikeTwoTone}
@@ -59,7 +59,7 @@ const Posts: React.FC = () => {
                 />
               </Flex>,
               <Flex
-                onClick={() => console.log('dislike')}
+                onClick={() => console.info('dislike')}
                 style={{ cursor: 'pointer' }}>
                 <IconText
                   icon={DislikeTwoTone}
@@ -70,7 +70,7 @@ const Posts: React.FC = () => {
               <span>{String(item.likes)}</span>,
               item.authorId % 2 === 0 && (
                 <Flex
-                  onClick={() => console.log('enter edit mode')}
+                  onClick={() => console.info('enter edit mode')}
                   style={{ cursor: 'pointer' }}>
                   <IconText
                     icon={EditOutlined}
