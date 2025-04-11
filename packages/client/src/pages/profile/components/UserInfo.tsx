@@ -5,7 +5,7 @@ import InfoForm from './InfoForm'
 import PasswordForm from './PasswordForm'
 
 type UserInfoProps = Partial<UserProfile>
-const Userinfo = (props: UserInfoProps) => {
+const UserInfo = (props: UserInfoProps) => {
   const [selectedForm, setSelectedForm] = useState('password')
 
   return (
@@ -24,4 +24,4 @@ const Userinfo = (props: UserInfoProps) => {
   )
 }
 
-export default Userinfo
+export default UserInfo

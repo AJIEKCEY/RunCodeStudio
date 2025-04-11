@@ -4,7 +4,7 @@ import { Flex } from 'antd'
 
 import { useGetUserQuery } from '../../store/features/user/userApiSlice'
 import UserAvatar from './components/UserAvatar'
-import Userinfo from './components/UserInfo'
+import UserInfo from './components/UserInfo'
 
 const Profile = () => {
   const { isSuccess, data: user } = useGetUserQuery('')
@@ -24,7 +24,7 @@ const Profile = () => {
             : ''
         }
       />
-      <Userinfo {...user} email="test@ya.ru" />
+      <UserInfo {...user} email="test@ya.ru" />
     </Flex>
   )
 }

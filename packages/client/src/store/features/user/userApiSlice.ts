@@ -7,6 +7,7 @@ import {
   UserProfile,
 } from './types'
 import { isBadRequest } from '../../../utils/typeguard/isBadRequest'
+import { formDataToJson } from '../../../utils/formDatatoJson'
 
 export const userApiSlice = createApi({
   reducerPath: 'userApiSlice',
@@ -75,7 +76,7 @@ export const userApiSlice = createApi({
           accept: 'application/json',
         },
         method: 'PUT',
-        body: data,
+        body: formDataToJson(data),
       }),
       transformErrorResponse: (response): ErrorResponse => {
         if (isBadRequest(response)) {
