@@ -4,7 +4,7 @@ import style from './game.module.css'
 
 interface CanvasGameProps {
   characterId: string
-  onGameOver: VoidFunction
+  onGameOver: (score: number) => void
   onCoinsChange: (coins: number) => void
 }
 
@@ -37,7 +37,7 @@ const CanvasGame = ({
     refGame.current = game
 
     game.onGameOver(() => {
-      onGameOver()
+      onGameOver(game.getElapsedTime())
       onCoinsChange(game.getCoins())
     })
 
