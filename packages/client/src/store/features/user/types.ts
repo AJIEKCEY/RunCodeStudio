@@ -34,11 +34,12 @@ export type BadRequest = {
   data: { reason: string }
   status: number | string
 }
-export enum PractikumEndpoints {
-  BASE = 'https://ya-praktikum.tech/api/v2',
-  AUTH = `https://ya-praktikum.tech/api/v2/auth`,
-  USER = `https://ya-praktikum.tech/api/v2/user`,
-  PROFILE = `https://ya-praktikum.tech/api/v2/user/profile`,
+export const PractikumEndpoints = {
+  AUTH: `https://ya-praktikum.tech/api/v2/auth`,
+  BASE: 'https://ya-praktikum.tech/api/v2',
+  USER: `https://ya-praktikum.tech/api/v2/user`,
+  PROFILE: `https://ya-praktikum.tech/api/v2/user/profile`,
+  LEADERBOARD: `https://ya-praktikum.tech/api/v2/leaderboard`,
 }
 export type ErrorResponse = {
   status: number | string
