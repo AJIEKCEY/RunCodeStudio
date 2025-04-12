@@ -53,13 +53,6 @@ const LeaderBoard: React.FC = () => {
   const [getLeaderBoardData, { isLoading }] = useGetLeaderBoardMutation()
   const [leaderboard, setLeaderBoard] = useState<leaderBoardDataTableType[]>([])
 
-  const onChange: TableProps<leaderBoardDataTableType>['onChange'] = (
-    pagination,
-    sorter,
-    extra
-  ) => {
-    console.info('params', pagination, sorter, extra)
-  }
   useEffect(() => {
     getLeaderBoardData({ cursor: 0, limit: 100 }).then(response => {
       if (response.data) {
