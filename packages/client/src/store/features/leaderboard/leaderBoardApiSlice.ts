@@ -9,6 +9,10 @@ import {
   paginationOptions,
 } from './type'
 
+const jsonHeader = {
+  'Content-Type': 'application/json',
+  accept: 'application/json',
+}
 export const leaderBoardApiSlice = createApi({
   reducerPath: 'leaderBoardApiSlice',
   baseQuery: fetchBaseQuery({
@@ -27,8 +31,7 @@ export const leaderBoardApiSlice = createApi({
         return {
           url: `all`,
           headers: {
-            'Content-Type': 'application/json',
-            accept: 'application/json',
+            ...jsonHeader,
           },
           method: 'POST',
           body: hydratedData,
@@ -46,8 +49,7 @@ export const leaderBoardApiSlice = createApi({
         return {
           url: `${PractikumEndpoints.LEADERBOARD}`,
           headers: {
-            'Content-Type': 'application/json',
-            accept: 'application/json',
+            ...jsonHeader,
           },
           method: 'POST',
           body: hydratedData,
