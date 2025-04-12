@@ -84,7 +84,6 @@ const LeaderBoard: React.FC = () => {
         columns={columns}
         dataSource={leaderboard}
         rowKey="nickname"
-        onChange={onChange}
         showSorterTooltip={{ target: 'sorter-icon' }}
         pagination={{ pageSize: 25 }}
         locale={{ emptyText: 'Пока нет записей' }}
