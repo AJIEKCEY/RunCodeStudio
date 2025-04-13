@@ -42,6 +42,23 @@ export const userApiSlice = createApi({
       }),
       invalidatesTags: ['user'],
     }),
+    yandexAuth: builder.mutation<
+      UserProfile,
+      { code: string; redirect_uri: string }
+    >({
+      query: ({ code, redirect_uri }) => ({
+        url: `${PractikumEndpoints.BASE}/oauth/yandex`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: { code, redirect_uri },
+        responseHandler: response =>
+          response.status === 200 ? response.text() : response.json(),
+      }),
+      invalidatesTags: ['user'],
+    }),
     logoutUser: builder.mutation<UserProfile, unknown>({
       query: () => ({
         url: `${PractikumEndpoints.AUTH}/logout`,
@@ -109,6 +126,7 @@ export const userApiSlice = createApi({
 export const {
   useGetUserQuery,
   useSignInUserMutation,
+  useYandexAuthMutation,
   useLogoutUserMutation,
   useUpdateUserAvatarMutation,
   useUpdateUserInfoMutation,
