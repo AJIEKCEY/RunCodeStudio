@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
 import { VitePWA } from 'vite-plugin-pwa'
 dotenv.config()
+import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,6 +14,7 @@ export default defineConfig({
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   build: {
+    outDir: path.join(__dirname, 'dist/client'),
     rollupOptions: {
       output: {
         entryFileNames: 'assets/[name].js',
@@ -20,6 +22,9 @@ export default defineConfig({
         assetFileNames: 'assets/[name].[ext]',
       },
     },
+  },
+  ssr: {
+    format: 'cjs',
   },
   plugins: [
     react(),

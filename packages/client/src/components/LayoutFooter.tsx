@@ -1,4 +1,4 @@
-import { Footer } from 'antd/es/layout/layout'
+import { Layout } from 'antd'
 import React from 'react'
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons'
 import { Flex } from 'antd'
@@ -10,7 +10,7 @@ type footerProps = {
 }
 function LayoutFooter({ text, onFullScreen, isFullScreen }: footerProps) {
   return (
-    <Footer>
+    <Layout>
       <Flex justify="space-between">
         {text} ©{new Date().getFullYear()}
         {isFullScreen ? (
@@ -19,7 +19,7 @@ function LayoutFooter({ text, onFullScreen, isFullScreen }: footerProps) {
           <FullscreenOutlined onClick={onFullScreen} />
         )}
       </Flex>
-    </Footer>
+    </Layout>
   )
 }
 
