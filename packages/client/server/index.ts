@@ -76,8 +76,8 @@ async function createServer() {
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
-      // vite.ssrFixStacktrace(e as Error)
-      // next(e)
+      vite.ssrFixStacktrace(e as Error)
+      next(e)
     }
   })
 

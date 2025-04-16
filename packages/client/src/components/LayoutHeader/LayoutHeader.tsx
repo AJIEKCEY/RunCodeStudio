@@ -1,5 +1,5 @@
-import { Layout } from 'antd'
-import { Menu } from 'antd'
+import { Layout } from 'antd/lib'
+import { Menu } from 'antd/lib'
 import { Link } from 'react-router-dom'
 import styles from './LayoutHeader.module.css'
 import { useAuth } from '../../hooks/useAuth'

@@ -1,6 +1,5 @@
-import React from 'react'
 import Container from './components/Layout'
-import { Route, Routes } from 'react-router-dom'
+import { Route, type RouteObject, Routes } from 'react-router-dom'
 import Threads from './pages/forum/Threads'
 import Posts from './pages/forum/Posts'
 import Landing from './pages/Landing/Landing'
@@ -26,53 +25,51 @@ export const AppRoutes = {
   LEADER_BOARD: 'leader-board',
 }
 
-type Route = {
-  path: string
-  Component: React.JSX.Element
+type Route = RouteObject & {
   isProtected?: boolean
 }
 
 export const routConfig: Route[] = [
   {
     path: AppRoutes.LOGIN,
-    Component: <Auth />,
+    Component: Auth,
   },
   {
     path: AppRoutes.PROFILE,
-    Component: <Profile />,
+    Component: Profile,
     isProtected: true,
   },
   {
     path: AppRoutes.REGISTRATION,
-    Component: <Registration />,
+    Component: Registration,
   },
   {
     path: AppRoutes.PLAY,
-    Component: <GameMain />,
+    Component: GameMain,
     isProtected: true,
   },
   {
     path: AppRoutes.FORUM,
-    Component: <Threads />,
+    Component: Threads,
     isProtected: true,
   },
   {
     path: `${AppRoutes.FORUM}/:id`,
-    Component: <Posts />,
+    Component: Posts,
     isProtected: true,
   },
   {
     path: AppRoutes.LEADER_BOARD,
-    Component: <LeaderBoard />,
+    Component: LeaderBoard,
     isProtected: true,
   },
   {
     path: '*',
-    Component: <NotFound />,
+    Component: NotFound,
   },
   {
     path: 'server-error',
-    Component: <ServerError />,
+    Component: ServerError,
   },
 ]
 
@@ -90,9 +87,11 @@ const AppRouter = () => {
                   path={path}
                   element={
                     isProtected ? (
-                      <ProtectedRoute>{Component}</ProtectedRoute>
+                      <ProtectedRoute>
+                        <>{Component}</>
+                      </ProtectedRoute>
                     ) : (
-                      Component
+                      <>{Component}</>
                     )
                   }
                 />

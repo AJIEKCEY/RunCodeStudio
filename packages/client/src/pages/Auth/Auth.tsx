@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC } from 'react'
-import { Form, Input, Button, Typography, Flex, message } from 'antd'
+import { Form, Input, Button, Typography, Flex, message } from 'antd/lib'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useAuth } from '../../hooks/useAuth'
 import { useSignInUserMutation } from '../../store/features/user/userApiSlice'

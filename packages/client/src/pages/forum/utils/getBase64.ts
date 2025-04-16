@@ -1,4 +1,4 @@
-import { GetProp, UploadProps } from 'antd'
+import { GetProp, UploadProps } from 'antd/lib'
 
 export const getBase64 = (file: FileType): Promise<string> =>
   new Promise((resolve, reject) => {

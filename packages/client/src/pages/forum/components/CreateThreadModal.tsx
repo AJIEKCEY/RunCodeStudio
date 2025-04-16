@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Modal, Select } from 'antd'
+import { Form, Input, Modal, Select } from 'antd/lib'
 import { Category } from '../../../store/features/forum/types'
 
 const { TextArea } = Input

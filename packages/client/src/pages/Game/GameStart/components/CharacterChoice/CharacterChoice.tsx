@@ -1,5 +1,5 @@
 import React from 'react'
-import { Radio, Typography, type RadioChangeEvent } from 'antd'
+import { Radio, Typography, type RadioChangeEvent } from 'antd/lib'
 import styles from './CharacterChoice.module.css'
 import characters from './Characters'
 

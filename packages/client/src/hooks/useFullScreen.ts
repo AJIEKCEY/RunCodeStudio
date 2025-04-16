@@ -1,4 +1,4 @@
-import { message } from 'antd'
+import { message } from 'antd/lib'
 import React, { useEffect, useState } from 'react'
 
 function UseFullScreen(container: React.MutableRefObject<HTMLElement | null>) {

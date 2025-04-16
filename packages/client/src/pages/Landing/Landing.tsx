@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/Button/Button'
 import styles from './Landing.module.css'
 import { AppRoutes } from '../../AppRoutes'
-import { Flex } from 'antd'
+import { Flex } from 'antd/lib'
 
 const Landing: React.FC = () => {
   const navigate = useNavigate()

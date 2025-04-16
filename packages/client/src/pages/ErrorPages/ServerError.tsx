@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Typography } from 'antd'
+import { Flex, Typography } from 'antd/lib'
 
 const ServerError = () => {
   return (

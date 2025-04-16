@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from 'antd'
+import { Typography } from 'antd/lib'
 
 const rules = [
   'Нажмите на пробел, чтобы прыгнуть',

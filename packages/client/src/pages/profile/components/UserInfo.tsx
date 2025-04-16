@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Flex, Radio } from 'antd'
+import { Flex, Radio } from 'antd/lib'
 import { UserProfile } from '../../../store/features/user/types'
 import InfoForm from './InfoForm'
 import PasswordForm from './PasswordForm'

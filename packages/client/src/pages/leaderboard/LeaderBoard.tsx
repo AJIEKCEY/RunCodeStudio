@@ -1,4 +1,4 @@
-import { Flex, Table, TableColumnsType, TableProps, Typography } from 'antd'
+import { Flex, Table, TableColumnsType, TableProps, Typography } from 'antd/lib'
 const { Title, Text } = Typography
 import React from 'react'
 import { useAppSelector } from '../../store/hooks/deriveTypes'

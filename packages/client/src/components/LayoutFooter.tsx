@@ -1,7 +1,6 @@
-import { Layout } from 'antd'
+import { Layout, Flex } from 'antd/lib'
 import React from 'react'
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons'
-import { Flex } from 'antd'
 
 type footerProps = {
   text: string

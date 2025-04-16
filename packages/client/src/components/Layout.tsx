@@ -1,4 +1,4 @@
-import { Layout, theme } from 'antd'
+import { Layout, theme } from 'antd/lib'
 import LayoutHeader from './LayoutHeader/LayoutHeader'
 import LayoutFooter from './LayoutFooter'
 import { Outlet } from 'react-router-dom'

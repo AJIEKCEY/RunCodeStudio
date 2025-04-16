@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Flex, Typography } from 'antd'
+import { Flex, Typography } from 'antd/lib'
 import { Button } from '../../../components/Button/Button'
 import CharacterChoice from './components/CharacterChoice/CharacterChoice'
 import Rules from './components/Rules'

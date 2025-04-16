@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Flex, Image, Upload } from 'antd'
-import type { UploadFile, UploadProps } from 'antd'
+import { Flex, Image, Upload } from 'antd/lib'
+import type { UploadFile, UploadProps } from 'antd/lib'
 import { getBase64, FileType } from '../utils/getBase64'
 
 type imageUploadProps = {

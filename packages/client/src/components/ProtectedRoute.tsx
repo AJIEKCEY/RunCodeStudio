@@ -1,10 +1,12 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { AuthProviderProps } from '../types'
+import { ReactNode } from 'react'
 
-type ChildrenProps = AuthProviderProps
+type Props = {
+  children: ReactNode
+}
 
-export const ProtectedRoute = ({ children }: ChildrenProps) => {
+export const ProtectedRoute = ({ children }: Props) => {
   const { user } = useAuth()
   if (!user) {
     return <Navigate to="/login" />

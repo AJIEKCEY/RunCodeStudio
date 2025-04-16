@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Flex, Typography } from 'antd'
+import { Button, Flex, Typography } from 'antd/lib'
 import { useNavigate } from 'react-router-dom'
 
 const NotFound = () => {

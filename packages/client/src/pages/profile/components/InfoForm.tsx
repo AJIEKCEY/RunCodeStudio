@@ -1,4 +1,4 @@
-import { Input, Button, Form, message } from 'antd'
+import { Input, Button, Form, message } from 'antd/lib'
 import React, { useEffect } from 'react'
 
 import { UserProfile } from '../../../store/features/user/types'

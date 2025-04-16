@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react'
-import { Flex, Typography } from 'antd'
+import { Flex, Typography } from 'antd/lib'
 
 interface Props {
   children: ReactNode

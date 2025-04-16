@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Flex } from 'antd'
+import { Flex } from 'antd/lib'
 
 import { useGetUserQuery } from '../../store/features/user/userApiSlice'
 import UserAvatar from './components/UserAvatar'
