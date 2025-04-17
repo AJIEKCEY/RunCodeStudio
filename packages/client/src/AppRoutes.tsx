@@ -76,30 +76,28 @@ export const routConfig: Route[] = [
 const AppRouter = () => {
   return (
     <ErrorBoundary>
-      <div>
-        <AuthProvider>
-          <Routes>
-            <Route path="/" element={<Container />}>
-              <Route index element={<Landing />} />
-              {routConfig.map(({ path, Component, isProtected = false }) => (
-                <Route
-                  key={path}
-                  path={path}
-                  element={
-                    isProtected ? (
-                      <ProtectedRoute>
-                        <>{Component}</>
-                      </ProtectedRoute>
-                    ) : (
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Container />}>
+            <Route index element={<Landing />} />
+            {routConfig.map(({ path, Component, isProtected = false }) => (
+              <Route
+                key={path}
+                path={path}
+                element={
+                  isProtected ? (
+                    <ProtectedRoute>
                       <>{Component}</>
-                    )
-                  }
-                />
-              ))}
-            </Route>
-          </Routes>
-        </AuthProvider>
-      </div>
+                    </ProtectedRoute>
+                  ) : (
+                    <>{Component}</>
+                  )
+                }
+              />
+            ))}
+          </Route>
+        </Routes>
+      </AuthProvider>
     </ErrorBoundary>
   )
 }

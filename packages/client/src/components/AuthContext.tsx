@@ -1,28 +1,35 @@
-import React, { createContext, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { createContext, type ReactNode, useMemo } from 'react'
+// import { useNavigate } from 'react-router-dom'
 import { useLocalStorage } from '../hooks/useLocalStorage'
-import { User, AuthContextType, AuthProviderProps } from '../types'
+import { User, AuthContextType } from '../types'
 import { useLogoutUserMutation } from '../store/features/user/userApiSlice'
 
 type UserOrNull = User | null
+
+type Props = {
+  children: ReactNode
+}
 
 // Создаем контекст
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 // Создаем провайдер
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useLocalStorage<UserOrNull>('user', null)
-  const navigate = useNavigate()
+  // TODO: [Настроить Redux и Router в SSR] разобраться как сделать красиво
+  // const navigate = useNavigate()
   const [logoutUser] = useLogoutUserMutation()
 
   const login = async (data: User) => {
     setUser(data)
-    navigate('/play')
+    window.location.href = '/play'
+    // navigate('/play')
   }
 
   const logout = () => {
     setUser(null)
-    navigate('/', { replace: true })
+    window.location.href = '/'
+    // navigate('/', { replace: true })
     logoutUser({})
   }
 

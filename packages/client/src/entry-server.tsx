@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/server'
 import { Request as ExpressRequest } from 'express'
 import { Provider } from 'react-redux'
@@ -11,6 +10,8 @@ import {
 import { createFetchRequest } from './entry-server.utils'
 import { routConfig } from './AppRoutes'
 import './index.css'
+import { store } from './store/store'
+import { AuthProvider } from './components/AuthContext'
 
 export const render = async (req: ExpressRequest) => {
   const { query, dataRoutes } = createStaticHandler(routConfig)
@@ -27,9 +28,10 @@ export const render = async (req: ExpressRequest) => {
 
   return {
     html: ReactDOM.renderToString(
-      // @ts-ignore
-      <Provider store={}>
-        <StaticRouterProvider router={router} context={context} />
+      <Provider store={store}>
+        <AuthProvider>
+          <StaticRouterProvider router={router} context={context} />
+        </AuthProvider>
       </Provider>
     ),
   }
