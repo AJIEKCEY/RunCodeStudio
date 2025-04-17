@@ -13,7 +13,7 @@ dist-ssr
 *.local
 tsconfig.server.tsbuildinfo
 server/index.js
-server\index.d.ts
+server/index.d.ts
 
 # Editor directories and files
 .vscode/*

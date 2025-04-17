@@ -1,4 +1,4 @@
-import { Flex, Table, TableColumnsType, TableProps, Typography } from 'antd/lib'
+import { Flex, Table, TableColumnsType, Typography } from 'antd/lib'
 const { Title, Text } = Typography
 import React, { useEffect, useState } from 'react'
 import { useGetLeaderBoardMutation } from '../../store/features/leaderboard/leaderBoardApiSlice'

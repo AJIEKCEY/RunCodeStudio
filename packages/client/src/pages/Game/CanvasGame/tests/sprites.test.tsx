@@ -31,8 +31,8 @@ describe('Sprite Utilities', () => {
       },
     })
 
-    expect(player.image).toBeInstanceOf(Image)
-    expect(player.image.src).toContain('/sprite/players/test_player.png')
+    expect(player?.image).toBeInstanceOf(Image)
+    expect(player?.image.src).toContain('/sprite/players/test_player.png')
   })
 
   test('createThemeData создаёт массив слоев темы', () => {
@@ -40,7 +40,7 @@ describe('Sprite Utilities', () => {
 
     expect(themeData).toHaveLength(3)
 
-    themeData.forEach((layer, index) => {
+    themeData?.forEach((layer, index) => {
       expect(layer).toMatchObject({
         x: 0,
         speedModifier: (index + 1) * 0.2,
