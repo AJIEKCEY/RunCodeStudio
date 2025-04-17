@@ -9,7 +9,11 @@ import { store } from './store/store'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
+    try {
+      navigator.serviceWorker.register('/sw.js')
+    } catch (error) {
+      console.info(error)
+    }
   })
 }
 

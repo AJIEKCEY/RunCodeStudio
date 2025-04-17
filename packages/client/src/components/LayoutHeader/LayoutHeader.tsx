@@ -46,8 +46,12 @@ function LayoutHeader() {
         ))}
       </Menu>
       <div className={styles.header_auth}>
-        <Link to="login">Вход</Link>
-        <Link to="registration">Регистрация</Link>
+        {!user && (
+          <>
+            <Link to="login">Вход</Link>
+            <Link to="registration">Регистрация</Link>
+          </>
+        )}
         {user && (
           <Link to="/" onClick={logout}>
             Выход

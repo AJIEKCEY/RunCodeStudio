@@ -3,7 +3,6 @@ import { Form, Input, Button, Typography, Flex, message } from 'antd/lib'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useAuth } from '../../hooks/useAuth'
 import { useSignInUserMutation } from '../../store/features/user/userApiSlice'
-
 import styles from './Auth.module.css'
 
 const { Title } = Typography
@@ -20,12 +19,6 @@ const Auth = () => {
   const [userName, setUserName] = useState('')
   const { login } = useAuth()
 
-  const onFinish = async (values: LoginFormValues) => {
-    const { username, password } = values
-    setUserName(username)
-    signIn({ login: username, password })
-  }
-
   useEffect(() => {
     if (isError) {
       const errorData = (error as { data: { reason: string } })?.data
@@ -39,6 +32,31 @@ const Auth = () => {
       login({ name: userName, isAuthenticated: true })
     }
   }, [isError, error, isSuccess])
+
+  const onFinish = (values: { username: string; password: string }) => {
+    setUserName(values.username)
+    signIn({ login: values.username, password: values.password })
+  }
+
+  const REDIRECT_URI = 'http://localhost:3000'
+  const handleYandexLogin = async () => {
+    try {
+      const res = await fetch(
+        `https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=${encodeURIComponent(
+          REDIRECT_URI
+        )}`
+      )
+      if (!res.ok) throw new Error('Не удалось получить CLIENT_ID')
+      const data = await res.json()
+      const clientId = data.service_id
+      window.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+        REDIRECT_URI
+      )}`
+    } catch (err) {
+      console.error(err)
+      messageApi.error('Ошибка при получении CLIENT_ID')
+    }
+  }
 
   return (
     <Flex
@@ -69,7 +87,6 @@ const Auth = () => {
             className={styles.input}
           />
         </Form.Item>
-
         <Form.Item
           name="password"
           rules={[
@@ -94,6 +111,13 @@ const Auth = () => {
               htmlType="submit"
               className={styles.button}>
               Авторизоваться
+            </Button>
+          )}
+        </Form.Item>
+        <Form.Item shouldUpdate className={styles.formItem}>
+          {() => (
+            <Button onClick={handleYandexLogin} block>
+              Войти через Яндекс
             </Button>
           )}
         </Form.Item>

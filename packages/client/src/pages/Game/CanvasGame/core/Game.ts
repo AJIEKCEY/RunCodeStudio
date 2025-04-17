@@ -63,7 +63,9 @@ export class Game {
     this.startGame = true
     this.animation()
   }
-
+  getElapsedTime(): number {
+    return this.timeElapsed
+  }
   checkSpeedIncrease() {
     if (this.timeElapsed % 10 === 0) {
       this.speed += 1

@@ -7,6 +7,7 @@ import {
   UserProfile,
 } from './types'
 import { isBadRequest } from '../../../utils/typeguard/isBadRequest'
+import { formDataToJson } from '../../../utils/formDatatoJson'
 
 export const userApiSlice = createApi({
   reducerPath: 'userApiSlice',
@@ -37,6 +38,23 @@ export const userApiSlice = createApi({
           accept: 'application/json',
         },
         body: data,
+        responseHandler: response =>
+          response.status === 200 ? response.text() : response.json(),
+      }),
+      invalidatesTags: ['user'],
+    }),
+    yandexAuth: builder.mutation<
+      UserProfile,
+      { code: string; redirect_uri: string }
+    >({
+      query: ({ code, redirect_uri }) => ({
+        url: `${PractikumEndpoints.BASE}/oauth/yandex`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: { code, redirect_uri },
         responseHandler: response =>
           response.status === 200 ? response.text() : response.json(),
       }),
@@ -75,7 +93,7 @@ export const userApiSlice = createApi({
           accept: 'application/json',
         },
         method: 'PUT',
-        body: data,
+        body: formDataToJson(data),
       }),
       transformErrorResponse: (response): ErrorResponse => {
         if (isBadRequest(response)) {
@@ -109,6 +127,7 @@ export const userApiSlice = createApi({
 export const {
   useGetUserQuery,
   useSignInUserMutation,
+  useYandexAuthMutation,
   useLogoutUserMutation,
   useUpdateUserAvatarMutation,
   useUpdateUserInfoMutation,
