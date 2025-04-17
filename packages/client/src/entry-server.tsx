@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/server'
 import { Request as ExpressRequest } from 'express'
+import { Provider } from 'react-redux'
 import {
   createStaticHandler,
   createStaticRouter,
@@ -12,7 +13,6 @@ import { routConfig } from './AppRoutes'
 import './index.css'
 
 export const render = async (req: ExpressRequest) => {
-  // @ts-ignore
   const { query, dataRoutes } = createStaticHandler(routConfig)
 
   const fetchRequest = createFetchRequest(req)
@@ -27,7 +27,10 @@ export const render = async (req: ExpressRequest) => {
 
   return {
     html: ReactDOM.renderToString(
-      <StaticRouterProvider router={router} context={context} />
+      // @ts-ignore
+      <Provider store={}>
+        <StaticRouterProvider router={router} context={context} />
+      </Provider>
     ),
   }
 }
