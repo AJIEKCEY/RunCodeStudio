@@ -45,7 +45,7 @@ describe('Backgournd class', () => {
   })
 
   it('Корректное обновление this.speed', () => {
-    background.animation(10)
-    expect(background.speed).toBe(10)
+    background.animation(5)
+    expect(background.speed).toBe(5)
   })
 })

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Category } from '../../../store/features/forum/types'
-import { Flex, Select, Input } from 'antd'
-import { DefaultOptionType } from 'antd/es/select'
+import { Flex, Select, Input } from 'antd/lib'
+import { DefaultOptionType } from 'antd/lib//select'
 
 const { Search } = Input
 type navigationProps = {

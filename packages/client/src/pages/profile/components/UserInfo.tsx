@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Flex, Radio } from 'antd'
+import { Flex, Radio } from 'antd/lib'
 import { UserProfile } from '../../../store/features/user/types'
 import InfoForm from './InfoForm'
 import PasswordForm from './PasswordForm'
 
 type UserInfoProps = Partial<UserProfile>
-const Userinfo = (props: UserInfoProps) => {
+const UserInfo = (props: UserInfoProps) => {
   const [selectedForm, setSelectedForm] = useState('password')
 
   return (
@@ -24,4 +24,4 @@ const Userinfo = (props: UserInfoProps) => {
   )
 }
 
-export default Userinfo
+export default UserInfo

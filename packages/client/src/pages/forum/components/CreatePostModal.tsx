@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Modal, UploadFile } from 'antd'
+import { Form, Input, Modal, UploadFile } from 'antd/lib'
 import ImageUpload from './ImageUpload'
 import { FileType } from '../utils/getBase64'
 

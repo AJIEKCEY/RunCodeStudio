@@ -1,4 +1,4 @@
-import { Space } from 'antd'
+import { Space } from 'antd/lib'
 import React from 'react'
 
 export const IconText = ({ icon, text }: { icon: React.FC; text: string }) => {

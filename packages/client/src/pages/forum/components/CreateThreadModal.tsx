@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Modal, Select } from 'antd'
+import { Form, Input, Modal, Select } from 'antd/lib'
 import { Category } from '../../../store/features/forum/types'
 
 const { TextArea } = Input
@@ -39,12 +39,13 @@ const CreateThreadModal: React.FC<modalProps> = ({
         destroyOnClose
         modalRender={dom => (
           <Form
-            data-testid="create-thread-form"
-            layout="vertical"
             form={form}
             name="form_in_modal"
-            clearOnDestroy
-            onFinish={values => onCreate(values)}>
+            layout="vertical"
+            initialValues={{ title: '', description: '' }}
+            onFinish={values => onCreate(values)}
+            data-testid="create-thread-form"
+            clearOnDestroy>
             {dom}
           </Form>
         )}>

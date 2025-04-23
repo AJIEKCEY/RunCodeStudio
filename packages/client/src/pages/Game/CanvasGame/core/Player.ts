@@ -23,7 +23,7 @@ export class Player {
   private gravity = 0.3
   private isJumping = false
   private isAtack = false
-  private isDead = false
+  private _isDead = false
   private defaultY: number
   private y: number
   private x: number
@@ -60,11 +60,11 @@ export class Player {
     this.frameY = adnimation.frameY
     this.frames = adnimation.frames
 
-    if (key === 'dead') this.isDead = true
+    if (key === 'dead') this._isDead = true
   }
 
   _events = (e: KeyboardEvent) => {
-    if (this.isDead) return false
+    if (this._isDead) return false
 
     if (e.code === 'Space' && !this.isJumping) {
       this.velocityY = -10
@@ -85,6 +85,14 @@ export class Player {
     this.y += this.velocityY
     this.velocityY += this.gravity
 
+    if (this.isDead()) {
+      this.setAnimation('dead')
+      this.y = this.defaultY
+      this.velocityY = 0
+      this.isJumping = false
+      return
+    }
+
     if (this.y >= this.defaultY) {
       this.y = this.defaultY
       this.velocityY = 0
@@ -101,7 +109,7 @@ export class Player {
   }
 
   drawDead() {
-    if (!this.isDead) return
+    if (!this._isDead) return
     if (this.frameX === this.frames - 1) {
       this.lastFramX = this.frames - 1
     }
@@ -111,7 +119,7 @@ export class Player {
 
   animation = (speedGame: number) => {
     this.speed = speedGame || this.speed
-    this.frameX = Math.floor((this.gameFrame / this.staggerFrame) % this.frames)
+
     this.drawJump()
     this.drawAttac()
     this.drawDead()
@@ -127,7 +135,6 @@ export class Player {
       this.frameWidth,
       this.frameHeight
     )
-
     this.frameX = Math.floor((this.gameFrame / this.staggerFrame) % this.frames)
     this.gameFrame++
   }
@@ -139,6 +146,10 @@ export class Player {
       width: this.frameWidth,
       height: this.frameHeight,
     }
+  }
+
+  isDead() {
+    return this._isDead
   }
 
   getOffset() {

@@ -1,15 +1,9 @@
-import { message } from 'antd'
+import { message } from 'antd/lib'
 import React, { useEffect, useState } from 'react'
 
 function UseFullScreen(container: React.MutableRefObject<HTMLElement | null>) {
   const [isFullScreen, setFullScreen] = useState(false)
-  const onEscape = (e: KeyboardEvent) => {
-    if (e.code === 'esc' && document.fullscreenElement) {
-      document.exitFullscreen()
-      setFullScreen(false)
-      return
-    }
-  }
+
   const onFullScreen = () => {
     if (document.fullscreenElement) {
       document.exitFullscreen()
@@ -22,9 +16,15 @@ function UseFullScreen(container: React.MutableRefObject<HTMLElement | null>) {
       .catch(err => message.error(`Ошибка ${err.message}`))
   }
 
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.code === 'KeyF' && e.shiftKey) {
+      onFullScreen()
+    }
+  }
+
   useEffect(() => {
-    document.addEventListener('keydown', onFullScreen)
-    return () => document.removeEventListener('keydown', onEscape)
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
   }, [])
 
   return { onFullScreen, isFullScreen }

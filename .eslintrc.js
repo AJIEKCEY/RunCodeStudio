@@ -16,6 +16,13 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
-    'no-console': ['error', { allow: ['info', 'error', 'warn']}],
+    'no-console': ['error', { allow: ['info', 'error', 'warn'] }],
+    "no-restricted-imports": ["error", {
+      "paths": [{
+        "name": "antd",
+        "message": "Please use only antd/lib"
+      }]
+    }]
   },
+  ignorePatterns: "packages/client/server/**/*.js"
 }

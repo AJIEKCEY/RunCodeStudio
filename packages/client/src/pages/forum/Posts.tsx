@@ -1,6 +1,6 @@
 import styles from './styles/thread.module.css'
 import React, { useMemo, useState } from 'react'
-import { Avatar, Button, Flex, Image, List, Typography } from 'antd'
+import { Avatar, Button, Flex, Image, List, Typography } from 'antd/lib'
 import { useAppSelector } from '../../store/hooks/deriveTypes'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Post } from '../../store/features/forum/types'

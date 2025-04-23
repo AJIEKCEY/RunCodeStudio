@@ -1,5 +1,4 @@
-import { Layout, theme } from 'antd'
-import { Content } from 'antd/es/layout/layout'
+import { Layout, theme } from 'antd/lib'
 import LayoutHeader from './LayoutHeader/LayoutHeader'
 import LayoutFooter from './LayoutFooter'
 import { Outlet } from 'react-router-dom'
@@ -27,7 +26,7 @@ function Container() {
       }}
       ref={container}>
       <LayoutHeader />
-      <Content
+      <Layout.Content
         className={styles['layout-container']}
         style={{ overflowY: 'auto' }}>
         <div
@@ -39,7 +38,7 @@ function Container() {
           }}>
           <Outlet />
         </div>
-      </Content>
+      </Layout.Content>
       <LayoutFooter
         text="RunCode Studio"
         onFullScreen={onFullScreen}

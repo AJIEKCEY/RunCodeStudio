@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '../../../components/Button/Button'
-import { Flex, Typography } from 'antd'
+import { Flex, Typography } from 'antd/lib'
 import { coinsWords } from '../../../utils/singlePluralWords'
 
 interface GameOverProps {

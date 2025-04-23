@@ -1,18 +1,19 @@
-import React from 'react'
 import Container from './components/Layout'
-
-import { Route, Routes } from 'react-router-dom'
+import { Route, type RouteObject, Routes } from 'react-router-dom'
 import Threads from './pages/forum/Threads'
 import Posts from './pages/forum/Posts'
-import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Landing from './pages/Landing/Landing'
 import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
-import Profile from './pages/profile/Profile'
 import GameMain from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
+
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { AuthProvider } from './components/AuthContext'
+import Profile from './pages/profile/Profile'
+import LeaderBoard from './pages/leaderboard/LeaderBoard'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -24,92 +25,80 @@ export const AppRoutes = {
   LEADER_BOARD: 'leader-board',
 }
 
-export const routConfig: Record<
-  string,
-  { path: string; element: React.JSX.Element }
-> = {
-  [AppRoutes.LOGIN]: {
-    path: AppRoutes.LOGIN,
-    element: (
-      <ErrorBoundary>
-        <Auth />
-      </ErrorBoundary>
-    ),
-  },
-  [AppRoutes.PROFILE]: {
-    path: AppRoutes.PROFILE,
-    element: <Profile />,
-  },
-  [AppRoutes.REGISTRATION]: {
-    path: AppRoutes.REGISTRATION,
-    element: (
-      <ErrorBoundary>
-        <Registration />
-      </ErrorBoundary>
-    ),
-  },
-  [AppRoutes.PLAY]: {
-    path: AppRoutes.PLAY,
-    element: (
-      <ErrorBoundary>
-        <GameMain />
-      </ErrorBoundary>
-    ),
-  },
-  [AppRoutes.FORUM]: {
-    path: AppRoutes.FORUM,
-    element: (
-      <ErrorBoundary>
-        <Threads />
-      </ErrorBoundary>
-    ),
-  },
-  [AppRoutes.FORUM_TOPIC]: {
-    path: `${AppRoutes.FORUM}/:id`,
-    element: (
-      <ErrorBoundary>
-        <Posts />
-      </ErrorBoundary>
-    ),
-  },
-  [AppRoutes.LEADER_BOARD]: {
-    path: AppRoutes.LEADER_BOARD,
-    element: (
-      <ErrorBoundary>
-        <LeaderBoard />
-      </ErrorBoundary>
-    ),
-  },
-  NOT_FOUND: {
-    path: '*',
-    element: (
-      <ErrorBoundary>
-        <NotFound />
-      </ErrorBoundary>
-    ),
-  },
-  SERVER_ERROR: {
-    path: 'server-error',
-    element: (
-      <ErrorBoundary>
-        <ServerError />
-      </ErrorBoundary>
-    ),
-  },
+type Route = RouteObject & {
+  isProtected?: boolean
 }
+
+export const routConfig: Route[] = [
+  {
+    path: AppRoutes.LOGIN,
+    Component: Auth,
+  },
+  {
+    path: AppRoutes.PROFILE,
+    Component: Profile,
+    isProtected: true,
+  },
+  {
+    path: AppRoutes.REGISTRATION,
+    Component: Registration,
+  },
+  {
+    path: AppRoutes.PLAY,
+    Component: GameMain,
+    isProtected: true,
+  },
+  {
+    path: AppRoutes.FORUM,
+    Component: Threads,
+    isProtected: true,
+  },
+  {
+    path: `${AppRoutes.FORUM}/:id`,
+    Component: Posts,
+    isProtected: true,
+  },
+  {
+    path: AppRoutes.LEADER_BOARD,
+    Component: LeaderBoard,
+    isProtected: true,
+  },
+  {
+    path: '*',
+    Component: NotFound,
+  },
+  {
+    path: 'server-error',
+    Component: ServerError,
+  },
+]
 
 const AppRouter = () => {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Container />}>
-          <Route index element={<Landing />} />
-          {Object.values(routConfig).map(({ path, element }) => (
-            <Route key={path} path={path} element={element} />
-          ))}
-        </Route>
-      </Routes>
-    </div>
+    <ErrorBoundary>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Container />}>
+            <Route index element={<Landing />} />
+            {routConfig.map(({ path, Component, isProtected = false }) => (
+              <Route
+                key={path}
+                path={path}
+                element={
+                  isProtected ? (
+                    <ProtectedRoute>
+                      <>{Component}</>
+                    </ProtectedRoute>
+                  ) : (
+                    <>{Component}</>
+                  )
+                }
+              />
+            ))}
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </ErrorBoundary>
   )
 }
 export default AppRouter

@@ -16,7 +16,11 @@ export const createPlayerSprite = (
   jumpFrames: number,
   attackFrames: number,
   deadFrames: number
-): PlayerSpriteData => {
+): PlayerSpriteData | null => {
+  if (typeof document === 'undefined') {
+    return null
+  }
+
   const image = new Image()
   image.src = `/sprite/players/${playerName}.png`
 
@@ -34,6 +38,10 @@ export const createPlayerSprite = (
 }
 
 export const createThemeData = (themeName: string, countLayers: number) => {
+  if (typeof document === 'undefined') {
+    return null
+  }
+
   return Array.from({ length: countLayers }).map((_, index) => {
     const image = new Image()
     image.src = `/sprite/themes/${themeName}/layer-${index + 1}.png`
@@ -46,13 +54,13 @@ export const createThemeData = (themeName: string, countLayers: number) => {
 }
 
 //сюда добовляем нового персонажа если такой будет.
-export const players: Record<string, PlayerSpriteData> = {
+export const players: Record<string, PlayerSpriteData | null> = {
   player_1: createPlayerSprite('player_1', 8, 10, 4, 3),
   player_2: createPlayerSprite('player_2', 8, 12, 4, 3),
   player_3: createPlayerSprite('player_3', 8, 12, 4, 4),
 }
 
-export const themes: Record<string, TypeDataTheme[]> = {
+export const themes: Record<string, TypeDataTheme[] | null> = {
   theme_1: createThemeData('theme_1', 5),
   theme_2: createThemeData('theme_2', 5),
 }

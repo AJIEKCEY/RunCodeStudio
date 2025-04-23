@@ -7,7 +7,7 @@ import {
   GetProp,
   UploadProps,
   message,
-} from 'antd'
+} from 'antd/lib'
 import React, { useEffect, useState } from 'react'
 import { useUpdateUserAvatarMutation } from '../../../store/features/user/userApiSlice'
 import { isErrorResponse } from '../../../utils/typeguard/isErrorResponse'

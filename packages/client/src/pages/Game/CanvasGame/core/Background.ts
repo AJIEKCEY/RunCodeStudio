@@ -40,7 +40,8 @@ export class Backgournd {
   }
 
   animation = (speedGame: number) => {
-    this.speed = speedGame || this.speed
+    this.speed = speedGame === 0 ? 0 : this.speed
+
     this.themesImages.forEach(layer => {
       this.draw(layer)
     })

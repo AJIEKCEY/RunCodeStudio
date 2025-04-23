@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import { Game } from './core/Game'
 import style from './game.module.css'
+import { useNotificationContext } from '../../../components/Notification/NotificationContext'
 
 interface CanvasGameProps {
   characterId: string
-  onGameOver: VoidFunction
+  onGameOver: (score: number) => void
   onCoinsChange: (coins: number) => void
 }
 
@@ -15,6 +16,7 @@ const CanvasGame = ({
 }: CanvasGameProps) => {
   const ref = useRef<HTMLCanvasElement | null>(null)
   const refGame = useRef<Game | null>(null)
+  const { sendNotification } = useNotificationContext()
 
   useEffect(() => {
     const canvas = ref.current
@@ -37,8 +39,13 @@ const CanvasGame = ({
     refGame.current = game
 
     game.onGameOver(() => {
-      onGameOver()
+      onGameOver(game.getElapsedTime())
       onCoinsChange(game.getCoins())
+
+      sendNotification({
+        title: 'Игра завершена',
+        options: { body: 'В следующий раз обязательно получится' },
+      })
     })
 
     return () => {

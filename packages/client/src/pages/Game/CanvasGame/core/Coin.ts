@@ -33,7 +33,7 @@ export class Coin {
   }
 
   animation(gameSpeed: number) {
-    this.speed = gameSpeed || this.speed
+    this.speed = gameSpeed === 0 ? 0 : this.speed
     this.frameX = Math.floor((this.gameFrame / 10) % this.frames)
 
     this.ctx.drawImage(

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Button, Typography, Flex } from 'antd'
+import { Form, Input, Button, Typography, Flex, message } from 'antd/lib'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { useAuth } from '../../hooks/useAuth'
+import { useSignInUserMutation } from '../../store/features/user/userApiSlice'
 import styles from './Auth.module.css'
 
 const { Title } = Typography
@@ -10,16 +12,50 @@ interface LoginFormValues {
   password: string
 }
 
-const Auth: React.FC = () => {
+const Auth = () => {
+  const [messageApi, contextHolder] = message.useMessage()
   const [form] = Form.useForm<LoginFormValues>()
-  const [clientReady, setClientReady] = useState<boolean>(false)
+  const [signIn, { isError, isSuccess, error }] = useSignInUserMutation()
+  const [userName, setUserName] = useState('')
+  const { login } = useAuth()
 
   useEffect(() => {
-    setClientReady(true)
-  }, [])
+    if (isError) {
+      const errorData = (error as { data: { reason: string } })?.data
+      if (errorData && errorData.reason === 'User already in system') {
+        login({ name: 'serghey', isAuthenticated: true })
+      }
+      messageApi.error(errorData?.reason || 'Ошибка, попробуйте еще раз')
+    }
+    if (isSuccess) {
+      messageApi.success('Данные сохранены')
+      login({ name: userName, isAuthenticated: true })
+    }
+  }, [isError, error, isSuccess])
 
-  const onFinish = (values: LoginFormValues) => {
-    console.info('Finish:', values)
+  const onFinish = (values: { username: string; password: string }) => {
+    setUserName(values.username)
+    signIn({ login: values.username, password: values.password })
+  }
+
+  const REDIRECT_URI = 'http://localhost:3000'
+  const handleYandexLogin = async () => {
+    try {
+      const res = await fetch(
+        `https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=${encodeURIComponent(
+          REDIRECT_URI
+        )}`
+      )
+      if (!res.ok) throw new Error('Не удалось получить CLIENT_ID')
+      const data = await res.json()
+      const clientId = data.service_id
+      window.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+        REDIRECT_URI
+      )}`
+    } catch (err) {
+      console.error(err)
+      messageApi.error('Ошибка при получении CLIENT_ID')
+    }
   }
 
   return (
@@ -29,6 +65,7 @@ const Auth: React.FC = () => {
       align={'center'}
       className={styles.container}>
       <Title level={2}>Авторизация</Title>
+      {contextHolder}
       <Form
         form={form}
         name="horizontal_login"
@@ -50,7 +87,6 @@ const Auth: React.FC = () => {
             className={styles.input}
           />
         </Form.Item>
-
         <Form.Item
           name="password"
           rules={[
@@ -75,6 +111,13 @@ const Auth: React.FC = () => {
               htmlType="submit"
               className={styles.button}>
               Авторизоваться
+            </Button>
+          )}
+        </Form.Item>
+        <Form.Item shouldUpdate className={styles.formItem}>
+          {() => (
+            <Button onClick={handleYandexLogin} block>
+              Войти через Яндекс
             </Button>
           )}
         </Form.Item>

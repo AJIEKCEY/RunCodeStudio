@@ -1,5 +1,5 @@
 import { MessageOutlined } from '@ant-design/icons'
-import { List, Avatar, Typography, Flex, Button, Tag } from 'antd'
+import { List, Avatar, Typography, Flex, Button, Tag } from 'antd/lib'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ForumNavigation from './components/ForumNavigation'

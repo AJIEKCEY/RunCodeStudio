@@ -63,7 +63,9 @@ export class Game {
     this.startGame = true
     this.animation()
   }
-
+  getElapsedTime(): number {
+    return this.timeElapsed
+  }
   checkSpeedIncrease() {
     if (this.timeElapsed % 10 === 0) {
       this.speed += 1
@@ -107,7 +109,7 @@ export class Game {
       if (this.checkCollision(this.player, obstacle)) {
         this.player.setAnimation('dead')
         this.speed = 0
-        this.settings.speed = 0
+
         setTimeout(() => {
           this.triggerGameOverCallback()
         }, 2000)
@@ -130,6 +132,18 @@ export class Game {
 
   animation = () => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+    if (this.player.isDead()) {
+      this.theme.animation(0)
+      this.obstacles.forEach(obstacle => obstacle.animation(0))
+      this.coins.forEach(coin => coin.animation(0))
+
+      this.player.animation(1)
+
+      this.drawUI()
+      this.animationFrameId = requestAnimationFrame(this.animation)
+      return
+    }
 
     this.theme.animation(this.speed)
     this.player.animation(this.speed)

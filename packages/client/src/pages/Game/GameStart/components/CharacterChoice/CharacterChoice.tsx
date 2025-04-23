@@ -1,5 +1,5 @@
 import React from 'react'
-import { Radio, Typography, type RadioChangeEvent } from 'antd'
+import { Radio, Typography, type RadioChangeEvent } from 'antd/lib'
 import styles from './CharacterChoice.module.css'
 import characters from './Characters'
 
@@ -28,18 +28,6 @@ const CharacterChoice = ({ selected, onSelect }: CharacterChoiceProps) => {
           </Radio>
         ))}
       </Radio.Group>
-      <div>
-        <Typography.Text
-          style={{
-            color: '#fff',
-            fontStyle: 'italic',
-            fontSize: '14px',
-            marginTop: '1rem',
-            display: 'block',
-          }}>
-          {characters.find(character => character.id === selected)?.description}
-        </Typography.Text>
-      </div>
     </div>
   )
 }

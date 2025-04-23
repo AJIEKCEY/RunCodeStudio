@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Input, Button, Typography, Flex } from 'antd'
+import { Form, Input, Button, Typography, Flex } from 'antd/lib'
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
 import styles from './Registration.module.css'
 import { VALIDATION_RULES, VALIDATION_MESSAGES } from '../../utils/validation'
@@ -13,7 +13,7 @@ interface RegistrationFormValues {
   confirmPassword: string
 }
 
-const Registration: React.FC = () => {
+const Registration = () => {
   const [form] = Form.useForm<RegistrationFormValues>()
 
   const onFinish = (values: RegistrationFormValues) => {
