@@ -12,7 +12,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AuthProvider } from './components/AuthContext'
-import LeaderBoard from './pages/leaderboard/LeaderBoard'
+import LeaderBoard from './pages/Leaderboard/LeaderBoard'
 import Profile from './pages/Profile/Profile'
 
 export const AppRoutes = {

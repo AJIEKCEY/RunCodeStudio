@@ -1,6 +1,8 @@
-import { Client } from 'pg'
+import { Sequelize } from 'sequelize-typescript'
 import dotenv from 'dotenv'
+
 dotenv.config()
+
 const {
   POSTGRES_USER,
   POSTGRES_PASSWORD,
@@ -9,27 +11,24 @@ const {
   POSTGRES_HOST,
 } = process.env
 
-export const createClientAndConnect = async (): Promise<Client | null> => {
+export const sequelize = new Sequelize({
+  dialect: 'postgres',
+  host: POSTGRES_HOST,
+  port: Number(POSTGRES_PORT),
+  username: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
+  database: POSTGRES_DB,
+  models: [
+    /* Здесь можно указать модели, если используете `sequelize-typescript` */
+  ],
+})
+
+// Проверка подключения
+export const checkDatabaseConnection = async (): Promise<boolean> => {
   try {
-    const client = new Client({
-      user: POSTGRES_USER,
-      host: POSTGRES_HOST,
-      database: POSTGRES_DB,
-      password: POSTGRES_PASSWORD,
-      port: Number(POSTGRES_PORT),
-    })
-
-    await client.connect()
-
-    const res = await client.query('SELECT NOW()')
-    console.info('  ➜ 🎸 Connected to the database at:', res?.rows?.[0].now)
-
-    client.end()
-
-    return client
-  } catch (e) {
-    console.error(e)
+    await sequelize.authenticate()
+    return true
+  } catch (error) {
+    return false
   }
-
-  return null
 }
