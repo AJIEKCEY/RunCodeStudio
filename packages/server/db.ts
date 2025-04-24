@@ -1,34 +1,18 @@
 import { Sequelize } from 'sequelize-typescript'
+import path from 'path'
 import dotenv from 'dotenv'
 
-dotenv.config()
+dotenv.config({ path: path.join(__dirname, '../../.env') })
 
-const {
-  POSTGRES_USER,
-  POSTGRES_PASSWORD,
-  POSTGRES_DB,
-  POSTGRES_PORT,
-  POSTGRES_HOST,
-} = process.env
+const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
+  process.env
 
 export const sequelize = new Sequelize({
   dialect: 'postgres',
-  host: POSTGRES_HOST,
+  host: 'localhost',
   port: Number(POSTGRES_PORT),
   username: POSTGRES_USER,
-  password: POSTGRES_PASSWORD,
+  password: String(POSTGRES_PASSWORD),
   database: POSTGRES_DB,
-  models: [
-    /* Здесь можно указать модели, если используете `sequelize-typescript` */
-  ],
+  models: ['models/User.ts'],
 })
-
-// Проверка подключения
-export const checkDatabaseConnection = async (): Promise<boolean> => {
-  try {
-    await sequelize.authenticate()
-    return true
-  } catch (error) {
-    return false
-  }
-}
