@@ -5,13 +5,15 @@ import {
   PrimaryKey,
   AutoIncrement,
   Model,
+  HasMany,
 } from 'sequelize-typescript'
+import { Post } from './Post'
 
 @Table({
   tableName: 'users',
   timestamps: true,
 })
-export class User extends Model {
+export class User extends Model<User> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -46,4 +48,10 @@ export class User extends Model {
     allowNull: false,
   })
   declare password: string
+
+  @HasMany(() => Post, {
+    foreignKey: 'post_id',
+    onDelete: 'CASCADE',
+  })
+  declare posts: Post[]
 }

@@ -2,6 +2,8 @@ import { Sequelize } from 'sequelize-typescript'
 import path from 'path'
 import dotenv from 'dotenv'
 import { User } from './models/User'
+import { Post } from './models/Post'
+import { Category } from './models/Categories'
 
 dotenv.config({ path: path.join(__dirname, '../../.env') })
 
@@ -15,5 +17,14 @@ export const sequelize = new Sequelize({
   username: POSTGRES_USER,
   password: String(POSTGRES_PASSWORD),
   database: POSTGRES_DB,
-  models: [User],
+  models: [User, Post, Category],
 })
+
+export const checkDatabaseConnection = async () => {
+  try {
+    await sequelize.authenticate()
+    return true
+  } catch (error) {
+    return false
+  }
+}
