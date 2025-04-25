@@ -1,10 +1,10 @@
-import { Model } from 'sequelize'
 import {
   Table,
   Column,
   DataType,
   PrimaryKey,
   AutoIncrement,
+  Model,
 } from 'sequelize-typescript'
 
 @Table({
@@ -15,7 +15,7 @@ export class User extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
-  declare id: number // declare — поле управляется Sequelize
+  declare id: number
 
   @Column({
     type: DataType.STRING(30),

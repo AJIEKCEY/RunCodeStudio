@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize-typescript'
 import path from 'path'
 import dotenv from 'dotenv'
+import { User } from './models/User'
 
 dotenv.config({ path: path.join(__dirname, '../../.env') })
 
@@ -14,5 +15,5 @@ export const sequelize = new Sequelize({
   username: POSTGRES_USER,
   password: String(POSTGRES_PASSWORD),
   database: POSTGRES_DB,
-  models: ['models/User.ts'],
+  models: [User],
 })

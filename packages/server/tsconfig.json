@@ -23,7 +23,8 @@
     "types": ["node", "jest"],
     "baseUrl": "./server",
     "paths": {
-      "*": ["types/*"]
+      "*": ["types/*"],
+      "models/*": ["server/models/*.ts"]
     },
     "outDir": "dist"
   }
