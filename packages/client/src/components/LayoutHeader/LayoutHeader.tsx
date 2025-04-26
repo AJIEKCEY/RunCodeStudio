@@ -1,9 +1,10 @@
-import { Layout } from 'antd/lib'
-import { Menu } from 'antd/lib'
+import { Layout, Menu } from 'antd/lib'
 import { Link } from 'react-router-dom'
 import styles from './LayoutHeader.module.css'
 import { useAuth } from '../../hooks/useAuth'
 import NotificationBell from '../Notification/NotificationBell'
+import { BulbOutlined } from '@ant-design/icons'
+import { useTheme } from '../../context/ThemeContext'
 
 const items = [
   {
@@ -35,6 +36,7 @@ const items = [
 
 function LayoutHeader() {
   const { logout, user } = useAuth()
+  const { toggleTheme } = useTheme()
 
   return (
     <Layout.Header style={{ display: 'flex', alignItems: 'center' }}>
@@ -46,6 +48,15 @@ function LayoutHeader() {
           </Menu.Item>
         ))}
       </Menu>
+      <BulbOutlined
+        onClick={toggleTheme}
+        style={{
+          fontSize: 15,
+          cursor: 'pointer',
+          marginRight: 16,
+          color: '#7fff00',
+        }}
+      />
       <NotificationBell />
       <div className={styles.header_auth}>
         {!user && (

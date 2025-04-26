@@ -11,9 +11,10 @@ import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 
 import { ProtectedRoute } from './components/ProtectedRoute'
-import { AuthProvider } from './components/AuthContext'
-import Profile from './pages/Profile/Profile'
-import LeaderBoard from './pages/Leaderboard/LeaderBoard'
+// import { AuthProvider } from './components/AuthContext'
+// import { ThemeProvider } from './context/ThemeContext'
+import Profile from './pages/profile/Profile'
+import LeaderBoard from './pages/leaderboard/LeaderBoard'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -76,28 +77,30 @@ export const routConfig: Route[] = [
 const AppRouter = () => {
   return (
     <ErrorBoundary>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<Container />}>
-            <Route index element={<Landing />} />
-            {routConfig.map(({ path, element, isProtected = false }) => (
-              <Route
-                key={path}
-                path={path}
-                element={
-                  isProtected ? (
-                    <ProtectedRoute>
-                      <>{element}</>
-                    </ProtectedRoute>
-                  ) : (
+      {/*<AuthProvider>*/}
+      {/*<ThemeProvider>*/}
+      <Routes>
+        <Route path="/" element={<Container />}>
+          <Route index element={<Landing />} />
+          {routConfig.map(({ path, element, isProtected = false }) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                isProtected ? (
+                  <ProtectedRoute>
                     <>{element}</>
-                  )
-                }
-              />
-            ))}
-          </Route>
-        </Routes>
-      </AuthProvider>
+                  </ProtectedRoute>
+                ) : (
+                  <>{element}</>
+                )
+              }
+            />
+          ))}
+        </Route>
+      </Routes>
+      {/*</ThemeProvider>*/}
+      {/*</AuthProvider>*/}
     </ErrorBoundary>
   )
 }

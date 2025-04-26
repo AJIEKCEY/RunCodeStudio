@@ -5,7 +5,8 @@
     "lastname": "Юдин",
     "email": "Marian2@hotmail.com",
     "login": "gray_1",
-    "password": "G7Thb10Ydy5KonI"
+    "password": "G7Thb10Ydy5KonI",
+    "themeId": 1
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "lastname": "Горшкова",
     "email": "Kazimir.Shiryaeva@mail.ru",
     "login": "gray_2",
-    "password": "Zz0JRiYvuHg9A0l"
+    "password": "Zz0JRiYvuHg9A0l",
+    "themeId": 2
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "lastname": "Евдокимов",
     "email": "Konon91@gmail.com",
     "login": "gray_3",
-    "password": "dKhiELehjIrgxuT"
+    "password": "dKhiELehjIrgxuT",
+    "themeId": 1
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "lastname": "Гришина",
     "email": "Mikhei.Borisova@yahoo.com",
     "login": "gray_4",
-    "password": "07i3lsWbAWMOcpI"
+    "password": "07i3lsWbAWMOcpI",
+    "themeId": 1
   },
   {
     "id": 5,
@@ -37,6 +41,7 @@
     "lastname": "Королева",
     "email": "Yulian_Zueva@yandex.ru",
     "login": "gray_5",
-    "password": "Cf4QuPup9m8xE5H"
+    "password": "Cf4QuPup9m8xE5H",
+    "themeId": 2
   }
 ]

@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest .",
-    "seed:users": "ts-node seeders/users/users.seeder.ts"
+    "seed:users": "ts-node seeders/users/users.seeder.ts",
+    "seed:themes": "ts-node seeders/themes/themes.seeder.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

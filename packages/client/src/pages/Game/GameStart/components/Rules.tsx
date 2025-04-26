@@ -1,5 +1,6 @@
 import React from 'react'
 import { Typography } from 'antd/lib'
+import { useTheme } from '../../../../context/ThemeContext'
 
 const rules = [
   'Нажмите на пробел, чтобы прыгнуть',
@@ -8,12 +9,14 @@ const rules = [
 ]
 
 const Rules: React.FC = () => {
+  const { settings } = useTheme()
+  const textColor = settings?.textColor || '#ffffff'
   return (
     <div>
       <Typography.Title
         level={3}
         style={{
-          color: '#fff',
+          color: textColor,
           fontSize: '24px',
           textAlign: 'center',
           marginBottom: '0',

@@ -1,11 +1,12 @@
 import React from 'react'
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
 import ReactDOM from 'react-dom/client'
-import { ConfigProvider } from 'antd/lib'
 
 import App from './App'
 import './index.css'
 import { store } from './store/store'
+import { AuthProvider } from './components/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -20,16 +21,12 @@ if ('serviceWorker' in navigator) {
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <React.StrictMode>
-    <Provider store={store}>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: '#8076a3',
-            fontSize: 18,
-          },
-        }}>
-        <App />
-      </ConfigProvider>
-    </Provider>
+    <ReduxProvider store={store}>
+      <AuthProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </AuthProvider>
+    </ReduxProvider>
   </React.StrictMode>
 )

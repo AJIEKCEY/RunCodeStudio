@@ -4,8 +4,11 @@ import {
   DataType,
   PrimaryKey,
   AutoIncrement,
+  ForeignKey,
+  BelongsTo,
   Model,
 } from 'sequelize-typescript'
+import { Theme } from './Theme'
 
 @Table({
   tableName: 'users',
@@ -46,4 +49,14 @@ export class User extends Model {
     allowNull: false,
   })
   declare password: string
+
+  @ForeignKey(() => Theme)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+  })
+  declare themeId: number | null
+
+  @BelongsTo(() => Theme)
+  declare theme: Theme
 }
