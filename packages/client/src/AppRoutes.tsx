@@ -15,6 +15,7 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 // import { ThemeProvider } from './context/ThemeContext'
 import Profile from './pages/profile/Profile'
 import LeaderBoard from './pages/leaderboard/LeaderBoard'
+import Profile from './pages/Profile/Profile'
 
 export const AppRoutes = {
   LOGIN: 'login',
