@@ -7,15 +7,15 @@ import App from './App'
 import './index.css'
 import { store } from './store/store'
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    try {
-      navigator.serviceWorker.register('/sw.js')
-    } catch (error) {
-      console.info(error)
-    }
-  })
-}
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     try {
+//       navigator.serviceWorker.register('/sw.js')
+//     } catch (error) {
+//       console.info(error)
+//     }
+//   })
+// }
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,

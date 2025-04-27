@@ -5,6 +5,7 @@ import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
 import fs from 'fs/promises'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
+import { log } from 'console'
 
 const port = process.env.CLIENT_SERVER_PORT || 3002
 const clientPath = path.join(__dirname, '..')
@@ -24,7 +25,9 @@ async function createServer() {
     app.use(vite.middlewares)
   } else {
     app.use(
-      express.static(path.join(clientPath, 'dist/client'), { index: false })
+      express.static(path.join(clientPath, 'dist/client/public'), {
+        index: false,
+      })
     )
   }
   app.get('*', async (req, res, next) => {
@@ -34,7 +37,7 @@ async function createServer() {
       // Получаем файл client/index.html который мы правили ранее
       let render: (
         req: ExpressRequest
-      ) => Promise<{ html: string; initialState: unknown }>
+      ) => Promise<{ html: string; initialState: unknown; style: string }>
       let template: string
       if (vite) {
         template = await fs.readFile(
@@ -61,14 +64,15 @@ async function createServer() {
         // Получаем путь до модуля клиента, чтобы не тащить средства сборки клиента на сервер
         const pathToServer = path.join(
           clientPath,
-          'dist/server/entry-server.js'
+          'dist/server/assets/entry-server.js'
         )
 
         // Импортируем этот модуль и вызываем с начальным состоянием
         render = (await import(pathToServer)).render
       }
       // Получаем HTML-строку из JSX
-      const { html: appHtml, initialState } = await render(req)
+      const { html: appHtml, initialState, style } = await render(req)
+      // console.log('SRTYLEsS', style)
 
       // Заменяем комментарий на сгенерированную HTML-строку
       const html = template
@@ -79,6 +83,7 @@ async function createServer() {
             initialState
           )}</script>`
         )
+        .replace('<!--styledText-->', `<style>${style}</style>`)
 
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)

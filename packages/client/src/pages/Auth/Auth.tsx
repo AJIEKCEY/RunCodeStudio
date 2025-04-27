@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { Form, Input, Button, Typography, Flex, message } from 'antd/lib'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useAuth } from '../../hooks/useAuth'
-import { useSignInUserMutation } from '../../store/features/user/userApiSlice'
+import {
+  userApiSlice,
+  useSignInUserMutation,
+} from '../../store/features/user/userApiSlice'
 import styles from './Auth.module.css'
+import { PageInitArgs } from '../../store/store'
+import { usePage } from '../../hooks/usePage'
 
 const { Title } = Typography
 interface LoginFormValues {
@@ -56,7 +61,7 @@ const Auth = () => {
       messageApi.error('Ошибка при получении CLIENT_ID')
     }
   }
-
+  usePage({ initPage: initLoginPage })
   return (
     <Flex
       vertical={true}
@@ -125,4 +130,12 @@ const Auth = () => {
   )
 }
 
+export const initLoginPage = async ({ dispatch }: PageInitArgs) => {
+  return dispatch(
+    userApiSlice.endpoints.signInUser.initiate({
+      login: 'fastyhobo86',
+      password: 'Fasty1985',
+    })
+  )
+}
 export default Auth

@@ -5,7 +5,8 @@ import {
   leaderBoardApiSlice,
   useGetLeaderBoardMutation,
 } from '../../store/features/leaderboard/leaderBoardApiSlice'
-import { PageInitArgs } from '../../store/store'
+import { PageInitArgs, store } from '../../store/store'
+import { usePage } from '../../hooks/usePage'
 
 export type leaderBoardDataTableType = {
   nickname: string
@@ -71,8 +72,10 @@ const LeaderBoard: React.FC = () => {
         )
         setLeaderBoard(mappedData)
       }
+      // console.log('LEADERBOARD', store.getState())
     })
   }, [])
+  usePage({ initPage: initLeaderBoardPage })
   return (
     <Flex vertical justify="center" style={{ paddingTop: '3rem' }}>
       <Title
@@ -101,6 +104,6 @@ export const initLeaderBoardPage = async ({ dispatch }: PageInitArgs) => {
       cursor: 0,
       limit: 100,
     })
-  )
+  ).unwrap()
 }
 export default LeaderBoard

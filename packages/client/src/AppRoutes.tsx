@@ -7,13 +7,16 @@ import NotFound from './pages/ErrorPages/NotFound'
 import ServerError from './pages/ErrorPages/ServerError'
 import Registration from './pages/Registration/Registration'
 import GameMain from './pages/Game/GameMain'
-import Auth from './pages/Auth/Auth'
+import Auth, { initLoginPage } from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AuthProvider } from './components/AuthContext'
-import LeaderBoard from './pages/leaderboard/LeaderBoard'
+import LeaderBoard, {
+  initLeaderBoardPage,
+} from './pages/leaderboard/LeaderBoard'
 import Profile from './pages/Profile/Profile'
+import { PageInitArgs } from './store/store'
 
 export const AppRoutes = {
   LOGIN: 'login',
@@ -23,16 +26,24 @@ export const AppRoutes = {
   FORUM: 'forum',
   FORUM_TOPIC: 'forum-topic/:id',
   LEADER_BOARD: 'leader-board',
+  LANDING: '/',
 }
 
 type Route = RouteObject & {
   isProtected?: boolean
+  fetchData?: (initFc: PageInitArgs) => Promise<unknown>
 }
 
 export const routConfig: Route[] = [
   {
+    path: AppRoutes.LANDING,
+    element: <Landing />,
+    fetchData: initLoginPage,
+  },
+  {
     path: AppRoutes.LOGIN,
     element: <Auth />,
+    fetchData: initLoginPage,
   },
   {
     path: AppRoutes.PROFILE,
@@ -61,7 +72,8 @@ export const routConfig: Route[] = [
   {
     path: AppRoutes.LEADER_BOARD,
     element: <LeaderBoard />,
-    isProtected: true,
+    fetchData: initLeaderBoardPage,
+    // isProtected: true,
   },
   {
     path: '*',
