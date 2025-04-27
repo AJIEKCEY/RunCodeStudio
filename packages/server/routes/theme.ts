@@ -4,13 +4,12 @@ import {
   getUserTheme,
   setUserTheme,
 } from '../controllers/themeController'
+import expressAsyncHandler from 'express-async-handler'
 
 const router = Router()
 
-router.get('/themes', getAllThemes)
-
-router.get('/users/:userId/theme', getUserTheme)
-
-router.post('/users/:userId/theme', setUserTheme)
+router.get('/themes', expressAsyncHandler(getAllThemes))
+router.get('/users/:userId/theme', expressAsyncHandler(getUserTheme))
+router.post('/users/:userId/theme', expressAsyncHandler(setUserTheme))
 
 export default router
