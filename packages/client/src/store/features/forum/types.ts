@@ -10,13 +10,13 @@ export type Post = {
 }
 
 export type Thread = {
+  user_id: number
+  description?: string
   id: number
   title: string
-  description: string
-  posts: Post[]
-  authorId: number
-  createdAt: Date
-  categoryId: number
+  category_id: number
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export type Category = {

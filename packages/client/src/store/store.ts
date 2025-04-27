@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import forumSlice from './features/forum/forumSlice'
 import { userApiSlice } from './features/user/userApiSlice'
 import { leaderBoardApiSlice } from './features/leaderboard/leaderBoardApiSlice'
+import { forumApi } from './features/forum/forumApiSlice'
 declare global {
   interface Window {
     APP_INITIAL_STATE: RootState
@@ -10,6 +11,7 @@ declare global {
 
 export const rootReducer = combineReducers({
   forum: forumSlice,
+  [forumApi.reducerPath]: forumApi.reducer,
   [userApiSlice.reducerPath]: userApiSlice.reducer,
   [leaderBoardApiSlice.reducerPath]: leaderBoardApiSlice.reducer,
 })
