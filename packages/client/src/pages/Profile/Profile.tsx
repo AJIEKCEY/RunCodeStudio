@@ -28,5 +28,5 @@ const Profile = () => {
     </Flex>
   )
 }
-
+export const initProfilePage = () => Promise.resolve()
 export default Profile

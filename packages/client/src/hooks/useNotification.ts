@@ -28,11 +28,19 @@ export type NotificationContextType = {
 }
 
 const getLocalStorage = (key: string) => {
+  if (typeof window === 'undefined') {
+    console.warn('useLocalStorage:только для браузерного окружения')
+    return null
+  }
   const value = localStorage.getItem(key)
   return value ? JSON.parse(value) : null
 }
 
 const setLocalStorage = (key: string, data: unknown) => {
+  if (typeof window === 'undefined') {
+    console.warn('setLocalStorage:только для браузерного окружения')
+    return
+  }
   localStorage.setItem(key, JSON.stringify(data))
 }
 
@@ -59,6 +67,23 @@ const NOTIFICATION_STATUSES: Record<
 }
 
 const useNotification = (): NotificationContextType => {
+  if (typeof window === 'undefined') {
+    console.warn('useNotification: хук только для браузерного окружения')
+    return {
+      isNotificationsEnabled: false,
+      toggleNotifications: () => {
+        console.info('node env')
+      },
+      notificationStatus: NOTIFICATION_STATUSES['default'],
+      notification: [],
+      sendNotification: () => {
+        console.info('node env')
+      },
+      infoText: { title: '', message: '' },
+      countNotification: 0,
+      openInfoText: false,
+    }
+  }
   const typeNotification: NotificationPermission =
     getLocalStorage('notificationPermission') || 'default'
   const [notificationStatus, setNotificationStatus] =

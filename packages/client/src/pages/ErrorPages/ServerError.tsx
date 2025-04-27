@@ -12,5 +12,5 @@ const ServerError = () => {
     </Flex>
   )
 }
-
+export const initServerErrorPage = () => Promise.resolve()
 export default ServerError

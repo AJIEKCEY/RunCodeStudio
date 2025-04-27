@@ -54,5 +54,5 @@ const Game = () => {
   }
   return <GameOver onRepeat={handleRepeat} coins={coins} />
 }
-
+export const initGamePage = () => Promise.resolve()
 export default Game

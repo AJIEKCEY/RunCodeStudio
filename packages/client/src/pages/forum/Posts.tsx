@@ -132,5 +132,5 @@ const Posts: React.FC = () => {
     </Flex>
   )
 }
-
+export const initPostsPage = () => Promise.resolve()
 export default Posts

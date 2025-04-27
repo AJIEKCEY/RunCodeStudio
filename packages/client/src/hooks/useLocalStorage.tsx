@@ -2,6 +2,10 @@ import { useState } from 'react'
 
 export const useLocalStorage = <T,>(keyName: string, defaultValue: T) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
+    if (typeof window === 'undefined') {
+      console.warn('useLocalStorage:только для браузерного окружения')
+      return defaultValue
+    }
     try {
       const value = window.localStorage.getItem(keyName)
       if (value) {
@@ -16,6 +20,10 @@ export const useLocalStorage = <T,>(keyName: string, defaultValue: T) => {
   })
 
   const setValue = (newValue: T) => {
+    if (typeof window === 'undefined') {
+      console.warn('useLocalStorage:только для браузерного окружения')
+      return
+    }
     try {
       window.localStorage.setItem(keyName, JSON.stringify(newValue))
     } catch (err) {
