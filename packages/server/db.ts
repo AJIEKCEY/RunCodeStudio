@@ -11,15 +11,12 @@ const {
   POSTGRES_PASSWORD,
   POSTGRES_DB,
   POSTGRES_PORT,
-  POSTGRES_HOST_DEV,
+  POSTGRES_HOST,
 } = process.env
 
 export const sequelize = new Sequelize({
   dialect: 'postgres',
-  // хост для продакшена
-  // host: POSTGRES_HOST,
-  // хост для разработки, если только БД в контейенре
-  host: POSTGRES_HOST_DEV,
+  host: POSTGRES_HOST,
   port: Number(POSTGRES_PORT),
   username: POSTGRES_USER,
   password: String(POSTGRES_PASSWORD),

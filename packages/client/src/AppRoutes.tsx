@@ -9,10 +9,7 @@ import Registration from './pages/Registration/Registration'
 import GameMain from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
-
 import { ProtectedRoute } from './components/ProtectedRoute'
-// import { AuthProvider } from './components/AuthContext'
-// import { ThemeProvider } from './context/ThemeContext'
 import Profile from './pages/profile/Profile'
 import LeaderBoard from './pages/leaderboard/LeaderBoard'
 
@@ -77,8 +74,6 @@ export const routConfig: Route[] = [
 const AppRouter = () => {
   return (
     <ErrorBoundary>
-      {/*<AuthProvider>*/}
-      {/*<ThemeProvider>*/}
       <Routes>
         <Route path="/" element={<Container />}>
           <Route index element={<Landing />} />
@@ -99,8 +94,6 @@ const AppRouter = () => {
           ))}
         </Route>
       </Routes>
-      {/*</ThemeProvider>*/}
-      {/*</AuthProvider>*/}
     </ErrorBoundary>
   )
 }
