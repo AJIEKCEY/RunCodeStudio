@@ -10,7 +10,6 @@ import GameMain from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 import { ProtectedRoute } from './components/ProtectedRoute'
-import Profile from './pages/profile/Profile'
 import LeaderBoard from './pages/leaderboard/LeaderBoard'
 import Profile from './pages/Profile/Profile'
 
