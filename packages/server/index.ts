@@ -1,15 +1,13 @@
 import dotenv from 'dotenv'
 import cors from 'cors'
-dotenv.config()
-
 import express from 'express'
-import { checkDatabaseConnection } from './db'
 import postRouter from './routes/posts'
 import commentsRouter from './routes/comments'
+import themeRouter from './routes/theme'
 import { sanitizeInput } from './middlewares/sanitize'
+import { checkDatabaseConnection } from './db'
 
-const app = express()
-app.use(cors())
+dotenv.config()
 const port = Number(process.env.SERVER_PORT) || 3001
 
 const startServer = async () => {
@@ -19,11 +17,15 @@ const startServer = async () => {
       throw new Error('Database connection failed')
     }
 
+    const app = express()
+
+    app.use(cors())
     app.use(express.json())
     app.use(sanitizeInput)
 
-    app.use('/api', postRouter)
-    app.use('/api', commentsRouter)
+    app.use('/api/v1', postRouter)
+    app.use('/api/v1', commentsRouter)
+    app.use('/api/v1', themeRouter)
 
     app.listen(port, () => {
       console.info(`  ➜ 🎸 Server is listening on port: ${port}`)

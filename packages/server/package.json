@@ -13,7 +13,8 @@
     "seed:categories": "ts-node seeders/categories/categories.seeder.ts",
     "seed:posts": "ts-node seeders/posts/posts.seeder.ts",
     "seed:comments": "ts-node seeders/comments/comments.seeder.ts",
-    "seed:reactions": "ts-node seeders/reactions/reactions.seeder.ts"
+    "seed:reactions": "ts-node seeders/reactions/reactions.seeder.ts",
+    "seed:themes": "ts-node seeders/themes/themes.seeder.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

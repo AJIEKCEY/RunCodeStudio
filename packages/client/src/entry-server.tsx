@@ -12,6 +12,7 @@ import { routConfig } from './AppRoutes'
 import './index.css'
 
 import { AuthProvider } from './components/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
 import { configureStore } from '@reduxjs/toolkit'
 import { rootReducer } from './store/store'
 import { leaderBoardApiSlice } from './store/features/leaderboard/leaderBoardApiSlice'
@@ -46,7 +47,9 @@ export const render = async (req: ExpressRequest) => {
     html: ReactDOM.renderToString(
       <Provider store={store}>
         <AuthProvider>
-          <StaticRouterProvider router={router} context={context} />
+          <ThemeProvider>
+            <StaticRouterProvider router={router} context={context} />
+          </ThemeProvider>
         </AuthProvider>
       </Provider>
     ),

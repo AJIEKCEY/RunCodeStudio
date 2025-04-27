@@ -4,6 +4,7 @@ import { Button } from '../../../components/Button/Button'
 import CharacterChoice from './components/CharacterChoice/CharacterChoice'
 import Rules from './components/Rules'
 import { secondsWords } from '../../../utils/singlePluralWords'
+import { useTheme } from '../../../context/ThemeContext'
 
 interface GameStartProps {
   onStart: VoidFunction
@@ -18,6 +19,7 @@ const GameStart = ({
 }: GameStartProps) => {
   const [showCountdown, setShowCountdown] = useState(false)
   const [countdown, setCountdown] = useState(3)
+  const { settings } = useTheme()
 
   useEffect(() => {
     if (!showCountdown) return
@@ -38,9 +40,21 @@ const GameStart = ({
     setShowCountdown(true)
   }
 
+  const background =
+    settings?.background ||
+    'linear-gradient(135deg, #5f00b5, #4c0099 40%, #30006d)'
+  const textColor = settings?.textColor || '#ffffff'
+  const buttonColor = settings?.buttonColor || '#7fff00'
+  const buttonTextColor = settings?.buttonTextColor || '#000000'
+
   return (
-    <Flex vertical gap="large" align="center" className="page">
-      <Typography.Title style={{ color: '#fff' }}>
+    <Flex
+      vertical
+      gap="large"
+      align="center"
+      className="page"
+      style={{ background: background, color: textColor }}>
+      <Typography.Title style={{ color: textColor }}>
         Подготовка к игре
       </Typography.Title>
       {!showCountdown && (
@@ -50,11 +64,19 @@ const GameStart = ({
             onSelect={setSelectedCharacter}
           />
           <Rules />
-          <Button onClick={handleStartClick}>Старт</Button>
+          <Button
+            onClick={handleStartClick}
+            style={{
+              backgroundColor: buttonColor,
+              borderColor: buttonColor,
+              color: buttonTextColor,
+            }}>
+            Старт
+          </Button>
         </>
       )}
       {showCountdown && (
-        <Typography.Text style={{ color: '#fff', fontSize: '24px' }}>
+        <Typography.Text style={{ color: textColor, fontSize: '24px' }}>
           Игра начнётся через {countdown} {secondsWords(countdown)}
         </Typography.Text>
       )}

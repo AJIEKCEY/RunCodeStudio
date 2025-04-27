@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "light",
+    "settings": {
+      "background": "linear-gradient(135deg, #e5d1f2, #d7c0e6 40%, #c1aedb)",
+      "buttonColor": "#ccffcc",
+      "textColor": "#000000"
+    }
+  },
+  {
+    "id": 2,
+    "name": "dark",
+    "settings": {
+      "background": "linear-gradient(135deg, #5f00b5, #4c0099 40%, #30006d)",
+      "buttonColor": "#7fff00",
+      "textColor": "#ffffff"
+    }
+  }
+]
