@@ -4,7 +4,9 @@ import express from 'express'
 import postRouter from './routes/posts'
 import commentsRouter from './routes/comments'
 import themeRouter from './routes/theme'
+import reactionRouter from './routes/reaction'
 import { sanitizeInput } from './middlewares/sanitize'
+import { errorHandler } from './middlewares/error'
 import { checkDatabaseConnection } from './db'
 import categoryRouter from './routes/categories'
 
@@ -28,8 +30,9 @@ const startServer = async () => {
     app.use('/api/v1', commentsRouter)
     app.use('/api/v1', themeRouter)
     app.use('/api/v1', categoryRouter)
+    app.use('/api/v1', reactionRouter)
 
-    app.listen(port, () => {
+    app.use(errorHandler).listen(port, () => {
       console.info(`  ➜ 🎸 Server is listening on port: ${port}`)
     })
   } catch (error) {

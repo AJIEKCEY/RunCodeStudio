@@ -5,12 +5,13 @@ import {
   getPostById,
   getPosts,
 } from '../controllers/postController'
+import expressAsyncHandler from 'express-async-handler'
 
 const postRouter = express.Router()
 
-postRouter.get('/posts', getPosts)
-postRouter.get('/posts/:id', getPostById)
-postRouter.post('/posts', createPost)
-postRouter.delete('/posts/:id', deletePost)
+postRouter.get('/posts', expressAsyncHandler(getPosts))
+postRouter.get('/posts/:id', expressAsyncHandler(getPostById))
+postRouter.post('/posts', expressAsyncHandler(createPost))
+postRouter.delete('/posts/:id', expressAsyncHandler(deletePost))
 
 export default postRouter
