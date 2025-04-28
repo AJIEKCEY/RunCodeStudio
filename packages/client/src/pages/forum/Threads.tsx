@@ -3,11 +3,16 @@ import { List, Avatar, Typography, Flex, Button, Tag } from 'antd/lib'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ForumNavigation from './components/ForumNavigation'
-import { useAppSelector } from '../../store/hooks/deriveTypes'
+import { useAppDispatch, useAppSelector } from '../../store/hooks/deriveTypes'
 import styles from './/styles/thread.module.css'
 import { Thread } from '../../store/features/forum/types'
 import CreateThreadModal from './components/CreateThreadModal'
 import { IconText } from './components/IconText'
+import { getForumData } from '../../store/features/forum/forumSlice'
+import {
+  useGetCategoriesQuery,
+  useGetThreadsQuery,
+} from '../../store/features/forum/forumApiSlice'
 
 const categoryColors: { [key: number]: string } = {
   3: 'volcano',
@@ -15,7 +20,10 @@ const categoryColors: { [key: number]: string } = {
   2: 'processing',
 }
 const Threads: React.FC = () => {
-  const { categories, threads } = useAppSelector(state => state.forum)
+  const dispatch = useAppDispatch()
+  const { isLoading: isThreadsLoading } = useGetThreadsQuery()
+  const { isLoading: isCategoriesLoading } = useGetCategoriesQuery()
+  const { categories, threads } = useAppSelector(getForumData)
   const [categoryFilter, setcategoryFilter] = useState<number[]>([])
   const [search, setSearch] = useState('')
   const [showModal, setShowModal] = useState(false)
@@ -24,14 +32,20 @@ const Threads: React.FC = () => {
     let result: Thread[] = threads
     if (categoryFilter.length)
       result = result.filter(thread =>
-        categoryFilter.includes(thread.categoryId)
+        categoryFilter.includes(thread.category_id)
       )
     if (search !== '') {
       const searchRegex = new RegExp(search, 'i')
-      result = result.filter(thread => searchRegex.test(thread.description))
+      result = result.filter(thread =>
+        searchRegex.test(thread.description ? thread.description : '')
+      )
     }
     return result
-  }, [categoryFilter, search])
+  }, [categoryFilter, search, threads])
+
+  if (isThreadsLoading || isCategoriesLoading) {
+    return <div>Загрузка...</div>
+  }
 
   return (
     <Flex vertical gap="large">
@@ -53,20 +67,16 @@ const Threads: React.FC = () => {
               <div className={styles['thread-list-item-actions']}>
                 <IconText
                   icon={MessageOutlined}
-                  text={String(item.posts.length)}
+                  text={String(item.count_comments)}
                   key="list-vertical-message"
                 />
-                <Tag color={categoryColors[item.categoryId] || 'cyan'}>
-                  {
-                    categories.find(
-                      (cat: { id: number }) => cat.id === item.categoryId
-                    )?.title
-                  }
+                <Tag color={categoryColors[item.category_id] || 'cyan'}>
+                  {item.category.name}
                 </Tag>
               </div>,
             ]}>
             <List.Item.Meta
-              avatar={<Avatar src={item.authorId} />}
+              avatar={<Avatar src={item.user_id} />}
               title={
                 <Typography.Text style={{ fontSize: '1.7rem' }}>
                   <Link

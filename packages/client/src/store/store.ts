@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import forumSlice from './features/forum/forumSlice'
+import forumReducer from './features/forum/forumSlice'
 import { userApiSlice } from './features/user/userApiSlice'
 import { leaderBoardApiSlice } from './features/leaderboard/leaderBoardApiSlice'
 import { forumApi } from './features/forum/forumApiSlice'
@@ -10,11 +10,17 @@ declare global {
 }
 
 export const rootReducer = combineReducers({
-  forum: forumSlice,
+  forum: forumReducer,
   [forumApi.reducerPath]: forumApi.reducer,
   [userApiSlice.reducerPath]: userApiSlice.reducer,
   [leaderBoardApiSlice.reducerPath]: leaderBoardApiSlice.reducer,
 })
+
+const apiMiddlewares = [
+  userApiSlice.middleware,
+  leaderBoardApiSlice.middleware,
+  forumApi.middleware,
+]
 
 export const store = configureStore({
   reducer: rootReducer,
@@ -23,7 +29,7 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(userApiSlice.middleware, leaderBoardApiSlice.middleware),
+    }).concat(...apiMiddlewares),
 })
 export type PageInitArgs = {
   dispatch: AppDispatch

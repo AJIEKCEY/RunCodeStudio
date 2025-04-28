@@ -1,12 +1,26 @@
 export type Post = {
+  category: { name: string }
+  user: {
+    firstname: string
+  }
+} & Thread
+
+export type ThreadResponce = {
+  count: number
+  items: Thread[]
+}
+
+export type CommentType = {
   id: number
-  authorId: number
-  content: string
+  text: string
+  post_id: number
+  user_id: number
+  root_comment: number
+  user: {
+    firstname: string
+  }
   createdAt: Date
-  editedAt: Date
-  threadId: number
-  likes: number
-  img?: string[]
+  updatedAt: Date
 }
 
 export type Thread = {
@@ -15,6 +29,10 @@ export type Thread = {
   id: number
   title: string
   category_id: number
+  category: {
+    name: string
+  }
+  count_comments: number
   createdAt?: Date
   updatedAt?: Date
 }
@@ -23,8 +41,11 @@ export type Category = {
   id: number
   title: string
 }
+
 export interface ForumState {
   threads: Thread[]
   posts: Post[]
   categories: Category[]
+  loading: boolean
+  error: null | Error
 }

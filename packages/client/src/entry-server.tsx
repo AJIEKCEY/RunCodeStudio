@@ -17,6 +17,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { rootReducer } from './store/store'
 import { leaderBoardApiSlice } from './store/features/leaderboard/leaderBoardApiSlice'
 import { userApiSlice } from './store/features/user/userApiSlice'
+import { forumApi } from './store/features/forum/forumApiSlice'
 
 export const render = async (req: ExpressRequest) => {
   const store = configureStore({
@@ -24,7 +25,11 @@ export const render = async (req: ExpressRequest) => {
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware({
         serializableCheck: false,
-      }).concat(userApiSlice.middleware, leaderBoardApiSlice.middleware),
+      }).concat(
+        userApiSlice.middleware,
+        leaderBoardApiSlice.middleware,
+        forumApi.middleware
+      ),
   })
   const { query, dataRoutes } = createStaticHandler(routConfig)
 

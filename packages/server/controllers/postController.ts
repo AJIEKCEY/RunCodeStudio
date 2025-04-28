@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import { Post } from '../models/Post'
+import { User } from '../models/User'
+import { Category } from '../models/Category'
+import { Comment } from '../models/Comment'
 
 const getPosts = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -8,12 +11,31 @@ const getPosts = async (req: Request, res: Response, next: NextFunction) => {
 
     const posts = await Post.findAll({
       offset: Number(skip),
-      limit: Math.max(Number(limit), max_limit),
+      limit: Math.min(Number(limit), max_limit),
+      include: [
+        {
+          model: Category,
+          attributes: ['name'],
+        },
+      ],
     })
+
+    const postsWithComments = await Promise.all(
+      posts.map(async post => {
+        const count = await Comment.count({
+          where: { post_id: post.id },
+        })
+
+        return {
+          ...post.get({ plain: true }),
+          count_comments: count,
+        }
+      })
+    )
 
     res.json({
       count: await Post.count(),
-      items: posts,
+      items: postsWithComments,
     })
   } catch (error) {
     next(error)
@@ -22,7 +44,18 @@ const getPosts = async (req: Request, res: Response, next: NextFunction) => {
 
 const getPostById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const post = await Post.findByPk(req.params.id)
+    const post = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ['firstname'],
+        },
+        {
+          model: Category,
+          attributes: ['name'],
+        },
+      ],
+    })
     res.json({
       item: post,
     })
