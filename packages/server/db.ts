@@ -31,8 +31,8 @@ export const checkDatabaseConnection = async () => {
   try {
     await sequelize.authenticate()
     return true
-  } catch (error: Error) {
-    console.error('Нет подключения к БД:', error.message)
+  } catch (error) {
+    console.error('Нет подключения к БД:', (error as Error).message)
     process.exit(1)
     return false
   }

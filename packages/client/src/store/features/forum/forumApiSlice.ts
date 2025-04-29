@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Thread, Category, ThreadResponce, Post, CommentType } from './types'
+import { Thread, Category, ThreadResponce, Post, IComment } from './types'
 
 export const forumApi = createApi({
   reducerPath: 'forumApi',
@@ -10,14 +10,14 @@ export const forumApi = createApi({
       transformResponse: (response: ThreadResponce) => response.items,
     }),
     getPost: builder.query<Post, number>({
-      query: (id: number) => `posts/${id}`,
+      query: id => `posts/${id}`,
       transformResponse: (res: { item: Post }) => res.item,
     }),
     getCategories: builder.query<Category[], void>({
       query: () => 'categories',
     }),
-    getComments: builder.query<CommentType[], number>({
-      query: (postId: number) => `posts/${postId}/comments`,
+    getComments: builder.query<IComment[], number>({
+      query: postId => `posts/${postId}/comments`,
     }),
     addThread: builder.mutation<Thread, Omit<Thread, 'id'>>({
       query: newThread => ({

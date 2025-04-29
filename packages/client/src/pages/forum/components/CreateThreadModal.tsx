@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Form, Input, Modal, Select } from 'antd/lib'
 import { Category } from '../../../store/features/forum/types'
+import { useGetUserQuery } from '../../../store/features/user/userApiSlice'
+import { useSelector } from 'react-redux'
 
 const { TextArea } = Input
 interface Values {
@@ -19,11 +21,8 @@ const CreateThreadModal: React.FC<modalProps> = ({
   categories,
 }) => {
   const [form] = Form.useForm()
-  const [formValues, setFormValues] = useState<Values>()
 
   const onCreate = (values: Values) => {
-    setFormValues(values)
-    console.info('Данные формы ', formValues)
     closeModal()
   }
 

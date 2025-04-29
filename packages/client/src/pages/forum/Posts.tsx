@@ -2,15 +2,12 @@ import React, { useState } from 'react'
 import styles from './styles/thread.module.css'
 import {
   Card,
-  Divider,
   Space,
   Tag,
   List,
   Button,
   Avatar,
   Typography,
-  Form,
-  Input,
   Flex,
 } from 'antd/lib'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -19,7 +16,6 @@ import {
   DislikeTwoTone,
   EditOutlined,
   LikeTwoTone,
-  MessageOutlined,
   RollbackOutlined,
   TagOutlined,
   UserOutlined,
@@ -37,13 +33,6 @@ const Posts: React.FC = () => {
   const { data: post, isLoading, error } = useGetPostQuery(Number(threadId))
   const { data: comments } = useGetCommentsQuery(Number(threadId))
   const [showModal, setShowModal] = useState(false)
-  // const filteredPosts = useMemo(() => {
-  //   let result: Post[] = posts
-  //   if (threadId)
-  //     result = result.filter(post => post.threadId === Number(threadId))
-  //   return result
-  // }, [threadId, posts])
-  const { TextArea } = Input
 
   if (isLoading) return <div>Загрузка...</div>
   if (error) return <div>Ошибка загрузки поста</div>
@@ -125,23 +114,6 @@ const Posts: React.FC = () => {
               description={
                 <Flex vertical>
                   <Typography.Paragraph>{item.text}</Typography.Paragraph>
-                  {/* {item.img && item.img.length && (
-                    <Flex gap="small">
-                      {item.img.map(url => {
-                        return (
-                          <Image
-                            alt={`картинка взятая с адреса: ${url}`}
-                            height={200}
-                            src={url}
-                            key={url}
-                            preview={{
-                              mask: <span>предпросмотр</span>,
-                            }}
-                          />
-                        )
-                      })}
-                    </Flex>
-                  )} */}
                 </Flex>
               }
             />
@@ -167,75 +139,6 @@ const Posts: React.FC = () => {
         closeModal={() => setShowModal(false)}
       />
     </Flex>
-    // <div style={{ margin: '0 auto', padding: 16 }}>
-    //   {/* Заголовок и содержание поста */}
-    //   <Card>
-    //     <Space size="middle" style={{ marginBottom: 16 }}>
-    //       <Tag icon={<UserOutlined />}>{post?.user.firstname}</Tag>
-    //       <Tag icon={<ClockCircleOutlined />}>
-    //         {post?.createdAt
-    //           ? new Date(post.createdAt).toLocaleDateString()
-    //           : 'Нет даты'}
-    //       </Tag>
-    //       <Tag icon={<TagOutlined />}>{post?.category.name}</Tag>
-    //     </Space>
-
-    //     {post?.description && (
-    //       <Typography style={{ fontSize: 16 }}>{post?.description}</Typography>
-    //     )}
-    //   </Card>
-
-    //   {/* Блок комментариев */}
-    //   <Divider orientation="left" style={{ marginTop: 40 }}>
-    //     <MessageOutlined style={{ marginRight: 8 }} />
-    //     Комментарии {comments?.length}
-    //   </Divider>
-
-    //   {/* Список комментариев */}
-    //   <List
-    //     itemLayout="horizontal"
-    //     dataSource={comments} // Просто массив из 2 элементов для примера
-    //     renderItem={item => (
-    //       <List.Item>
-    //         <List.Item.Meta
-    //           avatar={<Avatar icon={<UserOutlined />} />}
-    //           // title={'Имя пользователя'}
-    //           description={
-    //             <>
-    //               <Typography style={{ marginBottom: 0 }}>
-    //                 {item.text}
-    //               </Typography>
-    //               <Typography style={{ fontSize: 12 }}>
-    //                 {item.updatedAt
-    //                   ? new Date(item.updatedAt).toLocaleDateString()
-    //                   : 'Нет даты'}
-    //               </Typography>
-    //             </>
-    //           }
-    //         />
-    //       </List.Item>
-    //     )}
-    //   />
-
-    //   {/* Форма добавления комментария */}
-    //   <Card style={{ marginTop: 24 }}>
-    //     <List.Item>
-    //       <List.Item.Meta
-    //         avatar={<Avatar icon={<UserOutlined />} />}
-    //         description={
-    //           <Form>
-    //             <Form.Item>
-    //               <TextArea></TextArea>
-    //             </Form.Item>
-    //             <Form.Item>
-    //               <Button type="primary">Отправить</Button>
-    //             </Form.Item>
-    //           </Form>
-    //         }
-    //       />
-    //     </List.Item>
-    //   </Card>
-    // </div>
   )
 }
 

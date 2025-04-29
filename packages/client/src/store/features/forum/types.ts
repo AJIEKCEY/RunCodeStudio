@@ -10,17 +10,31 @@ export type ThreadResponce = {
   items: Thread[]
 }
 
-export type CommentType = {
+export interface IReaction {
   id: number
-  text: string
-  post_id: number
+  type: 'like' | 'dislike' | 'heart' | 'laugh' | 'angry'
   user_id: number
-  root_comment: number
+  comment_id: number
+  createdAt: string
+  updatedAt: string
   user: {
     firstname: string
   }
-  createdAt: Date
-  updatedAt: Date
+}
+
+export interface IComment {
+  id: number
+  text: string
+  root_comment: number | null
+  post_id: number
+  user_id: number
+  createdAt: string
+  updatedAt: string
+  user: {
+    firstname: string
+  }
+  reactions: IReaction[]
+  replies: IComment[]
 }
 
 export type Thread = {

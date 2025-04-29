@@ -48,8 +48,8 @@ Reaction.init(
   }
 )
 
-Reaction.belongsTo(User, { foreignKey: 'user_id' })
+Reaction.belongsTo(User, { as: 'user', foreignKey: 'user_id' })
 Reaction.belongsTo(Comment, { foreignKey: 'comment_id' })
 
 User.hasMany(Reaction, { foreignKey: 'user_id' })
-Comment.hasMany(Reaction, { foreignKey: 'comment_id' })
+Comment.hasMany(Reaction, { as: 'reactions', foreignKey: 'comment_id' })

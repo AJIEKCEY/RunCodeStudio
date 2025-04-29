@@ -3,7 +3,7 @@ import { List, Avatar, Typography, Flex, Button, Tag } from 'antd/lib'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ForumNavigation from './components/ForumNavigation'
-import { useAppDispatch, useAppSelector } from '../../store/hooks/deriveTypes'
+import { useAppSelector } from '../../store/hooks/deriveTypes'
 import styles from './/styles/thread.module.css'
 import { Thread } from '../../store/features/forum/types'
 import CreateThreadModal from './components/CreateThreadModal'
@@ -20,7 +20,6 @@ const categoryColors: { [key: number]: string } = {
   2: 'processing',
 }
 const Threads: React.FC = () => {
-  const dispatch = useAppDispatch()
   const { isLoading: isThreadsLoading } = useGetThreadsQuery()
   const { isLoading: isCategoriesLoading } = useGetCategoriesQuery()
   const { categories, threads } = useAppSelector(getForumData)
