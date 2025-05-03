@@ -3,6 +3,10 @@ import forumReducer from './features/forum/forumSlice'
 import { userApiSlice } from './features/user/userApiSlice'
 import { leaderBoardApiSlice } from './features/leaderboard/leaderBoardApiSlice'
 import { forumApi } from './features/forum/forumApiSlice'
+import { useStore as useStoreBase, useDispatch as useDispatchBase } from 'react-redux'
+import { store } from './index'
+import type { PageInitArgs, RootState } from './types'
+
 declare global {
   interface Window {
     APP_INITIAL_STATE: RootState
@@ -15,6 +19,8 @@ export const rootReducer = combineReducers({
   [userApiSlice.reducerPath]: userApiSlice.reducer,
   [leaderBoardApiSlice.reducerPath]: leaderBoardApiSlice.reducer,
 })
+export { store }
+export type { PageInitArgs }
 
 const apiMiddlewares = [
   userApiSlice.middleware,
@@ -38,3 +44,5 @@ export type PageInitArgs = {
 export type RootState = ReturnType<typeof rootReducer>
 
 export type AppDispatch = typeof store.dispatch
+export const useStore: () => typeof store = useStoreBase
+export const useDispatch: () => typeof store.dispatch = useDispatchBase

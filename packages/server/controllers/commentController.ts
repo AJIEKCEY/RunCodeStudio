@@ -17,16 +17,13 @@ const getComments = async (req: Request, res: Response) => {
     include: [
       {
         model: User,
-        as: 'user',
         attributes: ['id', 'firstname'], // Выбираем нужные поля
       },
       {
         model: Reaction,
-        as: 'reactions',
         include: [
           {
             model: User,
-            as: 'user',
             attributes: ['id', 'firstname'],
           },
         ],
@@ -37,16 +34,13 @@ const getComments = async (req: Request, res: Response) => {
         include: [
           {
             model: User,
-            as: 'user',
             attributes: ['id', 'firstname'],
           },
           {
             model: Reaction,
-            as: 'reactions',
             include: [
               {
                 model: User,
-                as: 'user',
                 attributes: ['id', 'firstname'],
               },
             ],

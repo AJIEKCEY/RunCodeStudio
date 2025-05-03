@@ -5,8 +5,12 @@ import styles from './Landing.module.css'
 import { AppRoutes } from '../../AppRoutes'
 import { Flex } from 'antd/lib'
 import { useAuth } from '../../hooks/useAuth'
-import { useYandexAuthMutation } from '../../store/features/user/userApiSlice'
+import {
+  userApiSlice,
+  useYandexAuthMutation,
+} from '../../store/features/user/userApiSlice'
 import { useTheme } from '../../context/ThemeContext'
+import { PageInitArgs } from '../../store/store'
 
 const REDIRECT_URI = `http://localhost:${__SERVER_PORT__}`
 
@@ -78,5 +82,12 @@ const Landing: React.FC = () => {
     </Flex>
   )
 }
-
+export const initLoginPage = async ({ dispatch }: PageInitArgs) => {
+  return dispatch(
+    userApiSlice.endpoints.getUser.initiate({
+      logign: '',
+      password: '',
+    })
+  )
+}
 export default Landing

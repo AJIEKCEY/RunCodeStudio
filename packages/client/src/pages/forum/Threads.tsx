@@ -125,5 +125,5 @@ const Threads: React.FC = () => {
     </Flex>
   )
 }
-
+export const initThreadsPage = () => Promise.resolve()
 export default Threads

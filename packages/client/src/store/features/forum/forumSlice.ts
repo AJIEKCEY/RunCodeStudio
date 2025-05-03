@@ -1,7 +1,6 @@
-// forumSlice.ts
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../../store'
+import type { RootState } from '../../types'
 import { ForumState, Thread, Category } from './types'
 import { forumApi } from './forumApiSlice'
 
@@ -39,5 +38,7 @@ export const forumSlice = createSlice({
 })
 
 export const { addNewThread } = forumSlice.actions
+
 export const getForumData = (state: RootState) => state.forum
+
 export default forumSlice.reducer

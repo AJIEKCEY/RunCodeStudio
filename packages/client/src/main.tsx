@@ -1,32 +1,28 @@
 import React from 'react'
-import { Provider as ReduxProvider } from 'react-redux'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
 import './index.css'
-import { store } from './store/store'
-import { AuthProvider } from './components/AuthContext'
-import { ThemeProvider } from './context/ThemeContext'
+import { createStore } from './store/utils/createStore'
+import { AppProviders } from './components/AppProviders'
+import { handlePromiseError } from './utils/errorHandler'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    try {
-      navigator.serviceWorker.register('/sw.js')
-    } catch (error) {
-      console.info(error)
-    }
+    handlePromiseError(
+      navigator.serviceWorker.register('/sw.js'),
+      'регистрация service worker'
+    )
   })
 }
+
+const store = createStore(window.APP_INITIAL_STATE)
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <React.StrictMode>
-    <ReduxProvider store={store}>
-      <AuthProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </AuthProvider>
-    </ReduxProvider>
+    <AppProviders store={store}>
+      <App />
+    </AppProviders>
   </React.StrictMode>
 )
