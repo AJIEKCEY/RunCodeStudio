@@ -21,6 +21,7 @@ const getComments = async (req: Request, res: Response) => {
       },
       {
         model: Reaction,
+        as: 'reactions', // Добавляем alias для реакций
         include: [
           {
             model: User,
@@ -38,6 +39,7 @@ const getComments = async (req: Request, res: Response) => {
           },
           {
             model: Reaction,
+            as: 'reactions', // Добавляем alias для реакций в ответах
             include: [
               {
                 model: User,
