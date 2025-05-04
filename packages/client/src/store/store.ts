@@ -1,32 +1,17 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import forumReducer from './features/forum/forumSlice'
+import { configureStore } from '@reduxjs/toolkit'
+import { useStore as useStoreBase, useDispatch as useDispatchBase } from 'react-redux'
+import { rootReducer } from './reducers'
+import { apiMiddlewares } from './middleware'
+import type { RootState, AppDispatch } from './types'
 import { userApiSlice } from './features/user/userApiSlice'
 import { leaderBoardApiSlice } from './features/leaderboard/leaderBoardApiSlice'
 import { forumApi } from './features/forum/forumApiSlice'
-import { useStore as useStoreBase, useDispatch as useDispatchBase } from 'react-redux'
-import { store } from './index'
-import type { PageInitArgs, RootState } from './types'
 
 declare global {
   interface Window {
     APP_INITIAL_STATE: RootState
   }
 }
-
-export const rootReducer = combineReducers({
-  forum: forumReducer,
-  [forumApi.reducerPath]: forumApi.reducer,
-  [userApiSlice.reducerPath]: userApiSlice.reducer,
-  [leaderBoardApiSlice.reducerPath]: leaderBoardApiSlice.reducer,
-})
-export { store }
-export type { PageInitArgs }
-
-const apiMiddlewares = [
-  userApiSlice.middleware,
-  leaderBoardApiSlice.middleware,
-  forumApi.middleware,
-]
 
 export const store = configureStore({
   reducer: rootReducer,
@@ -35,14 +20,17 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(...apiMiddlewares),
+    }).concat(
+      userApiSlice.middleware,
+      leaderBoardApiSlice.middleware,
+      forumApi.middleware
+    ),
 })
+
+export const useStore: () => typeof store = useStoreBase
+export const useDispatch: () => typeof store.dispatch = useDispatchBase
+
 export type PageInitArgs = {
   dispatch: AppDispatch
   state: RootState
 }
-export type RootState = ReturnType<typeof rootReducer>
-
-export type AppDispatch = typeof store.dispatch
-export const useStore: () => typeof store = useStoreBase
-export const useDispatch: () => typeof store.dispatch = useDispatchBase

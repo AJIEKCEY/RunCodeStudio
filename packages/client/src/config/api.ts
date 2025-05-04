@@ -1,5 +1,8 @@
-const API_HOST = import.meta.env.VITE_API_HOST || 'localhost'
-const API_PORT = import.meta.env.VITE_API_SERVER_PORT || '3001'
+export const API_URL = process.env.API_URL || 'http://localhost:3005'
+export const API_VERSION = process.env.API_VERSION || 'v1'
+
+const API_HOST = process.env.VITE_API_HOST || 'localhost'
+const API_PORT = process.env.VITE_API_SERVER_PORT || '3005'
 const API_PREFIX = '/api/v1'
 
 const SERVER_URL = `http://${API_HOST}:${API_PORT}`

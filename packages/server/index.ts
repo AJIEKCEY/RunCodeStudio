@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import path from 'path'
 import cors from 'cors'
 import express from 'express'
 import postRouter from './routes/posts'
@@ -10,7 +11,7 @@ import { errorHandler } from './middlewares/error'
 import { checkDatabaseConnection } from './db'
 import categoryRouter from './routes/categories'
 
-dotenv.config()
+dotenv.config({ path: path.join(__dirname, '../../.env') })
 const port = Number(process.env.SERVER_PORT) || 3001
 
 const startServer = async () => {

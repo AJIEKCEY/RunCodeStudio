@@ -32,10 +32,13 @@ export default defineConfig({
       srcDir: 'src',
       filename: 'sw.ts',
       strategies: 'injectManifest',
-      injectRegister: false,
+      injectRegister: 'auto',
       manifest: false,
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,ttf}'],
+      },
       injectManifest: {
-        injectionPoint: undefined,
+        injectionPoint: null,
       },
     }),
   ],
