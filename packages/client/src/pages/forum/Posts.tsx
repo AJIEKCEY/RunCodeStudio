@@ -25,14 +25,21 @@ import {
   useGetPostQuery,
 } from '../../store/features/forum/forumApiSlice'
 import { IconText } from './components/IconText'
-import CreatePostModal from './components/CreatePostModal'
+import CreateCommentModal from './components/CreateCommentModal'
 
 const Posts: React.FC = () => {
   const navigate = useNavigate()
   const { id: threadId } = useParams()
-  const { data: post, isLoading, error } = useGetPostQuery(Number(threadId))
-  const { data: comments } = useGetCommentsQuery(Number(threadId))
+  const postId = Number(threadId)
+  const { data: post, isLoading, error } = useGetPostQuery(postId)
+  const { data: comments } = useGetCommentsQuery(postId)
   const [showModal, setShowModal] = useState(false)
+  const [replyToCommentId, setReplyToCommentId] = useState<number | undefined>(undefined)
+
+  const handleAddComment = (rootCommentId?: number) => {
+    setReplyToCommentId(rootCommentId)
+    setShowModal(true)
+  }
 
   if (isLoading) return <div>Загрузка...</div>
   if (error) return <div>Ошибка загрузки поста</div>
@@ -94,6 +101,11 @@ const Posts: React.FC = () => {
                 />
               </Flex>,
               <span>{String('item.Reaction.type')}</span>,
+              <Flex
+                onClick={() => handleAddComment(item.id)}
+                style={{ cursor: 'pointer' }}>
+                <Button type="link" size="small">Ответить</Button>
+              </Flex>,
               item.user_id % 2 === 0 && (
                 <Flex
                   onClick={() => console.info('enter edit mode')}
@@ -131,12 +143,17 @@ const Posts: React.FC = () => {
           maxWidth: '400px',
           alignSelf: 'center',
         }}
-        onClick={() => setShowModal(curr => !curr)}>
-        добавить сообщение
+        onClick={() => handleAddComment()}>
+        добавить комментарий
       </Button>
-      <CreatePostModal
+      <CreateCommentModal
         isOpen={showModal}
-        closeModal={() => setShowModal(false)}
+        closeModal={() => {
+          setShowModal(false)
+          setReplyToCommentId(undefined)
+        }}
+        postId={postId}
+        rootCommentId={replyToCommentId}
       />
     </Flex>
   )

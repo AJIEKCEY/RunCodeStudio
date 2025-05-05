@@ -2,33 +2,31 @@
   {
     "id": 1,
     "type": "like",
-    "user_id": 2,
-    "comment_id": 1,
-    "createdAt": "2023-01-18T14:00:00Z",
-    "updatedAt": "2023-01-18T14:00:00Z"
+    "user_id": 1,
+    "comment_id": 1
   },
   {
     "id": 2,
     "type": "heart",
-    "user_id": 3,
-    "comment_id": 1,
-    "createdAt": "2023-01-18T15:00:00Z",
-    "updatedAt": "2023-01-18T15:00:00Z"
+    "user_id": 2,
+    "comment_id": 1
   },
   {
     "id": 3,
-    "type": "like",
-    "user_id": 1,
-    "comment_id": 3,
-    "createdAt": "2023-01-18T16:00:00Z",
-    "updatedAt": "2023-01-18T16:00:00Z"
+    "type": "laugh",
+    "user_id": 3,
+    "comment_id": 2
   },
   {
     "id": 4,
-    "type": "laugh",
-    "user_id": 2,
-    "comment_id": 5,
-    "createdAt": "2023-01-19T11:00:00Z",
-    "updatedAt": "2023-01-19T11:00:00Z"
+    "type": "like",
+    "user_id": 4,
+    "comment_id": 3
+  },
+  {
+    "id": 5,
+    "type": "angry",
+    "user_id": 5,
+    "comment_id": 3
   }
 ]

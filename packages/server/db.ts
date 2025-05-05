@@ -6,6 +6,7 @@ import { Post } from './models/Post'
 import { Category } from './models/Category'
 import { Comment } from './models/Comment'
 import { Theme } from './models/Theme'
+import { Reaction } from './models/Reaction'
 
 const envPath = path.join(__dirname, '../../.env')
 console.info('Loading .env from:', envPath)
@@ -33,7 +34,7 @@ export const sequelize = new Sequelize({
   username: POSTGRES_USER,
   password: String(POSTGRES_PASSWORD),
   database: POSTGRES_DB,
-  models: [User, Post, Category, Comment, Theme],
+  models: [User, Post, Category, Comment, Theme, Reaction],
 })
 
 export const checkDatabaseConnection = async () => {
