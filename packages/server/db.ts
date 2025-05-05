@@ -6,8 +6,11 @@ import { Post } from './models/Post'
 import { Category } from './models/Category'
 import { Comment } from './models/Comment'
 import { Theme } from './models/Theme'
+import { Reaction } from './models/Reaction'
 
-dotenv.config({ path: path.join(__dirname, '../../.env') })
+const envPath = path.join(__dirname, '../../.env')
+console.info('Loading .env from:', envPath)
+dotenv.config({ path: envPath })
 
 const {
   POSTGRES_USER,
@@ -17,6 +20,13 @@ const {
   POSTGRES_HOST,
 } = process.env
 
+console.info('Database connection config:', {
+  host: POSTGRES_HOST,
+  port: POSTGRES_PORT,
+  username: POSTGRES_USER,
+  database: POSTGRES_DB,
+})
+
 export const sequelize = new Sequelize({
   dialect: 'postgres',
   host: POSTGRES_HOST,
@@ -24,15 +34,28 @@ export const sequelize = new Sequelize({
   username: POSTGRES_USER,
   password: String(POSTGRES_PASSWORD),
   database: POSTGRES_DB,
-  models: [User, Post, Category, Comment, Theme],
+  models: [User, Post, Category, Comment, Theme, Reaction],
 })
 
 export const checkDatabaseConnection = async () => {
   try {
+    console.info('Attempting to connect to database with config:', {
+      host: POSTGRES_HOST,
+      port: POSTGRES_PORT,
+      username: POSTGRES_USER,
+      database: POSTGRES_DB,
+      password: POSTGRES_PASSWORD ? '***' : undefined
+    })
     await sequelize.authenticate()
+    console.info('Database connection established successfully')
     return true
-  } catch (error: Error) {
-    console.error('Нет подключения к БД:', error.message)
+  } catch (error: unknown) {
+    console.error('Database connection error:', error)
+    console.error('Error details:', error instanceof Error ? {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    } : 'Unknown error type')
     process.exit(1)
     return false
   }
