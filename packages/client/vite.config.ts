@@ -4,6 +4,14 @@ import dotenv from 'dotenv'
 import { VitePWA } from 'vite-plugin-pwa'
 dotenv.config()
 import path from 'path'
+import { createHtmlPlugin } from 'vite-plugin-html'
+
+// Переменные окружения для API
+const API_HOST = process.env.VITE_API_HOST || 'localhost'
+const API_SERVER_PORT = process.env.VITE_API_SERVER_PORT || process.env.SERVER_PORT || 3005
+const API_VERSION = process.env.VITE_API_VERSION || 'v1'
+const API_PATH = process.env.VITE_API_PATH || 'api'
+const API_URL = process.env.VITE_API_URL || `http://${API_HOST}:${API_SERVER_PORT}`
 
 export default defineConfig({
   server: {
@@ -12,6 +20,11 @@ export default defineConfig({
   },
   define: {
     __SERVER_PORT__: process.env.CLIENT_SERVER_PORT,
+    'import.meta.env.VITE_API_HOST': JSON.stringify(API_HOST),
+    'import.meta.env.VITE_API_SERVER_PORT': JSON.stringify(API_SERVER_PORT),
+    'import.meta.env.VITE_API_VERSION': JSON.stringify(API_VERSION),
+    'import.meta.env.VITE_API_PATH': JSON.stringify(API_PATH),
+    'import.meta.env.VITE_API_URL': JSON.stringify(API_URL),
   },
   build: {
     outDir: path.join(__dirname, 'dist/client'),
@@ -28,6 +41,18 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    createHtmlPlugin({
+      minify: true,
+      inject: {
+        data: {
+          API_URL,
+          API_VERSION,
+          API_HOST,
+          API_PORT: API_SERVER_PORT,
+          API_PATH,
+        },
+      },
+    }),
     VitePWA({
       srcDir: 'src',
       filename: 'sw.ts',

@@ -15,6 +15,7 @@ import {
 } from '@ant-design/icons'
 import { IconText } from './IconText'
 import styles from '../styles/comments.module.css'
+import UrlImageDisplay from './UrlImageDisplay'
 
 interface CommentProps {
   comment: IComment
@@ -87,7 +88,7 @@ const Comment: React.FC<CommentProps> = ({ comment, onReply, level = 0 }) => {
             </div>
           }
           description={
-            <Typography.Paragraph>{comment.text}</Typography.Paragraph>
+            <UrlImageDisplay text={comment.text} />
           }
         />
       </List.Item>

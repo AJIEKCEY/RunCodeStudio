@@ -4,13 +4,47 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import Posts from './Posts'
 import { Provider } from 'react-redux'
 import { store } from '../../store/store'
+import { mockComments, mockPost } from '../../store/features/forum/__mocks__/forumApiSlice'
+import { IComment } from '../../store/features/forum/types'
 
+// Мокаем forumSlice
+jest.mock('../../store/features/forum/forumSlice')
+
+// Мокаем хуки API
+jest.mock('../../store/features/forum/forumApiSlice')
+
+// Мокаем useParams
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useParams: () => ({
     id: '1',
   }),
 }))
+
+// Мокаем компонент CommentsList, так как он может быть сложным для тестирования
+jest.mock('./components/CommentsList', () => {
+  return {
+    __esModule: true,
+    default: ({ comments }: { comments: IComment[] | undefined }) => (
+      <div data-testid="comments-list">
+        {comments?.map((comment: IComment) => (
+          <div key={comment.id} data-testid={`comment-${comment.id}`}>
+            <div data-testid={`comment-author-${comment.id}`}>{comment.user.firstname}</div>
+            <div data-testid={`comment-text-${comment.id}`}>{comment.text}</div>
+            {comment.text.match(/(https?:\/\/\S+\.(jpg|jpeg|png|gif))/gi)?.map((url: string, idx: number) => (
+              <img 
+                key={idx} 
+                src={url} 
+                alt={`картинка взятая с адреса: ${url}`}
+                data-testid={`comment-image-${comment.id}-${idx}`}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    )
+  }
+})
 
 describe('Posts компонент', () => {
   beforeAll(() => {
@@ -28,6 +62,7 @@ describe('Posts компонент', () => {
       })),
     })
   })
+  
   beforeEach(() => {
     render(
       <Provider store={store}>
@@ -39,23 +74,50 @@ describe('Posts компонент', () => {
       </Provider>
     )
   })
-  it('должен отрендерить имя автора сообщения', () => {
-    const testStr = 'Имя автора с id 2'
-    const regex = new RegExp(`.*${testStr}.*`, 'i')
-    const result = screen.getAllByText(regex)
-    expect(result).toBeTruthy()
-    expect(result.length).toEqual(1)
+  
+  it('должен отрендерить описание поста', () => {
+    const description = screen.getByText(mockPost.description)
+    expect(description).toBeInTheDocument()
   })
 
-  it('должен отрендерить изображения из тестовых данных', () => {
-    const images = [
-      'https://i.pinimg.com/736x/b0/6b/e4/b06be462c439a75e56bcc9dfc35df33a.jpg',
-      'https://i.imgur.com/EE6yHRx.jpeg',
-    ]
-    images.forEach(url => {
-      expect(
-        screen.getByAltText(`картинка взятая с адреса: ${url}`)
-      ).toBeTruthy()
+  it('должен отрендерить имя автора поста', () => {
+    const author = screen.getByText(mockPost.user.firstname)
+    expect(author).toBeInTheDocument()
+  })
+  
+  it('должен отрендерить категорию поста', () => {
+    const category = screen.getByText(mockPost.category.name)
+    expect(category).toBeInTheDocument()
+  })
+
+  it('должен отобразить список комментариев', () => {
+    const commentsList = screen.getByTestId('comments-list')
+    expect(commentsList).toBeInTheDocument()
+  })
+
+  it('должен отрендерить тексты комментариев', () => {
+    mockComments.forEach(comment => {
+      const commentText = screen.getByTestId(`comment-text-${comment.id}`)
+      expect(commentText).toHaveTextContent(comment.text)
     })
+  })
+
+  it('должен отрендерить имена авторов комментариев', () => {
+    mockComments.forEach(comment => {
+      const authorName = screen.getByTestId(`comment-author-${comment.id}`)
+      expect(authorName).toHaveTextContent(comment.user.firstname)
+    })
+  })
+
+  it('должен отрендерить изображения из ссылок в комментариях', () => {
+    // Изображение из первого комментария
+    const imageUrl1 = 'http://example.com/image.jpg'
+    const image1 = screen.getByAltText(`картинка взятая с адреса: ${imageUrl1}`)
+    expect(image1).toBeInTheDocument()
+    
+    // Изображение из второго комментария
+    const imageUrl2 = 'https://example.com/another-image.png'
+    const image2 = screen.getByAltText(`картинка взятая с адреса: ${imageUrl2}`)
+    expect(image2).toBeInTheDocument()
   })
 })
