@@ -1,6 +1,7 @@
 import JsonSchemaValidator from 'ajv'
 import { ValidationError } from '../errors'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const validate = <T = any>(schema: any, data: T) => {
   const jsonSchemaValidator = new JsonSchemaValidator()
 
