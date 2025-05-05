@@ -4,19 +4,13 @@ import {
   Card,
   Space,
   Tag,
-  List,
   Button,
-  Avatar,
   Typography,
   Flex,
 } from 'antd/lib'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
   ClockCircleOutlined,
-  DislikeTwoTone,
-  EditOutlined,
-  LikeTwoTone,
-  RollbackOutlined,
   TagOutlined,
   UserOutlined,
 } from '@ant-design/icons'
@@ -24,8 +18,8 @@ import {
   useGetCommentsQuery,
   useGetPostQuery,
 } from '../../store/features/forum/forumApiSlice'
-import { IconText } from './components/IconText'
 import CreateCommentModal from './components/CreateCommentModal'
+import CommentsList from './components/CommentsList'
 
 const Posts: React.FC = () => {
   const navigate = useNavigate()
@@ -36,13 +30,18 @@ const Posts: React.FC = () => {
   const [showModal, setShowModal] = useState(false)
   const [replyToCommentId, setReplyToCommentId] = useState<number | undefined>(undefined)
 
-  const handleAddComment = (rootCommentId?: number) => {
-    setReplyToCommentId(rootCommentId)
+  const handleAddComment = (commentId?: number) => {
+    setReplyToCommentId(commentId)
     setShowModal(true)
+  }
+
+  const handleNavigateBack = () => {
+    navigate(-1)
   }
 
   if (isLoading) return <div>Загрузка...</div>
   if (error) return <div>Ошибка загрузки поста</div>
+  
   return (
     <Flex vertical gap="large">
       <Card>
@@ -60,78 +59,13 @@ const Posts: React.FC = () => {
           <Typography style={{ fontSize: 16 }}>{post?.description}</Typography>
         )}
       </Card>
-      <List
-        style={{ paddingInline: '1rem' }}
-        itemLayout="vertical"
-        dataSource={comments}
-        header={
-          <Button
-            onClick={() => navigate(-1)}
-            type="primary"
-            shape="default"
-            icon={<RollbackOutlined />}
-            size="large"
-          />
-        }
-        renderItem={item => (
-          <List.Item
-            key={item.id}
-            actions={[
-              <IconText
-                icon={ClockCircleOutlined}
-                text={new Date(item.createdAt).toLocaleDateString()}
-                key="list-vertical-star-o"
-              />,
-              <Flex
-                onClick={() => console.info('like')}
-                style={{ cursor: 'pointer' }}>
-                <IconText
-                  icon={LikeTwoTone}
-                  key="list-vertical-message"
-                  text={''}
-                />
-              </Flex>,
-              <Flex
-                onClick={() => console.info('dislike')}
-                style={{ cursor: 'pointer' }}>
-                <IconText
-                  icon={DislikeTwoTone}
-                  key="list-vertical-message"
-                  text={''}
-                />
-              </Flex>,
-              <span>{String('item.Reaction.type')}</span>,
-              <Flex
-                onClick={() => handleAddComment(item.id)}
-                style={{ cursor: 'pointer' }}>
-                <Button type="link" size="small">Ответить</Button>
-              </Flex>,
-              item.user_id % 2 === 0 && (
-                <Flex
-                  onClick={() => console.info('enter edit mode')}
-                  style={{ cursor: 'pointer' }}>
-                  <IconText
-                    icon={EditOutlined}
-                    key="list-vertical-message"
-                    text={''}
-                  />
-                </Flex>
-              ),
-            ]}>
-            <List.Item.Meta
-              avatar={
-                <Avatar src={`Здесь будет аватар автора ${item.user_id}`} />
-              }
-              title={`${item.user.firstname}`}
-              description={
-                <Flex vertical>
-                  <Typography.Paragraph>{item.text}</Typography.Paragraph>
-                </Flex>
-              }
-            />
-          </List.Item>
-        )}
+      
+      <CommentsList 
+        comments={comments}
+        onReply={handleAddComment}
+        onNavigateBack={handleNavigateBack}
       />
+      
       <Button
         className={styles['pulsing-button']}
         color="primary"
@@ -146,6 +80,7 @@ const Posts: React.FC = () => {
         onClick={() => handleAddComment()}>
         добавить комментарий
       </Button>
+      
       <CreateCommentModal
         isOpen={showModal}
         closeModal={() => {
@@ -158,5 +93,6 @@ const Posts: React.FC = () => {
     </Flex>
   )
 }
+
 export const initPostsPage = () => Promise.resolve()
 export default Posts
