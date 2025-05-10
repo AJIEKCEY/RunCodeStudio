@@ -12,6 +12,7 @@ import {
 import { Post } from './Post'
 import { Comment } from './Comment'
 import { Theme } from './Theme'
+import { Reaction } from './Reaction'
 
 @Table({
   tableName: 'users',
@@ -63,6 +64,11 @@ export class User extends Model<User> {
     foreignKey: 'user_id',
   })
   declare comments: Comment[]
+
+  @HasMany(() => Reaction, {
+    foreignKey: 'user_id',
+  })
+  declare reactions: Reaction[]
 
   @ForeignKey(() => Theme)
   @Column({

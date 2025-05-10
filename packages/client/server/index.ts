@@ -83,7 +83,20 @@ async function createServer() {
 
       // Заменяем комментарий на сгенерированную HTML-строку
       const html = template
-        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(
+          '<!--CSP-->',
+          `<meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data:;
+        connect-src 'self' http://localhost:${process.env.SERVER_PORT} localhost:24678;
+        frame-src 'none';
+        base-uri 'self';
+        form-action 'self';
+      ">`
+        )
+        .replace('<!--ssr-outlet-->', appHtml)
         .replace(
           `<!--ssr-initial-state-->`,
           `<script>window.APP_INITIAL_STATE = ${JSON.stringify(

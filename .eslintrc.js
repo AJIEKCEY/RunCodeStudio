@@ -16,6 +16,10 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-namespace': 'warn',
     'no-console': ['error', { allow: ['info', 'error', 'warn'] }],
     "no-restricted-imports": ["error", {
       "paths": [{
@@ -24,5 +28,10 @@ module.exports = {
       }]
     }]
   },
-  ignorePatterns: "packages/client/server/**/*.js"
+  ignorePatterns: [
+    "packages/client/server/**/*.js",
+    "packages/server/models/**/*.ts",
+    "packages/client/dist/**",
+    "**/dist/**"
+  ]
 }
