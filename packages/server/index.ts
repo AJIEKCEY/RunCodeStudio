@@ -23,6 +23,14 @@ const startServer = async () => {
 
     const app = express()
 
+    app.use((_, res, next) => {
+      res.setHeader(
+        'Content-Security-Policy',
+        "default-src 'none'; script-src 'none'; style-src 'none'; connect-src 'self'"
+      )
+      next()
+    })
+
     app.use(cors())
     app.use(express.json())
     app.use(sanitizeInput)

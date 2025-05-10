@@ -16,7 +16,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import LeaderBoard, {
   initLeaderBoardPage,
-} from './pages/leaderboard/LeaderBoard'
+} from './pages/Leaderboard/LeaderBoard'
 import Profile, { initProfilePage } from './pages/Profile/Profile'
 import { PageInitArgs } from './store/store'
 
