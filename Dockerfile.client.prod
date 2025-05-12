@@ -1,0 +1,27 @@
+FROM node:18-buster AS builder
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+COPY . .
+RUN yarn lerna bootstrap
+
+WORKDIR /app/packages/client
+RUN yarn build && ls -R dist
+
+RUN mv dist/server/assets/entry-server.js dist/server/entry-server.js
+
+FROM node:18-buster-slim AS production
+WORKDIR /app
+
+COPY --from=builder /app/packages/client/dist/ ./dist/
+
+COPY --from=builder /app/packages/client/server/ ./server/
+
+COPY --from=builder /app/packages/client/package.json ./
+
+RUN yarn install --production --frozen-lockfile
+
+EXPOSE 3000
+CMD ["node", "server/index.js"]

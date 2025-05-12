@@ -1,0 +1,10 @@
+ARG NODE_VERSION=18
+FROM node:${NODE_VERSION}-buster as development
+WORKDIR /app
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+COPY . .
+RUN yarn lerna bootstrap
+EXPOSE $CLIENT_SERVER_PORT
+CMD ["sh","-c","HOST=0.0.0.0 yarn dev --scope=client"]
+

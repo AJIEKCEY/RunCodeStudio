@@ -1,0 +1,9 @@
+ARG NODE_VERSION=18
+
+FROM node:${NODE_VERSION}-buster as development
+WORKDIR /app
+COPY . .
+RUN yarn install
+RUN chmod +x ./scripts/wait-for-it.sh
+EXPOSE $SERVER_PORT
+CMD ["./scripts/wait-for-it.sh", "${POSTGRES_HOST}:${POSTGRES_PORT}", "--", "yarn", "dev"]

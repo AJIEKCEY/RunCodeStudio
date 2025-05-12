@@ -4,6 +4,8 @@
   "scripts": {
     "bootstrap": "yarn && node init.js && lerna clean && yarn && lerna bootstrap",
     "build": "lerna run build",
+    "build:client": "lerna run build --scope=client",
+    "build:all": "yarn build && yarn build:client",
     "dev:client": "lerna run dev --scope=client",
     "dev:server": "lerna run dev --scope=server",
     "dev": "lerna run dev",
@@ -12,6 +14,7 @@
     "lint": "lerna run lint",
     "format": "lerna run format",
     "preview": "lerna run preview"
+
   },
   "license": "MIT",
   "workspaces": [

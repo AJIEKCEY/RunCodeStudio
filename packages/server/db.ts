@@ -27,13 +27,16 @@ export const sequelize = new Sequelize({
   models: [User, Post, Category, Comment, Theme],
 })
 
-export const checkDatabaseConnection = async () => {
+export const checkDatabaseConnection = async (): Promise<boolean> => {
   try {
     await sequelize.authenticate()
     return true
-  } catch (error: Error) {
-    console.error('Нет подключения к БД:', error.message)
-    process.exit(1)
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error('Ошибка в БД:', err.message)
+    } else {
+      console.error('Неизвестная ошибка в БД:', err)
+    }
     return false
   }
 }
