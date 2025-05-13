@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useAuth } from './useAuth'
-import { API_URLS } from '../config/api'
+import { useAuth } from '@hooks/useAuth'
+import { API_URLS } from '@config/api'
 
 export type ThemeName = 'light' | 'dark'
 interface Theme {

@@ -18,6 +18,21 @@ export default defineConfig({
     port: Number(process.env.CLIENT_SERVER_PORT) || 3002,
     host: true,
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@components': path.resolve(__dirname, './src/components'),
+      '@hooks': path.resolve(__dirname, './src/hooks'),
+      '@pages': path.resolve(__dirname, './src/pages'),
+      '@utils': path.resolve(__dirname, './src/utils'),
+      '@assets': path.resolve(__dirname, './src/assets'),
+      '@config': path.resolve(__dirname, './src/config'),
+      '@styles': path.resolve(__dirname, './src/styles'),
+      '@services': path.resolve(__dirname, './src/services'),
+      '@types': path.resolve(__dirname, './src/types'),
+      '@context': path.resolve(__dirname, './src/context'),
+    }
+  },
   define: {
     __SERVER_PORT__: process.env.CLIENT_SERVER_PORT,
     'import.meta.env.VITE_API_HOST': JSON.stringify(API_HOST),

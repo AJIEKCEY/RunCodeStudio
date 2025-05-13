@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Thread, Category, ThreadResponce, Post, IComment } from './types'
-import { API_URLS } from '../../../config/api'
+import { API_URLS } from '@config/api'
 
 export const forumApi = createApi({
   reducerPath: 'forumApi',
