@@ -1,12 +1,16 @@
 import { Backgournd } from '../core/Background'
-
 import { EntityProps, GameSettings, TypeDataTheme } from '../types'
 
 jest.mock('../core/sprites', () => ({
-  getThemeSprite: jest.fn(() => [
-    { image: new Image(), x: 0, speedModifier: 1 },
-    { image: new Image(), x: 0, speedModifier: 0.5 },
-  ]),
+  getThemeSprite: jest.fn(themeId => {
+    if (themeId === 'theme_1') {
+      return [
+        { image: new Image(), x: 0, speedModifier: 1 },
+        { image: new Image(), x: 0, speedModifier: 0.5 },
+      ]
+    }
+    throw new Error('invalid themeId')
+  }),
 }))
 
 describe('Backgournd class', () => {
@@ -20,7 +24,15 @@ describe('Backgournd class', () => {
     }
     mockProps = {
       ctx: mockCtx as unknown as CanvasRenderingContext2D,
-      settings: { themeId: '1', speed: 5 } as GameSettings,
+      settings: {
+        playerId: 'test-player',
+        themeId: 'theme_1',
+        speed: 5,
+        timeElapsed: 0,
+        canvasWidth: 800,
+        canvasHeight: 600,
+        bgOfsetY: 120,
+      } as GameSettings,
     }
     background = new Backgournd(mockProps)
   })

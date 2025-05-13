@@ -1,6 +1,7 @@
 {
-  "name": "server",
+  "name": "@runcode/server",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "scripts": {
     "build": "tsc --p ./tsconfig.prod.json",
@@ -8,7 +9,7 @@
     "dev": "cross-env NODE_ENV=development nodemon index.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest .",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "seed:users": "ts-node seeders/users/users.seeder.ts",
     "seed:categories": "ts-node seeders/categories/categories.seeder.ts",
     "seed:posts": "ts-node seeders/posts/posts.seeder.ts",
