@@ -14,9 +14,13 @@ const API_PATH = process.env.VITE_API_PATH || 'api'
 const API_URL = process.env.VITE_API_URL || `http://${API_HOST}:${API_SERVER_PORT}`
 
 export default defineConfig({
+  base: '/',
+  optimizeDeps: {
+    include: ['antd'],
+  },
   server: {
     port: Number(process.env.CLIENT_SERVER_PORT) || 3002,
-    host: true,
+    host: process.env.HOST || 'localhost',
   },
   resolve: {
     alias: {
@@ -34,7 +38,7 @@ export default defineConfig({
     }
   },
   define: {
-    __SERVER_PORT__: process.env.CLIENT_SERVER_PORT,
+    __SERVER_PORT__: process.env.CLIENT_SERVER_PORT || 3000,
     'import.meta.env.VITE_API_HOST': JSON.stringify(API_HOST),
     'import.meta.env.VITE_API_SERVER_PORT': JSON.stringify(API_SERVER_PORT),
     'import.meta.env.VITE_API_VERSION': JSON.stringify(API_VERSION),

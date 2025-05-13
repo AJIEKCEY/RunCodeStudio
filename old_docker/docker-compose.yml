@@ -3,8 +3,8 @@ services:
     container_name: prakticum-client
     image: prakticum-client
     build:
-      context: .
-      dockerfile: Dockerfile.client
+      context: ..
+      dockerfile: ../Dockerfile.client
       target: production
       args:
         CLIENT_PORT: ${CLIENT_SERVER_PORT}
@@ -19,8 +19,8 @@ services:
     container_name: prakticum-client-dev
     image: prakticum-client-dev
     build:
-      context: .
-      dockerfile: Dockerfile.client
+      context: ..
+      dockerfile: ../Dockerfile.client
       target: development
       args:
         CLIENT_PORT: ${CLIENT_SERVER_PORT}
@@ -38,7 +38,7 @@ services:
     container_name: prakticum-server
     image: prackicum-server
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile.server
       target: production
       args:
@@ -69,7 +69,7 @@ services:
     container_name: prakticum-server-dev
     image: prakticum-server-dev
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile.server
       target: development
       args:

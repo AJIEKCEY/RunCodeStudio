@@ -37,7 +37,7 @@ export const sequelize = new Sequelize({
   models: [User, Post, Category, Comment, Theme, Reaction],
 })
 
-export const checkDatabaseConnection = async () => {
+export const checkDatabaseConnection = async (): Promise<boolean> => {
   try {
     console.info('Attempting to connect to database with config:', {
       host: POSTGRES_HOST,

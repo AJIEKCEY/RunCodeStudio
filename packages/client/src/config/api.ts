@@ -26,13 +26,13 @@ export const SERVER_URL = `http://${API_HOST}:${API_PORT}`;
 
 // Формируем базовый URL API
 export const BASE_API_URL = hasApiVersion
-  ? `${SERVER_URL}/${API_PATH}` 
+  ? `${SERVER_URL}/${API_PATH}`
   : `${SERVER_URL}/${API_PATH}/${API_VERSION}`;
 
 // Объект с URL для API
 export const API_URLS = {
   themes: `${BASE_API_URL}/themes`,
   BASEAPI_URL: BASE_API_URL,
-  userTheme: (userId: string | number) => 
+  userTheme: (userId: string | number) =>
     `${BASE_API_URL}/users/${userId}/theme`,
 };
