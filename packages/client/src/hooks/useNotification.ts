@@ -28,11 +28,19 @@ export type NotificationContextType = {
 }
 
 const getLocalStorage = (key: string) => {
+  if (typeof window === 'undefined') {
+    console.warn('useLocalStorage:только для браузерного окружения')
+    return null
+  }
   const value = localStorage.getItem(key)
   return value ? JSON.parse(value) : null
 }
 
 const setLocalStorage = (key: string, data: unknown) => {
+  if (typeof window === 'undefined') {
+    console.warn('setLocalStorage:только для браузерного окружения')
+    return
+  }
   localStorage.setItem(key, JSON.stringify(data))
 }
 

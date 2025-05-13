@@ -1,35 +1,30 @@
 import React from 'react'
-import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom/client'
-import { ConfigProvider } from 'antd/lib'
-
 import App from './App'
 import './index.css'
-import { store } from './store/store'
+import { createStore } from './store/utils/createStore'
+import { AppProviders } from './components/AppProviders'
+import { handlePromiseError } from './utils/errorHandler'
+import { ConfigProvider } from 'antd/lib'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    try {
-      navigator.serviceWorker.register('/sw.js')
-    } catch (error) {
-      console.info(error)
-    }
+    handlePromiseError(
+      navigator.serviceWorker.register('/sw.js'),
+      'регистрация service worker'
+    )
   })
 }
+
+const store = createStore(window.APP_INITIAL_STATE)
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <React.StrictMode>
-    <Provider store={store}>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: '#8076a3',
-            fontSize: 18,
-          },
-        }}>
+    <ConfigProvider>
+      <AppProviders store={store}>
         <App />
-      </ConfigProvider>
-    </Provider>
+      </AppProviders>
+    </ConfigProvider>
   </React.StrictMode>
 )

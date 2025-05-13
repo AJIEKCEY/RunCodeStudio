@@ -15,5 +15,5 @@ const NotFound = () => {
     </Flex>
   )
 }
-
+export const initNotFoundPage = () => Promise.resolve()
 export default NotFound

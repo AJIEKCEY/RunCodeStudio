@@ -1,4 +1,4 @@
-import { message, Switch } from 'antd'
+import { message, Switch } from 'antd/lib'
 import NotificationItem from './NotificationItem'
 import style from './notification.module.css'
 import { useNotificationContext } from './NotificationContext'

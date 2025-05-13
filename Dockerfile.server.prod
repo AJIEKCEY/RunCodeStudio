@@ -1,0 +1,26 @@
+ARG NODE_VERSION=18
+FROM node:${NODE_VERSION}-buster AS builder
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+COPY . .
+RUN yarn lerna bootstrap
+
+RUN yarn build --scope=server
+
+FROM node:${NODE_VERSION}-buster-slim AS production
+WORKDIR /app
+
+COPY --from=builder /app/packages/server/dist/ ./
+COPY --from=builder /app/packages/server/package.json ./
+
+COPY --from=builder /app/scripts/wait-for-it.sh ./scripts/wait-for-it.sh
+RUN chmod +x ./scripts/wait-for-it.sh
+
+RUN yarn install --production --frozen-lockfile
+
+EXPOSE 3001
+CMD ["sh", "-c", "./scripts/wait-for-it.sh postgres:5432 -- node index.js"]
+

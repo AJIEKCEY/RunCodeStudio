@@ -1,5 +1,5 @@
 import { BellOutlined } from '@ant-design/icons'
-import { Button, Drawer } from 'antd'
+import { Button, Drawer } from 'antd/lib'
 import style from './notification.module.css'
 import { useState } from 'react'
 import NotificationDrawer from './NotificationDrawer'

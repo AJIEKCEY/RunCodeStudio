@@ -5,9 +5,14 @@ import styles from './Landing.module.css'
 import { AppRoutes } from '../../AppRoutes'
 import { Flex } from 'antd/lib'
 import { useAuth } from '../../hooks/useAuth'
-import { useYandexAuthMutation } from '../../store/features/user/userApiSlice'
+import {
+  userApiSlice,
+  useYandexAuthMutation,
+} from '../../store/features/user/userApiSlice'
+import { useTheme } from '../../context/ThemeContext'
+import { PageInitArgs } from '../../store/store'
 
-const REDIRECT_URI = 'http://localhost:3000'
+const REDIRECT_URI = `http://localhost:${__SERVER_PORT__}`
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
@@ -19,6 +24,7 @@ const Landing: React.FC = () => {
   const query = useQuery()
   const code = query.get('code')
   const [yandexAuth] = useYandexAuthMutation()
+  const { settings } = useTheme()
 
   const handleButtonClick = () => {
     navigate('/' + AppRoutes.PLAY)
@@ -39,8 +45,20 @@ const Landing: React.FC = () => {
     }
   }, [code, login, navigate, yandexAuth])
 
+  const background =
+    settings?.background ||
+    'linear-gradient(135deg, #5f00b5, #4c0099 40%, #30006d)'
+  const textColor = settings?.textColor || '#ffffff'
+  const buttonColor = settings?.buttonColor || '#7fff00'
+  const buttonTextColor = settings?.buttonTextColor || '#000000'
+
   return (
-    <Flex vertical gap="large" align="center" className="page">
+    <Flex
+      vertical
+      gap="large"
+      align="center"
+      className="page"
+      style={{ background: background, color: textColor }}>
       <h1 className={styles.title}>
         Добро пожаловать в<span className={styles.pixelBlock}>RunCode!</span>
       </h1>
@@ -51,10 +69,25 @@ const Landing: React.FC = () => {
         такими как Mario, Sonic Dash.
       </p>
       <div className={styles.LandingButton}>
-        <Button onClick={handleButtonClick}>Начать игру</Button>
+        <Button
+          onClick={handleButtonClick}
+          style={{
+            backgroundColor: buttonColor,
+            borderColor: buttonColor,
+            color: buttonTextColor,
+          }}>
+          Начать игру
+        </Button>
       </div>
     </Flex>
   )
 }
-
+export const initLoginPage = async ({ dispatch }: PageInitArgs) => {
+  return dispatch(
+    userApiSlice.endpoints.getUser.initiate({
+      logign: '',
+      password: '',
+    })
+  )
+}
 export default Landing

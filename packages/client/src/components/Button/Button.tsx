@@ -3,13 +3,15 @@ import styles from './Button.module.css'
 
 type Props = {
   onClick: () => void
+  style?: React.CSSProperties
 }
 
 export const Button = ({
   onClick,
+  style,
   children,
 }: React.PropsWithChildren<Props>) => (
-  <button onClick={onClick} className={styles.button}>
+  <button onClick={onClick} style={style} className={styles.button}>
     {children}
   </button>
 )

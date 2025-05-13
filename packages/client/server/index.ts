@@ -4,11 +4,19 @@ dotenv.config()
 import express, { Request as ExpressRequest } from 'express'
 import path from 'path'
 import fs from 'fs/promises'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 import { createServer as createViteServer, ViteDevServer } from 'vite'
 
-const port = process.env.PORT || 3000
+const port = process.env.CLIENT_SERVER_PORT || 3002
 const clientPath = path.join(__dirname, '..')
 const isDev = process.env.NODE_ENV === 'development'
+
+export const authMiddleware = createProxyMiddleware({
+  changeOrigin: true,
+  cookieDomainRewrite: { '*': '' },
+  pathRewrite: { '^/auth': '' },
+  target: 'https://ya-praktikum.tech/api/v2',
+})
 
 async function createServer() {
   const app = express()
@@ -27,6 +35,9 @@ async function createServer() {
       express.static(path.join(clientPath, 'dist/client'), { index: false })
     )
   }
+
+  app.use('/auth', authMiddleware)
+
   app.get('*', async (req, res, next) => {
     const url = req.originalUrl
 
@@ -71,12 +82,19 @@ async function createServer() {
       const { html: appHtml, initialState } = await render(req)
 
       // Заменяем комментарий на сгенерированную HTML-строку
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const html = template
+        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(
+          `<!--ssr-initial-state-->`,
+          `<script>window.APP_INITIAL_STATE = ${JSON.stringify(
+            initialState
+          )}</script>`
+        )
 
       // Завершаем запрос и отдаём HTML-страницу
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
-      vite.ssrFixStacktrace(e as Error)
+      vite?.ssrFixStacktrace(e as Error)
       next(e)
     }
   })

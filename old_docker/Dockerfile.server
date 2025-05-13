@@ -1,5 +1,4 @@
-ARG NODE_VERSION=16
-ARG SERVER_PORT=3001
+ARG NODE_VERSION=18
 
 FROM node:$NODE_VERSION-buster as base
 
@@ -9,6 +8,7 @@ FROM base as builder
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
+RUN apt-get update && apt install -y netcat
 
 COPY . .
 
@@ -21,7 +21,19 @@ WORKDIR /app
 
 COPY --from=builder /app/packages/server/dist/ /app/
 COPY --from=builder /app/packages/server/package.json /app/package.json
+COPY --from=builder /app/scripts/wait-for-it.sh /app/scripts/wait-for-it.sh
 RUN yarn install --production=true
+RUN chmod +x /app/scripts/wait-for-it.sh
 
 EXPOSE $SERVER_PORT
-CMD [ "node", "/app/index.js" ]
+
+
+FROM base as development
+WORKDIR /app
+
+COPY --from=builder /app/packages/server/ /app/
+COPY --from=builder /app/scripts/wait-for-it.sh /app/scripts/wait-for-it.sh
+RUN yarn install
+RUN chmod +x /app/scripts/wait-for-it.sh
+
+EXPOSE $SERVER_PORT

@@ -1,22 +1,15 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import forumSlice from './features/forum/forumSlice'
-import { userApiSlice } from './features/user/userApiSlice'
-import { leaderBoardApiSlice } from './features/leaderboard/leaderBoardApiSlice'
+import { useStore as useStoreBase, useDispatch as useDispatchBase } from 'react-redux'
+import { store } from './index'
+import type { PageInitArgs, RootState } from './types'
 
-const rootReducer = combineReducers({
-  forum: forumSlice,
-  [userApiSlice.reducerPath]: userApiSlice.reducer,
-  [leaderBoardApiSlice.reducerPath]: leaderBoardApiSlice.reducer,
-})
+declare global {
+  interface Window {
+    APP_INITIAL_STATE: RootState
+  }
+}
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }).concat(userApiSlice.middleware, leaderBoardApiSlice.middleware),
-})
+export { store }
+export type { PageInitArgs }
 
-export type RootState = ReturnType<typeof store.getState>
-
-export type AppDispatch = typeof store.dispatch
+export const useStore: () => typeof store = useStoreBase
+export const useDispatch: () => typeof store.dispatch = useDispatchBase

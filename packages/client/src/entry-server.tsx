@@ -1,20 +1,21 @@
 import ReactDOM from 'react-dom/server'
 import { Request as ExpressRequest } from 'express'
-import { Provider } from 'react-redux'
-import {
-  createStaticHandler,
-  createStaticRouter,
-  StaticRouterProvider,
-} from 'react-router-dom/server'
+import { createStaticHandler } from 'react-router-dom/server'
 
-import { createFetchRequest } from './entry-server.utils'
-import { routConfig } from './AppRoutes'
+import { createFetchRequest, createUrl } from './entry-server.utils'
+import AppRouter, { routConfig } from './AppRoutes'
 import './index.css'
-import { store } from './store/store'
-import { AuthProvider } from './components/AuthContext'
+
+import { matchRoutes } from 'react-router-dom'
+import { createStore } from './store/utils/createStore'
+import { preloadData } from './store/utils/preloadData'
+import { AppProviders } from './components/AppProviders'
+import { handleError } from './utils/errorHandler'
 
 export const render = async (req: ExpressRequest) => {
-  const { query, dataRoutes } = createStaticHandler(routConfig)
+  const store = createStore()
+
+  const { query } = createStaticHandler(routConfig)
 
   const fetchRequest = createFetchRequest(req)
 
@@ -23,16 +24,35 @@ export const render = async (req: ExpressRequest) => {
   if (context instanceof Response) {
     throw context
   }
+  const url = createUrl(req)
+  const foundRoutes = matchRoutes(routConfig, url)
+  if (!foundRoutes) {
+    throw new Error(`Страница не найдена: ${url}`)
+  }
+  const [
+    {
+      route: { fetchData },
+    },
+  ] = foundRoutes
 
-  const router = createStaticRouter(dataRoutes, context)
+  await preloadData(store)
+
+  if (fetchData) {
+    await handleError(
+      fetchData({
+        dispatch: store.dispatch,
+        state: store.getState(),
+      }),
+      'инициализация страницы'
+    )
+  }
 
   return {
     html: ReactDOM.renderToString(
-      <Provider store={store}>
-        <AuthProvider>
-          <StaticRouterProvider router={router} context={context} />
-        </AuthProvider>
-      </Provider>
+      <AppProviders store={store} location={req.url}>
+        <AppRouter />
+      </AppProviders>
     ),
+    initialState: store.getState(),
   }
 }

@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "text": "Это первый комментарий к посту",
+    "post_id": 1,
+    "user_id": 1,
+    "root_comment": null,
+    "createdAt": "2023-01-18T10:00:00Z",
+    "updatedAt": "2023-01-18T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "text": "Это второй комментарий к посту",
+    "post_id": 1,
+    "user_id": 2,
+    "root_comment": null,
+    "createdAt": "2023-01-18T11:00:00Z",
+    "updatedAt": "2023-01-18T11:00:00Z"
+  },
+  {
+    "id": 3,
+    "text": "Это ответ на первый комментарий",
+    "post_id": 1,
+    "user_id": 3,
+    "root_comment": 1,
+    "createdAt": "2023-01-18T12:00:00Z",
+    "updatedAt": "2023-01-18T12:00:00Z"
+  },
+  {
+    "id": 4,
+    "text": "Это ответ на ответ",
+    "post_id": 1,
+    "user_id": 1,
+    "root_comment": 3,
+    "createdAt": "2023-01-18T13:00:00Z",
+    "updatedAt": "2023-01-18T13:00:00Z"
+  },
+  {
+    "id": 5,
+    "text": "Еще один корневой комментарий",
+    "post_id": 2,
+    "user_id": 2,
+    "root_comment": null,
+    "createdAt": "2023-01-19T10:00:00Z",
+    "updatedAt": "2023-01-19T10:00:00Z"
+  }
+]

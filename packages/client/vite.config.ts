@@ -6,11 +6,23 @@ dotenv.config()
 import path from 'path'
 
 export default defineConfig({
+  base: '/',
+  optimizeDeps: {
+    include: ['antd'],
+  },
   server: {
-    port: Number(process.env.CLIENT_PORT) || 3000,
+    // hmr: false,
+    // hmr: {
+    //   protocol: 'ws',
+    //   host: 'localhost',
+    //   port: 80,
+    //   clientPort: 80,
+    // },
+    port: Number(process.env.CLIENT_SERVER_PORT) || 3000,
+    host: process.env.HOST || 'localhost',
   },
   define: {
-    __SERVER_PORT__: process.env.SERVER_PORT,
+    __SERVER_PORT__: JSON.stringify(process.env.CLIENT_SERVER_PORT) || 3000,
   },
   build: {
     outDir: path.join(__dirname, 'dist/client'),

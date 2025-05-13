@@ -109,5 +109,5 @@ const Registration = () => {
     </Flex>
   )
 }
-
+export const initRegistrationPage = () => Promise.resolve()
 export default Registration

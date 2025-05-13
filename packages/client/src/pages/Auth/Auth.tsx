@@ -6,7 +6,6 @@ import { useSignInUserMutation } from '../../store/features/user/userApiSlice'
 import styles from './Auth.module.css'
 
 const { Title } = Typography
-
 interface LoginFormValues {
   username: string
   password: string
@@ -38,7 +37,7 @@ const Auth = () => {
     signIn({ login: values.username, password: values.password })
   }
 
-  const REDIRECT_URI = 'http://localhost:3000'
+  const REDIRECT_URI = `http://localhost:${__SERVER_PORT__}`
   const handleYandexLogin = async () => {
     try {
       const res = await fetch(
