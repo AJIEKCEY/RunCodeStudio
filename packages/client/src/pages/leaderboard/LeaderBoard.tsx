@@ -5,6 +5,7 @@ import {
   useGetLeaderBoardMutation,
 } from '../../store/features/leaderboard/leaderBoardApiSlice'
 import { PageInitArgs } from '../../store/store'
+import { leaderBoardResponse } from '../../store/features/leaderboard/type'
 
 const { Title, Text } = Typography
 
@@ -12,14 +13,6 @@ export type leaderBoardDataTableType = {
   nickname: string
   score: number
   date: string
-}
-
-type LeaderBoardResponse = {
-  data: {
-    nickname: string
-    rundCodeStudionGameScore: number
-    date: string
-  }
 }
 
 const columns: TableColumnsType<leaderBoardDataTableType> = [
@@ -66,9 +59,9 @@ const LeaderBoard: React.FC = () => {
 
   useEffect(() => {
     getLeaderBoardData({ cursor: 0, limit: 100 }).then((response) => {
-      if ('data' in response) {
+      if ('data' in response && Array.isArray(response.data)) {
         const mappedData: leaderBoardDataTableType[] = response.data.map(
-          (item: LeaderBoardResponse) => ({
+          (item: leaderBoardResponse) => ({
             nickname: item.data.nickname,
             score: item.data.rundCodeStudionGameScore,
             date: item.data.date,
