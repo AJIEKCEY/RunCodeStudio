@@ -1,20 +1,13 @@
-export const getPluralWord =
-  (single: string, small: string, plural: string) => (count: number) => {
-    const lastDigit = count % 10
-    const lastTwoDigits = count % 100
+export const getPluralForm = (count: number, forms: string[]): string => {
+  const cases = [2, 0, 1, 1, 1, 2]
+  const index = count % 100 > 4 && count % 100 < 20 ? 2 : cases[Math.min(count % 10, 5)]
+  return forms[index]
+}
 
-    if (lastDigit === 1 && lastTwoDigits !== 11) {
-      return single
-    } else if (
-      [2, 3, 4].includes(lastDigit) &&
-      ![12, 13, 14].includes(lastTwoDigits)
-    ) {
-      return small
-    } else {
-      return plural
-    }
-  }
+export const getTimeWord = (count: number): string => {
+  return getPluralForm(count, ['минута', 'минуты', 'минут'])
+}
 
-export const coinsWords = getPluralWord('монету', 'монеты', 'монет')
-
-export const secondsWords = getPluralWord('секунду', 'секунды', 'секунд')
+export const getScoreWord = (count: number): string => {
+  return getPluralForm(count, ['очко', 'очка', 'очков'])
+}

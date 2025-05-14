@@ -26,19 +26,11 @@ export const AppProviders = ({ children, store, location }: AppProvidersProps) =
     <Provider store={store}>
       <AuthProvider>
         <NotificationProvider>
-          <ThemeProvider>
-            {children}
-          </ThemeProvider>
+          <ThemeProvider>{children}</ThemeProvider>
         </NotificationProvider>
       </AuthProvider>
     </Provider>
   )
 
-  return location ? (
-    <StaticRouter location={location}>
-      {providers}
-    </StaticRouter>
-  ) : (
-    providers
-  )
-} 
+  return location ? <StaticRouter location={location}>{providers}</StaticRouter> : providers
+}

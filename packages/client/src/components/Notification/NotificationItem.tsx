@@ -7,9 +7,7 @@ const NotificationItem = (props: NotificationType) => {
   return (
     <div className={style['notification-item']}>
       <div className={style.title}>{title}</div>
-      {options?.body && (
-        <div className={style.description}>{options?.body}</div>
-      )}
+      {options?.body && <div className={style.description}>{options?.body}</div>}
       <div className={style['notification-close']}>
         <CloseCircleOutlined />
       </div>

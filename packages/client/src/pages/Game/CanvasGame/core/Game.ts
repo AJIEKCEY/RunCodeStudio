@@ -105,7 +105,7 @@ export class Game {
   }
 
   updateObstacleWithPlayer() {
-    this.obstacles.forEach(obstacle => {
+    this.obstacles.forEach((obstacle) => {
       if (this.checkCollision(this.player, obstacle)) {
         this.player.setAnimation('dead')
         this.speed = 0
@@ -116,7 +116,7 @@ export class Game {
       }
 
       this.obstacles = this.obstacles.filter(
-        obstacle => obstacle.getBounds().x + obstacle.getBounds().width >= 0
+        (obstacle) => obstacle.getBounds().x + obstacle.getBounds().width >= 0
       )
     })
   }
@@ -135,8 +135,8 @@ export class Game {
 
     if (this.player.isDead()) {
       this.theme.animation(0)
-      this.obstacles.forEach(obstacle => obstacle.animation(0))
-      this.coins.forEach(coin => coin.animation(0))
+      this.obstacles.forEach((obstacle) => obstacle.animation(0))
+      this.coins.forEach((coin) => coin.animation(0))
 
       this.player.animation(1)
 
@@ -148,9 +148,9 @@ export class Game {
     this.theme.animation(this.speed)
     this.player.animation(this.speed)
 
-    this.obstacles.forEach(obstacle => obstacle.animation(this.speed))
+    this.obstacles.forEach((obstacle) => obstacle.animation(this.speed))
     this.updateObstacleWithPlayer()
-    this.coins.forEach(coins => coins.animation(this.speed))
+    this.coins.forEach((coins) => coins.animation(this.speed))
     this.updateCoinWithPlayer()
 
     this.drawUI()
@@ -159,7 +159,7 @@ export class Game {
   }
 
   triggerGameOverCallback() {
-    this.gameOverCallback.forEach(el => el(true))
+    this.gameOverCallback.forEach((el) => el(true))
   }
   destroy() {
     if (this.animationFrameId) {

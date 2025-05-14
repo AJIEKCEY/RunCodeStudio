@@ -2,11 +2,13 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import forumSlice from '../features/forum/forumSlice'
 import { leaderBoardApiSlice } from '../features/leaderboard/leaderBoardApiSlice'
 import { userApiSlice } from '../features/user/userApiSlice'
+import { forumApi } from '../features/forum/forumApiSlice'
 
 const rootReducer = combineReducers({
   forum: forumSlice,
   [userApiSlice.reducerPath]: userApiSlice.reducer,
   [leaderBoardApiSlice.reducerPath]: leaderBoardApiSlice.reducer,
+  [forumApi.reducerPath]: forumApi.reducer,
 })
 
 /**
@@ -18,11 +20,11 @@ export const createStore = (preloadedState?: Partial<ReturnType<typeof rootReduc
   return configureStore({
     reducer: rootReducer,
     preloadedState,
-    middleware: getDefaultMiddleware =>
+    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
-      }).concat(userApiSlice.middleware, leaderBoardApiSlice.middleware),
+      }).concat(userApiSlice.middleware, leaderBoardApiSlice.middleware, forumApi.middleware),
   })
 }
 
-export type AppStore = ReturnType<typeof createStore> 
+export type AppStore = ReturnType<typeof createStore>

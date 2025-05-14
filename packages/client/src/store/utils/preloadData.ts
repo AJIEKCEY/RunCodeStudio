@@ -7,23 +7,27 @@ export const preloadData = async (store: AppStore) => {
     // Запускаем все необходимые запросы параллельно
     const preloadPromises = [
       // Запрос лидерборда
-      store.dispatch(
-        leaderBoardApiSlice.endpoints.getLeaderBoard.initiate({
-          cursor: 0,
-          limit: 100,
-        })
-      ).unwrap().catch(error => {
-        console.error('Ошибка загрузки лидерборда:', error)
-        return null
-      }),
-      
+      store
+        .dispatch(
+          leaderBoardApiSlice.endpoints.getLeaderBoard.initiate({
+            cursor: 0,
+            limit: 100,
+          })
+        )
+        .unwrap()
+        .catch((error) => {
+          console.error('Ошибка загрузки лидерборда:', error)
+          return null
+        }),
+
       // Запрос данных пользователя
-      store.dispatch(
-        userApiSlice.endpoints.getUser.initiate(undefined)
-      ).unwrap().catch(error => {
-        console.error('Ошибка загрузки данных пользователя:', error)
-        return null
-      })
+      store
+        .dispatch(userApiSlice.endpoints.getUser.initiate(undefined))
+        .unwrap()
+        .catch((error) => {
+          console.error('Ошибка загрузки данных пользователя:', error)
+          return null
+        }),
     ]
 
     // Ждем завершения всех запросов
@@ -34,4 +38,4 @@ export const preloadData = async (store: AppStore) => {
     console.error('Ошибка при предварительной загрузке данных:', error)
     return store.getState()
   }
-} 
+}

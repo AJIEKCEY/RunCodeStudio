@@ -2,10 +2,7 @@ import { Input, Button, Form, message } from 'antd/lib'
 import React, { useEffect } from 'react'
 
 import { UserProfile } from '../../../store/features/user/types'
-import {
-  VALIDATION_RULES,
-  VALIDATION_MESSAGES,
-} from '../../../utils/validation'
+import { VALIDATION_RULES, VALIDATION_MESSAGES } from '../../../utils/validation'
 import { useUpdateUserInfoMutation } from '../../../store/features/user/userApiSlice'
 import { isErrorResponse } from '../../../utils/typeguard/isErrorResponse'
 
@@ -72,7 +69,8 @@ const InfoForm = (props: UserInfoProps) => {
         onFinish={onFinish}
         style={{ minWidth: 600 }}
         scrollToFirstError
-        initialValues={props}>
+        initialValues={props}
+      >
         <Form.Item
           name="first_name"
           label="Имя "
@@ -81,7 +79,8 @@ const InfoForm = (props: UserInfoProps) => {
               pattern: VALIDATION_RULES.username,
               message: VALIDATION_MESSAGES.username,
             },
-          ]}>
+          ]}
+        >
           <Input placeholder="Имя пользователя" />
         </Form.Item>
         <Form.Item
@@ -92,7 +91,8 @@ const InfoForm = (props: UserInfoProps) => {
               pattern: VALIDATION_RULES.second_name,
               message: VALIDATION_MESSAGES.second_name,
             },
-          ]}>
+          ]}
+        >
           <Input placeholder="Фамилия пользователя" />
         </Form.Item>
         <Form.Item
@@ -103,7 +103,8 @@ const InfoForm = (props: UserInfoProps) => {
               pattern: VALIDATION_RULES.username,
               message: VALIDATION_MESSAGES.username,
             },
-          ]}>
+          ]}
+        >
           <Input placeholder="Никнейм пользователя" />
         </Form.Item>
         <Form.Item
@@ -114,7 +115,8 @@ const InfoForm = (props: UserInfoProps) => {
               pattern: VALIDATION_RULES.phone,
               message: VALIDATION_MESSAGES.phone,
             },
-          ]}>
+          ]}
+        >
           <Input placeholder="Телефон" />
         </Form.Item>
         <Form.Item
@@ -125,7 +127,8 @@ const InfoForm = (props: UserInfoProps) => {
               pattern: VALIDATION_RULES.email,
               message: VALIDATION_MESSAGES.email,
             },
-          ]}>
+          ]}
+        >
           <Input placeholder="Почта пользователя" />
         </Form.Item>
 

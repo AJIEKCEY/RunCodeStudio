@@ -1,13 +1,13 @@
-import { Store } from 'redux';
-import type { RootState, AppDispatch } from '../store/types';
+import { Store } from 'redux'
+import type { RootState, AppDispatch } from '../store/types'
 
 /**
  * Параметры маршрута
  * @property {string | undefined} [key] - Динамические параметры маршрута
  */
 export type RouteParams = {
-  [key: string]: string | undefined;
-};
+  [key: string]: string | undefined
+}
 
 /**
  * Аргументы для инициализации страницы
@@ -16,10 +16,10 @@ export type RouteParams = {
  * @property {URLSearchParams} searchParams - Параметры запроса
  */
 export type PageInitArgs = {
-  store: Store;
-  params: RouteParams;
-  searchParams: URLSearchParams;
-};
+  store: Store
+  params: RouteParams
+  searchParams: URLSearchParams
+}
 
 /**
  * Маршрут приложения
@@ -28,10 +28,10 @@ export type PageInitArgs = {
  * @property {(args: PageInitArgs) => Promise<void>} [init] - Функция инициализации страницы
  */
 export type Route = {
-  path: string;
-  element: React.ReactNode;
-  init?: (args: PageInitArgs) => Promise<void>;
-};
+  path: string
+  element: React.ReactNode
+  init?: (args: PageInitArgs) => Promise<void>
+}
 
 /**
  * Тип для хука useSelector
@@ -40,9 +40,9 @@ export type Route = {
 export type UseSelectorHook = <TSelected = unknown>(
   selector: (state: RootState) => TSelected,
   equalityFn?: (left: TSelected, right: TSelected) => boolean
-) => TSelected;
+) => TSelected
 
 /**
  * Тип для хука useDispatch
  */
-export type UseDispatchHook = () => AppDispatch; 
+export type UseDispatchHook = () => AppDispatch

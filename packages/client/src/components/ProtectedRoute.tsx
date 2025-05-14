@@ -14,10 +14,10 @@ type Props = {
  */
 export const ProtectedRoute = ({ children }: Props): JSX.Element => {
   const { user } = useAuth()
-  
+
   if (!user) {
     return <Navigate to="/login" replace />
   }
-  
+
   return <>{children}</>
 }

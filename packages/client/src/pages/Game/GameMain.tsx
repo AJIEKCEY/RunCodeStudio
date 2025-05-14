@@ -26,7 +26,7 @@ const Game = () => {
         nickname: user?.display_name || 'Player',
         date: formatDate(new Date()),
         rundCodeStudionGameScore: score,
-      }).catch(error => console.info(error))
+      }).catch((error) => console.info(error))
     }
   }
 

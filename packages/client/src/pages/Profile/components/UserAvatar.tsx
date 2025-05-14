@@ -1,13 +1,5 @@
 import { UploadOutlined } from '@ant-design/icons'
-import {
-  Flex,
-  Upload,
-  Image,
-  UploadFile,
-  GetProp,
-  UploadProps,
-  message,
-} from 'antd/lib'
+import { Flex, Upload, Image, UploadFile, GetProp, UploadProps, message } from 'antd/lib'
 import React, { useEffect, useState } from 'react'
 import { useUpdateUserAvatarMutation } from '../../../store/features/user/userApiSlice'
 import { isErrorResponse } from '../../../utils/typeguard/isErrorResponse'
@@ -40,9 +32,7 @@ const UserAvatar = ({ src }: userAvatarProps) => {
   const beforeUpload = (file: FileType) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
     if (!isJpgOrPng) {
-      message.error(
-        'Для аватара можно загужать только  файлы с расширениемJPG/PNG.'
-      )
+      message.error('Для аватара можно загужать только  файлы с расширениемJPG/PNG.')
     }
     const isLt2M = file.size / 1024 / 1024 < 2
     if (!isLt2M) {
@@ -66,7 +56,7 @@ const UserAvatar = ({ src }: userAvatarProps) => {
         fileList={fileList}
         onChange={handleChange}
         beforeUpload={beforeUpload}
-        action={file => {
+        action={(file) => {
           const formData = new FormData()
           formData.append('avatar', file)
           return new Promise((resolve, reject) => {
@@ -74,7 +64,8 @@ const UserAvatar = ({ src }: userAvatarProps) => {
             return isSuccess ? resolve('loaded') : reject('error')
           })
         }}
-        listType="picture-circle">
+        listType="picture-circle"
+      >
         {fileList.length < 1 && (
           <div>
             <UploadOutlined />

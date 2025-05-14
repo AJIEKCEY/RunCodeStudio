@@ -9,10 +9,7 @@ import { ConfigProvider } from 'antd/lib'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    handlePromiseError(
-      navigator.serviceWorker.register('/sw.js'),
-      'регистрация service worker'
-    )
+    handlePromiseError(navigator.serviceWorker.register('/sw.js'), 'регистрация service worker')
   })
 }
 

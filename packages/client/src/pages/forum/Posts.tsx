@@ -1,136 +1,80 @@
+import React, { useState } from 'react'
 import styles from './styles/thread.module.css'
-import React, { useMemo, useState } from 'react'
-import { Avatar, Button, Flex, Image, List, Typography } from 'antd/lib'
-import { useAppSelector } from '../../store/hooks/deriveTypes'
+import { Card, Space, Tag, Button, Typography } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Post } from '../../store/features/forum/types'
-import {
-  ClockCircleOutlined,
-  DislikeTwoTone,
-  EditOutlined,
-  LikeTwoTone,
-  RollbackOutlined,
-} from '@ant-design/icons'
-import { IconText } from './components/IconText'
-import CreatePostModal from './components/CreatePostModal'
+import { ClockCircleOutlined, TagOutlined, UserOutlined } from '@ant-design/icons'
+import { useGetCommentsQuery, useGetPostQuery } from '../../store/features/forum/forumApiSlice'
+import CreateCommentModal from './components/CreateCommentModal'
+import CommentsList from './components/CommentsList'
 
 const Posts: React.FC = () => {
   const navigate = useNavigate()
-  const { posts } = useAppSelector(state => state.forum)
   const { id: threadId } = useParams()
+  const postId = Number(threadId)
+  const { data: post, isLoading, error } = useGetPostQuery(postId)
+  const { data: comments } = useGetCommentsQuery(postId)
   const [showModal, setShowModal] = useState(false)
-  const filteredPosts = useMemo(() => {
-    let result: Post[] = posts
-    if (threadId)
-      result = result.filter(post => post.threadId === Number(threadId))
-    return result
-  }, [threadId, posts])
+  const [replyToCommentId, setReplyToCommentId] = useState<number | undefined>(undefined)
+
+  const handleAddComment = (commentId?: number) => {
+    setReplyToCommentId(commentId)
+    setShowModal(true)
+  }
+
+  const handleNavigateBack = () => {
+    navigate(-1)
+  }
+
+  if (isLoading) return <div>Загрузка...</div>
+  if (error) return <div>Ошибка загрузки поста</div>
+
   return (
-    <Flex vertical gap="large">
-      <List
-        style={{ paddingInline: '1rem' }}
-        itemLayout="vertical"
-        dataSource={filteredPosts}
-        header={
-          <Button
-            onClick={() => navigate(-1)}
-            type="primary"
-            shape="default"
-            icon={<RollbackOutlined />}
-            size="large"
-          />
-        }
-        renderItem={item => (
-          <List.Item
-            key={item.id}
-            actions={[
-              <IconText
-                icon={ClockCircleOutlined}
-                text={item.createdAt.toLocaleDateString()}
-                key="list-vertical-star-o"
-              />,
-              <Flex
-                onClick={() => console.info('like')}
-                style={{ cursor: 'pointer' }}>
-                <IconText
-                  icon={LikeTwoTone}
-                  key="list-vertical-message"
-                  text={''}
-                />
-              </Flex>,
-              <Flex
-                onClick={() => console.info('dislike')}
-                style={{ cursor: 'pointer' }}>
-                <IconText
-                  icon={DislikeTwoTone}
-                  key="list-vertical-message"
-                  text={''}
-                />
-              </Flex>,
-              <span>{String(item.likes)}</span>,
-              item.authorId % 2 === 0 && (
-                <Flex
-                  onClick={() => console.info('enter edit mode')}
-                  style={{ cursor: 'pointer' }}>
-                  <IconText
-                    icon={EditOutlined}
-                    key="list-vertical-message"
-                    text={''}
-                  />
-                </Flex>
-              ),
-            ]}>
-            <List.Item.Meta
-              avatar={
-                <Avatar src={`Здесь будет аватар автора ${item.authorId}`} />
-              }
-              title={`Имя автора с id ${item.authorId}`}
-              description={
-                <Flex vertical>
-                  <Typography.Paragraph>{item.content}</Typography.Paragraph>
-                  {item.img && item.img.length && (
-                    <Flex gap="small">
-                      {item.img.map(url => {
-                        return (
-                          <Image
-                            alt={`картинка взятая с адреса: ${url}`}
-                            height={200}
-                            src={url}
-                            key={url}
-                            preview={{
-                              mask: <span>предпросмотр</span>,
-                            }}
-                          />
-                        )
-                      })}
-                    </Flex>
-                  )}
-                </Flex>
-              }
-            />
-          </List.Item>
-        )}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <Card>
+        <Space size="middle" style={{ marginBottom: 16 }}>
+          <Tag icon={<UserOutlined />}>{post?.user.firstname}</Tag>
+          <Tag icon={<ClockCircleOutlined />}>
+            {post?.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Нет даты'}
+          </Tag>
+          <Tag icon={<TagOutlined />}>{post?.category.name}</Tag>
+        </Space>
+
+        {post?.description && <Typography style={{ fontSize: 16 }}>{post?.description}</Typography>}
+      </Card>
+
+      <CommentsList
+        comments={comments}
+        onReply={handleAddComment}
+        onNavigateBack={handleNavigateBack}
       />
+
       <Button
-        className={styles['pulsing-button']}
-        color="primary"
-        variant="outlined"
+        className="create-post-button"
+        type="primary"
         size="large"
         style={{
-          bottom: '30px',
+          bottom: '20px',
           position: 'sticky',
-          maxWidth: '400px',
+          maxWidth: '200px',
           alignSelf: 'center',
         }}
-        onClick={() => setShowModal(curr => !curr)}>
-        добавить сообщение
+        onClick={() => handleAddComment()}
+      >
+        Создать пост
       </Button>
-      <CreatePostModal
+
+      <CreateCommentModal
         isOpen={showModal}
-        closeModal={() => setShowModal(false)}
+        closeModal={() => {
+          setShowModal(false)
+          setReplyToCommentId(undefined)
+        }}
+        postId={postId}
+        rootCommentId={replyToCommentId}
       />
-    </Flex>
+    </div>
   )
 }
+
 export const initPostsPage = () => Promise.resolve()
 export default Posts

@@ -9,7 +9,7 @@ describe('Тест компонента Threads', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: jest.fn().mockImplementation(query => ({
+      value: jest.fn().mockImplementation((query) => ({
         matches: false,
         media: query,
         onchange: null,
@@ -34,12 +34,9 @@ describe('Тест компонента Threads', () => {
   })
 
   it('по нажатию кнопки появляется диалоговое окно с формой', async () => {
-    const user = userEvent.setup()
     const btn = screen.getByTestId('create-thread-btn')
-    const createThreadSpy = jest.spyOn(user, 'click')
     expect(btn).toBeTruthy()
-    await user.click(btn)
+    await userEvent.click(btn)
     expect(screen.getByTestId('create-thread-form')).toBeTruthy()
-    expect(createThreadSpy).toHaveBeenCalled()
   })
 })

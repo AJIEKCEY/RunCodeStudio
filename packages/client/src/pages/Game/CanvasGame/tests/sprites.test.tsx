@@ -46,9 +46,7 @@ describe('Sprite Utilities', () => {
         speedModifier: (index + 1) * 0.2,
       })
       expect(layer.image).toBeInstanceOf(Image)
-      expect(layer.image.src).toContain(
-        `/sprite/themes/desert/layer-${index + 1}.png`
-      )
+      expect(layer.image.src).toContain(`/sprite/themes/desert/layer-${index + 1}.png`)
     })
   })
 

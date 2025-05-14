@@ -1,8 +1,4 @@
-import {
-  PlayerSpriteData,
-  SpriteFrameData,
-  TypeDataTheme,
-} from './../types/index'
+import { PlayerSpriteData, SpriteFrameData, TypeDataTheme } from './../types/index'
 
 export const createSpriteData = (
   frameX: number,

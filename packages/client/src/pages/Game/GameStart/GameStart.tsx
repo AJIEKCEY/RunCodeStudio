@@ -12,11 +12,7 @@ interface GameStartProps {
   setSelectedCharacter: (characterId: string) => void
 }
 
-const GameStart = ({
-  onStart,
-  selectedCharacter,
-  setSelectedCharacter,
-}: GameStartProps) => {
+const GameStart = ({ onStart, selectedCharacter, setSelectedCharacter }: GameStartProps) => {
   const [showCountdown, setShowCountdown] = useState(false)
   const [countdown, setCountdown] = useState(3)
   const { settings } = useTheme()
@@ -24,7 +20,7 @@ const GameStart = ({
   useEffect(() => {
     if (!showCountdown) return
     const timer = setInterval(() => {
-      setCountdown(prev => prev - 1)
+      setCountdown((prev) => prev - 1)
     }, 1000)
     return () => clearInterval(timer)
   }, [showCountdown])
@@ -41,8 +37,7 @@ const GameStart = ({
   }
 
   const background =
-    settings?.background ||
-    'linear-gradient(135deg, #5f00b5, #4c0099 40%, #30006d)'
+    settings?.background || 'linear-gradient(135deg, #5f00b5, #4c0099 40%, #30006d)'
   const textColor = settings?.textColor || '#ffffff'
   const buttonColor = settings?.buttonColor || '#7fff00'
   const buttonTextColor = settings?.buttonTextColor || '#000000'
@@ -53,16 +48,12 @@ const GameStart = ({
       gap="large"
       align="center"
       className="page"
-      style={{ background: background, color: textColor }}>
-      <Typography.Title style={{ color: textColor }}>
-        Подготовка к игре
-      </Typography.Title>
+      style={{ background: background, color: textColor }}
+    >
+      <Typography.Title style={{ color: textColor }}>Подготовка к игре</Typography.Title>
       {!showCountdown && (
         <>
-          <CharacterChoice
-            selected={selectedCharacter}
-            onSelect={setSelectedCharacter}
-          />
+          <CharacterChoice selected={selectedCharacter} onSelect={setSelectedCharacter} />
           <Rules />
           <Button
             onClick={handleStartClick}
@@ -70,7 +61,8 @@ const GameStart = ({
               backgroundColor: buttonColor,
               borderColor: buttonColor,
               color: buttonTextColor,
-            }}>
+            }}
+          >
             Старт
           </Button>
         </>

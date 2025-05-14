@@ -4,19 +4,13 @@ import Threads, { initThreadsPage } from './pages/forum/Threads'
 import Posts, { initPostsPage } from './pages/forum/Posts'
 import Landing, { initLoginPage } from './pages/Landing/Landing'
 import NotFound, { initNotFoundPage } from './pages/ErrorPages/NotFound'
-import ServerError, {
-  initServerErrorPage,
-} from './pages/ErrorPages/ServerError'
-import Registration, {
-  initRegistrationPage,
-} from './pages/Registration/Registration'
+import ServerError, { initServerErrorPage } from './pages/ErrorPages/ServerError'
+import Registration, { initRegistrationPage } from './pages/Registration/Registration'
 import GameMain, { initGamePage } from './pages/Game/GameMain'
 import Auth from './pages/Auth/Auth'
 import ErrorBoundary from './components/ErrorBoundary'
 import { ProtectedRoute } from './components/ProtectedRoute'
-import LeaderBoard, {
-  initLeaderBoardPage,
-} from './pages/leaderboard/LeaderBoard'
+import LeaderBoard, { initLeaderBoardPage } from './pages/leaderboard/LeaderBoard'
 import Profile, { initProfilePage } from './pages/Profile/Profile'
 import { PageInitArgs } from './store/store'
 

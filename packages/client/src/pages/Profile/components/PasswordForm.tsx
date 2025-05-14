@@ -4,10 +4,7 @@ import React, { useEffect } from 'react'
 import { UserProfilePassword } from '../../../store/features/user/types'
 import { useUpdateUserPasswordMutation } from '../../../store/features/user/userApiSlice'
 import { isErrorResponse } from '../../../utils/typeguard/isErrorResponse'
-import {
-  VALIDATION_MESSAGES,
-  VALIDATION_RULES,
-} from '../../../utils/validation'
+import { VALIDATION_MESSAGES, VALIDATION_RULES } from '../../../utils/validation'
 
 const formItemLayout = {
   labelCol: {
@@ -35,8 +32,7 @@ const tailFormItemLayout = {
 
 const PasswordForm = () => {
   const [form] = Form.useForm<UserProfilePassword>()
-  const [update, { isError, isSuccess, error }] =
-    useUpdateUserPasswordMutation()
+  const [update, { isError, isSuccess, error }] = useUpdateUserPasswordMutation()
   const [messageApi, contextHolder] = message.useMessage()
 
   const onFinish = (values: UserProfilePassword) => {
@@ -71,7 +67,8 @@ const PasswordForm = () => {
         name="password"
         onFinish={onFinish}
         style={{ minWidth: 600 }}
-        scrollToFirstError>
+        scrollToFirstError
+      >
         <Form.Item
           name="newPassword"
           label="Новый пароль"
@@ -82,7 +79,8 @@ const PasswordForm = () => {
               message: VALIDATION_MESSAGES.password,
             },
           ]}
-          hasFeedback>
+          hasFeedback
+        >
           <Input.Password />
         </Form.Item>
         <Form.Item
@@ -95,7 +93,8 @@ const PasswordForm = () => {
               message: VALIDATION_MESSAGES.password,
             },
           ]}
-          hasFeedback>
+          hasFeedback
+        >
           <Input.Password />
         </Form.Item>
 
@@ -117,7 +116,8 @@ const PasswordForm = () => {
                 return Promise.reject(new Error('пароли не совпадают'))
               },
             }),
-          ]}>
+          ]}
+        >
           <Input.Password />
         </Form.Item>
 

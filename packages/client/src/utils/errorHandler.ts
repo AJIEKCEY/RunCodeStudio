@@ -26,4 +26,4 @@ export const handlePromiseError = async <T>(
     handleError(error, context)
     return null
   }
-} 
+}

@@ -24,26 +24,22 @@ function Container() {
         borderRadius: 0,
         overflow: 'hidden',
       }}
-      ref={container}>
+      ref={container}
+    >
       <LayoutHeader />
-      <Layout.Content
-        className={styles['layout-container']}
-        style={{ overflowY: 'auto' }}>
+      <Layout.Content className={styles['layout-container']} style={{ overflowY: 'auto' }}>
         <div
           style={{
             background: colorBgContainer,
             minHeight: '100%',
             borderRadius: borderRadiusLG,
             height: '100%',
-          }}>
+          }}
+        >
           <Outlet />
         </div>
       </Layout.Content>
-      <LayoutFooter
-        text="RunCode Studio"
-        onFullScreen={onFullScreen}
-        isFullScreen={isFullScreen}
-      />
+      <LayoutFooter text="RunCode Studio" onFullScreen={onFullScreen} isFullScreen={isFullScreen} />
     </Layout>
   )
 }

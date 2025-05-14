@@ -1,9 +1,4 @@
-import {
-  GameSettings,
-  PlayerAnimations,
-  EntityProps,
-  PlayerSpriteData,
-} from '../types'
+import { GameSettings, PlayerAnimations, EntityProps, PlayerSpriteData } from '../types'
 import { getPlayerSprite } from './sprites'
 
 export class Player {
@@ -42,8 +37,7 @@ export class Player {
     this.frameWidth = this.sprite.frameWidth
     this.frameHeight = this.sprite.frameHeight
 
-    this.defaultY =
-      this.settings.canvasHeight - (this.frameHeight + this.settings.bgOfsetY)
+    this.defaultY = this.settings.canvasHeight - (this.frameHeight + this.settings.bgOfsetY)
     this.x = 24
     this.y = this.defaultY
 

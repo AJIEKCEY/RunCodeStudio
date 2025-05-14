@@ -10,14 +10,11 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { themeName, settings, loading, toggleTheme } = useThemeData()
 
   return (
-    <ThemeContext.Provider
-      value={{ themeName, settings, loading, toggleTheme }}>
+    <ThemeContext.Provider value={{ themeName, settings, loading, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   )
