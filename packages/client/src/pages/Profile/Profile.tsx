@@ -24,7 +24,7 @@ const Profile = () => {
             : ''
         }
       />
-      <UserInfo {...user} email="test@ya.ru" />
+      <UserInfo {...user} />
     </Flex>
   )
 }

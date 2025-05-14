@@ -6,11 +6,11 @@ import {
   useGetLeaderBoardMutation,
 } from '../../store/features/leaderboard/leaderBoardApiSlice'
 import { PageInitArgs } from '../../store/store'
-
 export type leaderBoardDataTableType = {
   nickname: string
   score: number
   date: string
+  country?: string
 }
 
 const columns: TableColumnsType<leaderBoardDataTableType> = [
@@ -40,7 +40,7 @@ const columns: TableColumnsType<leaderBoardDataTableType> = [
   },
   {
     key: 'date',
-    title: 'Дата',
+    title: 'дата',
     dataIndex: 'date',
     showSorterTooltip: { title: 'Сортировать по дате ' },
     sorter: (a, b) => {
@@ -49,6 +49,22 @@ const columns: TableColumnsType<leaderBoardDataTableType> = [
       return dateA.getTime() - dateB.getTime()
     },
     sortDirections: ['descend', 'ascend'],
+    align: 'right',
+    render: (date: string) => {
+      const normalizedDate = date.replace(/[/.]/g, '-').split('-')
+      if (Number(normalizedDate[1]) > 12) {
+        const tmp = normalizedDate[0]
+        normalizedDate[1] = normalizedDate[0]
+        normalizedDate[0] = tmp
+      }
+      if (normalizedDate[0].length == 2) normalizedDate.reverse()
+      return normalizedDate.join('-')
+    },
+  },
+  {
+    key: 'country',
+    title: 'страна',
+    dataIndex: 'country',
     align: 'right',
   },
 ]
@@ -66,6 +82,7 @@ const LeaderBoard: React.FC = () => {
               nickname: item.data.nickname,
               score: item.data.rundCodeStudionGameScore,
               date: item.data.date,
+              country: item.data.country || 'Neverland',
             }
           }
         )
