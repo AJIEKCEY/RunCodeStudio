@@ -18,16 +18,11 @@ const CharacterChoice = ({ selected, onSelect }: CharacterChoiceProps) => {
 
   return (
     <div className={styles.characterSelect}>
-      <Typography.Title
-        level={2}
-        style={{ color: textColor, fontSize: '28px' }}>
+      <Typography.Title level={2} style={{ color: textColor, fontSize: '28px' }}>
         Выберите персонажа:
       </Typography.Title>
-      <Radio.Group
-        onChange={handleChange}
-        value={selected}
-        className={styles.radioGroup}>
-        {characters.map(character => (
+      <Radio.Group onChange={handleChange} value={selected} className={styles.radioGroup}>
+        {characters.map((character) => (
           <Radio key={character.id} value={character.id}>
             {character.name}
           </Radio>

@@ -11,7 +11,7 @@ const UserInfo = (props: UserInfoProps) => {
   return (
     <Flex vertical align="center" gap="large">
       <Radio.Group
-        onChange={e => setSelectedForm(e.target.value)}
+        onChange={(e) => setSelectedForm(e.target.value)}
         name="radiogroup"
         defaultValue={'password'}
         options={[

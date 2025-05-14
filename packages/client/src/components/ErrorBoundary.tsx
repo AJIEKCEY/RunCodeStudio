@@ -26,9 +26,7 @@ class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <Flex vertical gap="large" align="center" className="page">
-          <Typography.Title style={{ color: '#fff' }}>
-            Что-то пошло не так ...
-          </Typography.Title>
+          <Typography.Title style={{ color: '#fff' }}>Что-то пошло не так ...</Typography.Title>
         </Flex>
       )
     }

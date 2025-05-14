@@ -17,7 +17,12 @@ type modalProps = {
   rootCommentId?: number
 }
 
-const CreateCommentModal: React.FC<modalProps> = ({ isOpen, closeModal, postId, rootCommentId }) => {
+const CreateCommentModal: React.FC<modalProps> = ({
+  isOpen,
+  closeModal,
+  postId,
+  rootCommentId,
+}) => {
   const [form] = Form.useForm()
   const [fileList, setFileList] = useState<UploadFile[]>([])
   const [addComment, { isLoading }] = useAddCommentMutation()
@@ -30,13 +35,13 @@ const CreateCommentModal: React.FC<modalProps> = ({ isOpen, closeModal, postId, 
       // fileList.forEach(file => {
       //   formData.append('files[]', file as FileType)
       // })
-      
+
       await addComment({
         text: values.comment,
         postId,
-        rootCommentId
+        rootCommentId,
       }).unwrap()
-      
+
       messageApi.success('Комментарий успешно добавлен')
       setFileList([])
       form.resetFields()
@@ -59,16 +64,18 @@ const CreateCommentModal: React.FC<modalProps> = ({ isOpen, closeModal, postId, 
         onCancel={() => closeModal()}
         destroyOnClose
         confirmLoading={isLoading}
-        modalRender={dom => (
+        modalRender={(dom) => (
           <Form
             layout="vertical"
             form={form}
             name="form_in_modal"
             clearOnDestroy
-            onFinish={values => onCreate(values)}>
+            onFinish={(values) => onCreate(values)}
+          >
             {dom}
           </Form>
-        )}>
+        )}
+      >
         <Form.Item
           name="comment"
           label="Комментарий"
@@ -82,12 +89,11 @@ const CreateCommentModal: React.FC<modalProps> = ({ isOpen, closeModal, postId, 
                 if (value && value.length > 0) {
                   return Promise.resolve()
                 }
-                return Promise.reject(
-                  new Error('Комментарий не должен быть пустым')
-                )
+                return Promise.reject(new Error('Комментарий не должен быть пустым'))
               },
             },
-          ]}>
+          ]}
+        >
           <TextArea showCount autoSize={{ minRows: 4, maxRows: 10 }} />
         </Form.Item>
         <ImageUpload fileList={fileList} setFileList={setFileList} />

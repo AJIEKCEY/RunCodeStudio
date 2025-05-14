@@ -10,13 +10,9 @@ interface CommentsListProps {
   onNavigateBack: () => void
 }
 
-const CommentsList: React.FC<CommentsListProps> = ({ 
-  comments, 
-  onReply,
-  onNavigateBack
-}) => {
+const CommentsList: React.FC<CommentsListProps> = ({ comments, onReply, onNavigateBack }) => {
   // Фильтруем только корневые комментарии (без родителя)
-  const rootComments = comments?.filter(comment => comment.root_comment === null) || []
+  const rootComments = comments?.filter((comment) => comment.root_comment === null) || []
 
   return (
     <List
@@ -32,15 +28,9 @@ const CommentsList: React.FC<CommentsListProps> = ({
           size="large"
         />
       }
-      renderItem={comment => (
-        <Comment 
-          key={comment.id} 
-          comment={comment} 
-          onReply={onReply} 
-        />
-      )}
+      renderItem={(comment) => <Comment key={comment.id} comment={comment} onReply={onReply} />}
     />
   )
 }
 
-export default CommentsList 
+export default CommentsList

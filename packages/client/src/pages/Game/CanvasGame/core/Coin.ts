@@ -26,8 +26,7 @@ export class Coin {
     this.frameWidth = this.width / this.frames
     this.speed = this.settings.speed
 
-    this.positionY =
-      this.settings.canvasHeight - (this.height + this.settings.bgOfsetY)
+    this.positionY = this.settings.canvasHeight - (this.height + this.settings.bgOfsetY)
     this.x = x + 2000
     this.y = this.positionY - y
   }

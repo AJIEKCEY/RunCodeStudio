@@ -9,11 +9,7 @@ interface CanvasGameProps {
   onCoinsChange: (coins: number) => void
 }
 
-const CanvasGame = ({
-  characterId,
-  onGameOver,
-  onCoinsChange,
-}: CanvasGameProps) => {
+const CanvasGame = ({ characterId, onGameOver, onCoinsChange }: CanvasGameProps) => {
   const ref = useRef<HTMLCanvasElement | null>(null)
   const refGame = useRef<Game | null>(null)
   const { sendNotification } = useNotificationContext()

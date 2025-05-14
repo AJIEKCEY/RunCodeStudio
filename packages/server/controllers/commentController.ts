@@ -2,7 +2,13 @@ import { Request, Response } from 'express'
 import { Comment } from '../models/Comment'
 import { User } from '../models/User'
 import { Reaction } from '../models/Reaction'
-import { getCommentsSchema, createCommentSchema, updateCommentSchema, deleteCommentSchema, schemaValidator } from '../schemas'
+import {
+  getCommentsSchema,
+  createCommentSchema,
+  updateCommentSchema,
+  deleteCommentSchema,
+  schemaValidator,
+} from '../schemas'
 
 const getComments = async (req: Request, res: Response): Promise<void> => {
   const query = { postId: Number(req.params.postId) }
@@ -75,7 +81,7 @@ const createComment = async (req: Request, res: Response): Promise<void> => {
     text,
     post_id: postId,
     user_id: userId,
-    root_comment: rootCommentId || null
+    root_comment: rootCommentId || null,
   })
 
   const comment = await Comment.findByPk(newComment.id, {
@@ -83,8 +89,8 @@ const createComment = async (req: Request, res: Response): Promise<void> => {
       {
         model: User,
         attributes: ['id', 'firstname'],
-      }
-    ]
+      },
+    ],
   })
 
   res.status(201).json(comment)
@@ -110,7 +116,9 @@ const updateComment = async (req: Request, res: Response): Promise<void> => {
   }
 
   if (comment.user_id !== userId) {
-    res.status(403).json({ message: 'У вас нет прав для редактирования этого комментария' })
+    res
+      .status(403)
+      .json({ message: 'У вас нет прав для редактирования этого комментария' })
     return
   }
 
@@ -138,7 +146,9 @@ const deleteComment = async (req: Request, res: Response): Promise<void> => {
   }
 
   if (comment.user_id !== userId) {
-    res.status(403).json({ message: 'У вас нет прав для удаления этого комментария' })
+    res
+      .status(403)
+      .json({ message: 'У вас нет прав для удаления этого комментария' })
     return
   }
 

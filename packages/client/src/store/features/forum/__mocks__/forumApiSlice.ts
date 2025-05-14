@@ -12,11 +12,11 @@ export const mockPost = {
   // Поля которые используются компонентом
   user: {
     firstname: 'Тестовый автор',
-    lastname: 'Фамилия'
+    lastname: 'Фамилия',
   },
   category: {
-    name: 'Тестовая категория'
-  }
+    name: 'Тестовая категория',
+  },
 }
 
 // Мок-данные для комментариев
@@ -30,8 +30,8 @@ export const mockComments = [
     root_comment: null,
     replies: [],
     user: {
-      firstname: 'Автор комментария 1'
-    }
+      firstname: 'Автор комментария 1',
+    },
   },
   {
     id: 2,
@@ -42,16 +42,16 @@ export const mockComments = [
     root_comment: null,
     replies: [],
     user: {
-      firstname: 'Автор комментария 2'
-    }
-  }
+      firstname: 'Автор комментария 2',
+    },
+  },
 ]
 
 // Создаем мок API с тем же reducerPath, что и в оригинальном файле
 export const forumApi = createApi({
   reducerPath: 'forumApi',
   baseQuery: jest.fn(),
-  endpoints: () => ({})
+  endpoints: () => ({}),
 })
 
 // Мок-хуки для использования в тестах
@@ -59,21 +59,21 @@ export const useGetPostQuery = jest.fn(() => ({
   data: mockPost,
   isLoading: false,
   isError: false,
-  isSuccess: true
+  isSuccess: true,
 }))
 
 export const useGetCommentsQuery = jest.fn(() => ({
   data: mockComments,
   isLoading: false,
   isError: false,
-  isSuccess: true
+  isSuccess: true,
 }))
 
 export const useAddCommentMutation = jest.fn(() => [
   jest.fn(),
-  { isLoading: false, isSuccess: false, isError: false }
+  { isLoading: false, isSuccess: false, isError: false },
 ])
 
 export const useGetThreadsQuery = jest.fn()
 export const useGetCategoriesQuery = jest.fn()
-export const useAddThreadMutation = jest.fn() 
+export const useAddThreadMutation = jest.fn()

@@ -10,5 +10,5 @@ export const rootReducer = combineReducers({
   [forumApi.reducerPath]: forumApi.reducer,
   [userApiSlice.reducerPath]: userApiSlice.reducer,
   [leaderBoardApiSlice.reducerPath]: leaderBoardApiSlice.reducer,
-  auth: authReducer
-}) 
+  auth: authReducer,
+})

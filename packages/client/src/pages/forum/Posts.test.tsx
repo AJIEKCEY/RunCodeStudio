@@ -4,10 +4,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import Posts from './Posts'
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
-import {
-  mockComments,
-  mockPost,
-} from '../../store/features/forum/__mocks__/forumApiSlice'
+import { mockComments, mockPost } from '../../store/features/forum/__mocks__/forumApiSlice'
 import { IComment } from '../../store/features/forum/types'
 
 // Мокаем forumSlice
@@ -32,9 +29,7 @@ jest.mock('./components/CommentsList', () => {
       <div data-testid="comments-list">
         {comments?.map((comment: IComment) => (
           <div key={comment.id} data-testid={`comment-${comment.id}`}>
-            <div data-testid={`comment-author-${comment.id}`}>
-              {comment.user.firstname}
-            </div>
+            <div data-testid={`comment-author-${comment.id}`}>{comment.user.firstname}</div>
             <div data-testid={`comment-text-${comment.id}`}>{comment.text}</div>
             {comment.text
               .match(/(https?:\/\/\S+\.(jpg|jpeg|png|gif))/gi)
@@ -105,7 +100,7 @@ describe('Posts компонент', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: jest.fn().mockImplementation(query => ({
+      value: jest.fn().mockImplementation((query) => ({
         matches: false,
         media: query,
         onchange: null,
@@ -165,9 +160,7 @@ describe('Posts компонент', () => {
   })
 
   it('должен отрендерить изображения из ссылок в комментариях', () => {
-    const image1 = screen.getByAltText(
-      'картинка взятая с адреса: http://example.com/image.jpg'
-    )
+    const image1 = screen.getByAltText('картинка взятая с адреса: http://example.com/image.jpg')
     expect(image1).toBeInTheDocument()
 
     const image2 = screen.getByAltText(

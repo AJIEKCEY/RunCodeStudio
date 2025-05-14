@@ -15,11 +15,7 @@ type modalProps = {
   isOpen: boolean
   closeModal: () => void
 }
-const CreateThreadModal: React.FC<modalProps> = ({
-  isOpen,
-  closeModal,
-  categories,
-}) => {
+const CreateThreadModal: React.FC<modalProps> = ({ isOpen, closeModal, categories }) => {
   const [form] = Form.useForm()
   const [addThread, { isLoading }] = useAddThreadMutation()
   // Временное решение, замените на свой способ получения ID пользователя
@@ -32,14 +28,14 @@ const CreateThreadModal: React.FC<modalProps> = ({
         console.error('Не все поля заполнены:', values)
         return
       }
-      
+
       const result = await addThread({
         title: values.title,
         description: values.description,
         category_id: values.category,
-        user_id: mockUserId // Используем мок ID
+        user_id: mockUserId, // Используем мок ID
       }).unwrap()
-      
+
       console.info('Тема успешно создана:', result)
       message.success('Тема успешно создана')
       form.resetFields()
@@ -57,14 +53,15 @@ const CreateThreadModal: React.FC<modalProps> = ({
         title="Создать новую тему"
         okText="создать"
         cancelText="отмена"
-        okButtonProps={{ 
-          autoFocus: true, 
+        okButtonProps={{
+          autoFocus: true,
           loading: isLoading,
           form: 'thread-form',
-          htmlType: 'submit'
+          htmlType: 'submit',
         }}
         onCancel={() => closeModal()}
-        destroyOnClose>
+        destroyOnClose
+      >
         <Form
           id="thread-form"
           form={form}
@@ -72,7 +69,8 @@ const CreateThreadModal: React.FC<modalProps> = ({
           layout="vertical"
           initialValues={{ title: '', description: '' }}
           onFinish={onCreate}
-          data-testid="create-thread-form">
+          data-testid="create-thread-form"
+        >
           <Form.Item
             name="title"
             label="Название"
@@ -87,25 +85,27 @@ const CreateThreadModal: React.FC<modalProps> = ({
                   if (regexCat.test(value)) {
                     return Promise.resolve()
                   }
-                  return Promise.reject(
-                    new Error('Название должно начинаться с большой буквы')
-                  )
+                  return Promise.reject(new Error('Название должно начинаться с большой буквы'))
                 },
               },
-            ]}>
+            ]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item 
-            name="category" 
-            label="Категория" 
-            rules={[{
-              required: true,
-              message: 'Выберите категорию'
-            }]}>
+          <Form.Item
+            name="category"
+            label="Категория"
+            rules={[
+              {
+                required: true,
+                message: 'Выберите категорию',
+              },
+            ]}
+          >
             <Select
               style={{ width: 200 }}
               options={[
-                ...categories.map(cat => {
+                ...categories.map((cat) => {
                   return {
                     value: cat.id,
                     label: cat.title,
@@ -127,12 +127,11 @@ const CreateThreadModal: React.FC<modalProps> = ({
                   if (value.length > 20) {
                     return Promise.resolve()
                   }
-                  return Promise.reject(
-                    new Error('Описание не должно быть короче 20 символов')
-                  )
+                  return Promise.reject(new Error('Описание не должно быть короче 20 символов'))
                 },
               },
-            ]}>
+            ]}
+          >
             <TextArea showCount autoSize={{ minRows: 2, maxRows: 6 }} />
           </Form.Item>
         </Form>

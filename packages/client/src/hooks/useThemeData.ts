@@ -21,7 +21,7 @@ export function useThemeData() {
   useEffect(() => {
     let cancelled = false
     fetch(API_URLS.themes)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((data: Theme[]) => {
         if (!cancelled) setThemes(data)
       })
@@ -45,25 +45,23 @@ export function useThemeData() {
 
     if (isGuest) {
       const stored = localStorage.getItem('guestThemeId')
-      const id = stored
-        ? Number(stored)
-        : themes.find(t => t.name === 'light')!.id
-      applyTheme(themes.find(t => t.id === id)!)
+      const id = stored ? Number(stored) : themes.find((t) => t.name === 'light')!.id
+      applyTheme(themes.find((t) => t.id === id)!)
       setLoading(false)
     } else {
       // TODO: пока будем использовать юзера с id=1, но в будущем будем использовать реальный id юзера, когда будут ручки
       // fetch(API_URLS.userTheme(user!.id))
       fetch(API_URLS.userTheme(1))
-        .then(res => {
+        .then((res) => {
           if (!res.ok) throw new Error('Не удалось сохранить тему')
           return res.json()
         })
         .then(({ id }: { id: number }) => {
-          applyTheme(themes.find(t => t.id === id)!)
+          applyTheme(themes.find((t) => t.id === id)!)
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err)
-          applyTheme(themes.find(t => t.name === 'light')!)
+          applyTheme(themes.find((t) => t.name === 'light')!)
         })
         .finally(() => setLoading(false))
     }
@@ -74,7 +72,7 @@ export function useThemeData() {
     setLoading(true)
 
     const newName: ThemeName = themeName === 'light' ? 'dark' : 'light'
-    const newTheme = themes.find(t => t.name === newName)!
+    const newTheme = themes.find((t) => t.name === newName)!
 
     if (isGuest) {
       localStorage.setItem('guestThemeId', String(newTheme.id))

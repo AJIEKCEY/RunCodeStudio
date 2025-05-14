@@ -1,5 +1,4 @@
-import { Flex, Table, TableColumnsType, Typography } from 'antd/lib'
-const { Title, Text } = Typography
+import { Table, TableColumnsType, Typography } from 'antd'
 import React, { useEffect, useState } from 'react'
 import {
   leaderBoardApiSlice,
@@ -7,10 +6,20 @@ import {
 } from '../../store/features/leaderboard/leaderBoardApiSlice'
 import { PageInitArgs } from '../../store/store'
 
+const { Title, Text } = Typography
+
 export type leaderBoardDataTableType = {
   nickname: string
   score: number
   date: string
+}
+
+type LeaderBoardResponse = {
+  data: {
+    nickname: string
+    rundCodeStudionGameScore: number
+    date: string
+  }
 }
 
 const columns: TableColumnsType<leaderBoardDataTableType> = [
@@ -22,9 +31,7 @@ const columns: TableColumnsType<leaderBoardDataTableType> = [
     sorter: (a, b) => a.nickname.localeCompare(b.nickname),
     sortDirections: ['descend', 'ascend'],
     render: (nickname: string) => (
-      <Text
-        strong
-        style={{ color: 'teal', fontSize: '16px', fontWeight: 'bold' }}>
+      <Text strong style={{ color: 'teal', fontSize: '16px', fontWeight: 'bold' }}>
         {nickname}
       </Text>
     ),
@@ -42,7 +49,7 @@ const columns: TableColumnsType<leaderBoardDataTableType> = [
     key: 'date',
     title: 'Дата',
     dataIndex: 'date',
-    showSorterTooltip: { title: 'Сортировать по дате ' },
+    showSorterTooltip: { title: 'Сортировать по дате' },
     sorter: (a, b) => {
       const dateA = new Date(a.date)
       const dateB = new Date(b.date)
@@ -58,27 +65,25 @@ const LeaderBoard: React.FC = () => {
   const [leaderboard, setLeaderBoard] = useState<leaderBoardDataTableType[]>([])
 
   useEffect(() => {
-    getLeaderBoardData({ cursor: 0, limit: 100 }).then(response => {
-      if (response.data) {
+    getLeaderBoardData({ cursor: 0, limit: 100 }).then((response) => {
+      if ('data' in response) {
         const mappedData: leaderBoardDataTableType[] = response.data.map(
-          item => {
-            return {
-              nickname: item.data.nickname,
-              score: item.data.rundCodeStudionGameScore,
-              date: item.data.date,
-            }
-          }
+          (item: LeaderBoardResponse) => ({
+            nickname: item.data.nickname,
+            score: item.data.rundCodeStudionGameScore,
+            date: item.data.date,
+          })
         )
         setLeaderBoard(mappedData)
       }
     })
-  }, [])
+  }, [getLeaderBoardData])
+
   return (
-    <Flex vertical justify="center" style={{ paddingTop: '3rem' }}>
-      <Title
-        level={2}
-        style={{ alignSelf: 'center' }}
-        data-testid="leaderbord-title">
+    <div
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '3rem' }}
+    >
+      <Title level={2} style={{ alignSelf: 'center' }} data-testid="leaderbord-title">
         Таблица результатов игроков
       </Title>
       <Table<leaderBoardDataTableType>
@@ -88,13 +93,14 @@ const LeaderBoard: React.FC = () => {
         columns={columns}
         dataSource={leaderboard}
         rowKey="nickname"
-        showSorterTooltip={{ target: 'sorter-icon' }}
+        showSorterTooltip={false}
         pagination={{ pageSize: 25 }}
         locale={{ emptyText: 'Пока нет записей' }}
       />
-    </Flex>
+    </div>
   )
 }
+
 export const initLeaderBoardPage = async ({ dispatch }: PageInitArgs) => {
   return dispatch(
     leaderBoardApiSlice.endpoints.getLeaderBoard.initiate({
@@ -103,4 +109,5 @@ export const initLeaderBoardPage = async ({ dispatch }: PageInitArgs) => {
     })
   )
 }
+
 export default LeaderBoard

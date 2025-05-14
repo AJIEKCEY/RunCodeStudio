@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { ForumState, Thread } from '../types'
 
 const initialState: ForumState = {
-  threads: [], 
+  threads: [],
   posts: [],
   categories: [],
   loading: false,
@@ -25,4 +25,4 @@ export const { addNewThread } = forumSlice.actions
 
 export const getForumData = (state: any) => state.forum
 
-export default forumSlice.reducer 
+export default forumSlice.reducer

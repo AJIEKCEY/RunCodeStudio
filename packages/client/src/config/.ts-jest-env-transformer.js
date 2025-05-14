@@ -5,6 +5,6 @@ module.exports = {
   process(src) {
     return {
       code: src.replace(/import\.meta\.env/g, '({})'),
-    };
+    }
   },
-}; 
+}

@@ -6,14 +6,19 @@ export const forumApi = createApi({
   reducerPath: 'forumApi',
   baseQuery: fetchBaseQuery({ baseUrl: API_URLS.BASEAPI_URL }),
   tagTypes: ['Comments', 'Posts'],
-  endpoints: builder => ({
-    getThreads: builder.query<Thread[], void>({
+  endpoints: (builder) => ({
+    getThreads: builder.query<Post[], void>({
       query: () => 'posts',
-      transformResponse: (response: ThreadResponce) => response.items,
+      transformResponse: (response: ThreadResponce) =>
+        response.items.map((item) => ({
+          ...item,
+          user: { firstname: 'User' }, // Временное решение, пока нет данных о пользователе
+          category: { name: 'Category' }, // Временное решение, пока нет данных о категории
+        })),
       providesTags: ['Posts'],
     }),
     getPost: builder.query<Post, number>({
-      query: id => `posts/${id}`,
+      query: (id) => `posts/${id}`,
       transformResponse: (res: { item: Post }) => res.item,
       providesTags: (result, error, id) => [{ type: 'Posts', id }],
     }),
@@ -21,24 +26,35 @@ export const forumApi = createApi({
       query: () => 'categories',
     }),
     getComments: builder.query<IComment[], number>({
-      query: postId => `posts/${postId}/comments`,
+      query: (postId) => `posts/${postId}/comments`,
       providesTags: (result, error, postId) => [{ type: 'Comments', id: postId }],
     }),
-    addThread: builder.mutation<Thread, { title: string; description: string; category_id: number; user_id: number }>({
-      query: newThread => ({
+    addThread: builder.mutation<
+      Thread,
+      {
+        title: string
+        description: string
+        category_id: number
+        user_id: number
+      }
+    >({
+      query: (newThread) => ({
         url: 'posts',
         method: 'POST',
         body: newThread,
       }),
       invalidatesTags: ['Posts'],
     }),
-    addComment: builder.mutation<IComment, { text: string; postId: number; rootCommentId?: number }>({
-      query: commentData => ({
+    addComment: builder.mutation<
+      IComment,
+      { text: string; postId: number; rootCommentId?: number }
+    >({
+      query: (commentData) => ({
         url: 'comments',
         method: 'POST',
         body: commentData,
       }),
-      invalidatesTags: (result, error, { postId }) => 
+      invalidatesTags: (result, error, { postId }) =>
         error ? [] : [{ type: 'Comments', id: postId }],
     }),
   }),

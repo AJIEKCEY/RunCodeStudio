@@ -20,20 +20,14 @@ export const forumSlice = createSlice({
       state.threads.push(action.payload)
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addMatcher(
-        forumApi.endpoints.getThreads.matchFulfilled,
-        (state, action) => {
-          state.threads = action.payload
-        }
-      )
-      .addMatcher(
-        forumApi.endpoints.getCategories.matchFulfilled,
-        (state, action) => {
-          state.categories = action.payload
-        }
-      )
+      .addMatcher(forumApi.endpoints.getThreads.matchFulfilled, (state, action) => {
+        state.threads = action.payload
+      })
+      .addMatcher(forumApi.endpoints.getCategories.matchFulfilled, (state, action) => {
+        state.categories = action.payload
+      })
   },
 })
 

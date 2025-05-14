@@ -1,6 +1,8 @@
-// @ts-ignore --isolatedModules
+/// <reference lib="webworker" />
+/// <reference types="vite/client" />
+
 const cacheName = 'cache-v-1.0'
-const sw = self as unknown as ServiceWorkerGlobalScope & typeof globalThis
+const sw = self as unknown as ServiceWorkerGlobalScope
 const filesToCache = [
   '/',
   'index.html',
@@ -21,7 +23,7 @@ const filesToCache = [
 sw.addEventListener('install', (event: ExtendableEvent) => {
   console.info('service worker установлен!')
   event.waitUntil(
-    caches.open(cacheName).then(cache => {
+    caches.open(cacheName).then((cache) => {
       cache.addAll(filesToCache).then(() => {
         console.info('файлы добавлены в кэш')
       })
@@ -33,9 +35,9 @@ sw.addEventListener('activate', (event: ExtendableEvent) => {
   event.waitUntil(
     caches
       .keys()
-      .then(cacheNames => {
+      .then((cacheNames) => {
         return Promise.all(
-          cacheNames.map(name => {
+          cacheNames.map((name) => {
             if (name !== cacheName) {
               return caches.delete(name)
             }
@@ -47,7 +49,7 @@ sw.addEventListener('activate', (event: ExtendableEvent) => {
       })
   )
 })
-sw.addEventListener('fetch', event => {
+sw.addEventListener('fetch', (event) => {
   const requestUrl = new URL(event.request.url)
   if (!requestUrl.protocol.startsWith('http')) {
     return
@@ -55,14 +57,14 @@ sw.addEventListener('fetch', event => {
   event.respondWith(
     caches
       .match(event.request)
-      .then(response => response || fetch(event.request))
+      .then((response) => response || fetch(event.request))
       .catch(() => {
         console.warn('Сервер не отвечает')
         return new Response('Не удалось загрузить файл', { status: 404 })
       })
   )
   event.waitUntil(
-    update(event.request).catch(error => {
+    update(event.request).catch((error) => {
       console.warn(` ${error} запрос ${event.request.url}`)
       return
     })
@@ -73,12 +75,12 @@ function update(request: Request) {
   if (!navigator.onLine) {
     return Promise.reject('Обновление кэша невозможно, нет соединение с сетью')
   }
-  return caches.open(cacheName).then(cache => {
+  return caches.open(cacheName).then((cache) => {
     const requestUrl = new URL(request.url)
     if (!requestUrl.protocol.startsWith('http')) {
       return Promise.resolve()
     } else
-      return fetch(request).then(response => {
+      return fetch(request).then((response) => {
         if (response.ok) {
           return cache.put(request, response)
         }

@@ -15,16 +15,11 @@ declare global {
 
 export const store = configureStore({
   reducer: rootReducer,
-  preloadedState:
-    typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
-  middleware: getDefaultMiddleware =>
+  preloadedState: typeof window === 'undefined' ? undefined : window.APP_INITIAL_STATE,
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(
-      userApiSlice.middleware,
-      leaderBoardApiSlice.middleware,
-      forumApi.middleware
-    ),
+    }).concat(userApiSlice.middleware, leaderBoardApiSlice.middleware, forumApi.middleware),
 })
 
 export const useStore: () => typeof store = useStoreBase

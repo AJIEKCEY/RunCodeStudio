@@ -11,7 +11,7 @@ export interface AuthState {
 const initialState: AuthState = {
   isAuthenticated: false,
   loading: false,
-  error: null
+  error: null,
 }
 
 // Создание слайса
@@ -31,12 +31,12 @@ export const authSlice = createSlice({
     },
     clearError: (state) => {
       state.error = null
-    }
-  }
+    },
+  },
 })
 
 // Экспорт экшенов
 export const { setAuthenticated, setLoading, setError, clearError } = authSlice.actions
 
 // Экспорт редюсера по умолчанию
-export default authSlice.reducer 
+export default authSlice.reducer

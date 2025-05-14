@@ -4,19 +4,19 @@
 
 ## Доступные алиасы
 
-| Алиас | Путь | Пример использования |
-|-------|------|----------------------|
-| `@` | `src/` | `import App from '@/App'` |
-| `@components` | `src/components/` | `import { Button } from '@components/Button'` |
-| `@hooks` | `src/hooks/` | `import { useAuth } from '@hooks/useAuth'` |
-| `@pages` | `src/pages/` | `import { Home } from '@pages/Home'` |
-| `@utils` | `src/utils/` | `import { formatDate } from '@utils/formatDate'` |
-| `@assets` | `src/assets/` | `import logo from '@assets/logo.svg'` |
-| `@config` | `src/config/` | `import { API_URLS } from '@config/api'` |
-| `@styles` | `src/styles/` | `import '@styles/global.css'` |
-| `@services` | `src/services/` | `import { authService } from '@services/auth'` |
-| `@types` | `src/types/` | `import { User } from '@types/models'` |
-| `@context` | `src/context/` | `import { ThemeContext } from '@context/ThemeContext'` |
+| Алиас         | Путь              | Пример использования                                   |
+| ------------- | ----------------- | ------------------------------------------------------ |
+| `@`           | `src/`            | `import App from '@/App'`                              |
+| `@components` | `src/components/` | `import { Button } from '@components/Button'`          |
+| `@hooks`      | `src/hooks/`      | `import { useAuth } from '@hooks/useAuth'`             |
+| `@pages`      | `src/pages/`      | `import { Home } from '@pages/Home'`                   |
+| `@utils`      | `src/utils/`      | `import { formatDate } from '@utils/formatDate'`       |
+| `@assets`     | `src/assets/`     | `import logo from '@assets/logo.svg'`                  |
+| `@config`     | `src/config/`     | `import { API_URLS } from '@config/api'`               |
+| `@styles`     | `src/styles/`     | `import '@styles/global.css'`                          |
+| `@services`   | `src/services/`   | `import { authService } from '@services/auth'`         |
+| `@types`      | `src/types/`      | `import { User } from '@types/models'`                 |
+| `@context`    | `src/context/`    | `import { ThemeContext } from '@context/ThemeContext'` |
 
 ## Преимущества использования алиасов
 
@@ -28,6 +28,7 @@
 ## Пример использования
 
 До использования алиасов:
+
 ```typescript
 import { API_URLS } from '../../../config/api'
 import { Button } from '../../components/Button'
@@ -35,8 +36,9 @@ import { useAuth } from '../../hooks/useAuth'
 ```
 
 После использования алиасов:
+
 ```typescript
 import { API_URLS } from '@config/api'
 import { Button } from '@components/Button'
 import { useAuth } from '@hooks/useAuth'
-``` 
+```

@@ -12,8 +12,7 @@ interface GameOverProps {
 const GameOver = ({ onRepeat, coins }: GameOverProps) => {
   const { settings } = useTheme()
   const background =
-    settings?.background ||
-    'linear-gradient(135deg, #5f00b5, #4c0099 40%, #30006d)'
+    settings?.background || 'linear-gradient(135deg, #5f00b5, #4c0099 40%, #30006d)'
   const textColor = settings?.textColor || '#ffffff'
   const buttonColor = settings?.buttonColor || '#7fff00'
   const buttonTextColor = settings?.buttonTextColor || '#000000'
@@ -23,10 +22,9 @@ const GameOver = ({ onRepeat, coins }: GameOverProps) => {
       gap="large"
       align="center"
       className="page"
-      style={{ background: background, color: textColor }}>
-      <Typography.Title style={{ color: textColor }}>
-        Игра завершена!
-      </Typography.Title>
+      style={{ background: background, color: textColor }}
+    >
+      <Typography.Title style={{ color: textColor }}>Игра завершена!</Typography.Title>
       <Typography.Text style={{ color: textColor, marginBottom: '40px' }}>
         Поздравляем! Надеемся, вы получили удовольствие от прохождения
       </Typography.Text>
@@ -39,7 +37,8 @@ const GameOver = ({ onRepeat, coins }: GameOverProps) => {
           backgroundColor: buttonColor,
           borderColor: buttonColor,
           color: buttonTextColor,
-        }}>
+        }}
+      >
         Повторить
       </Button>
     </Flex>

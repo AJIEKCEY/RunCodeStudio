@@ -44,18 +44,23 @@ export const checkDatabaseConnection = async (): Promise<boolean> => {
       port: POSTGRES_PORT,
       username: POSTGRES_USER,
       database: POSTGRES_DB,
-      password: POSTGRES_PASSWORD ? '***' : undefined
+      password: POSTGRES_PASSWORD ? '***' : undefined,
     })
     await sequelize.authenticate()
     console.info('Database connection established successfully')
     return true
   } catch (error: unknown) {
     console.error('Database connection error:', error)
-    console.error('Error details:', error instanceof Error ? {
-      message: error.message,
-      stack: error.stack,
-      name: error.name
-    } : 'Unknown error type')
+    console.error(
+      'Error details:',
+      error instanceof Error
+        ? {
+            message: error.message,
+            stack: error.stack,
+            name: error.name,
+          }
+        : 'Unknown error type'
+    )
     process.exit(1)
     return false
   }

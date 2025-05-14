@@ -62,7 +62,12 @@ const createPost = async (req: Request, res: Response) => {
   try {
     const { title, description, user_id, category_id } = req.body
 
-    console.info('Creating post with data:', { title, description, user_id, category_id });
+    console.info('Creating post with data:', {
+      title,
+      description,
+      user_id,
+      category_id,
+    })
 
     // TODO use json schema validation
     if (!title || !user_id || !category_id) {
@@ -70,14 +75,14 @@ const createPost = async (req: Request, res: Response) => {
     }
 
     // Проверим, что пользователь и категория существуют
-    const user = await User.findByPk(user_id);
+    const user = await User.findByPk(user_id)
     if (!user) {
-      throw new ValidationError(`Пользователь с ID ${user_id} не найден`);
+      throw new ValidationError(`Пользователь с ID ${user_id} не найден`)
     }
 
-    const category = await Category.findByPk(category_id);
+    const category = await Category.findByPk(category_id)
     if (!category) {
-      throw new ValidationError(`Категория с ID ${category_id} не найдена`);
+      throw new ValidationError(`Категория с ID ${category_id} не найдена`)
     }
 
     const post = await Post.create({
@@ -91,15 +96,15 @@ const createPost = async (req: Request, res: Response) => {
       item: post,
     })
   } catch (error) {
-    console.error('Error creating post:', error);
-    
+    console.error('Error creating post:', error)
+
     if (error instanceof ValidationError) {
-      res.status(400).json({ message: error.message });
+      res.status(400).json({ message: error.message })
     } else {
-      res.status(500).json({ 
+      res.status(500).json({
         message: 'Внутренняя ошибка сервера',
-        details: error instanceof Error ? error.message : 'Unknown error'
-      });
+        details: error instanceof Error ? error.message : 'Unknown error',
+      })
     }
   }
 }

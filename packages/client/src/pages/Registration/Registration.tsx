@@ -22,11 +22,7 @@ const Registration = () => {
   }
 
   return (
-    <Flex
-      vertical={true}
-      justify={'center'}
-      align={'center'}
-      className={styles.container}>
+    <Flex vertical={true} justify={'center'} align={'center'} className={styles.container}>
       <Title level={2}>Регистрация</Title>
       <Form
         className={styles.form}
@@ -38,7 +34,8 @@ const Registration = () => {
           email: '',
           password: '',
           confirmPassword: '',
-        }}>
+        }}
+      >
         <Form.Item
           name="username"
           label="Имя пользователя"
@@ -48,7 +45,8 @@ const Registration = () => {
               pattern: VALIDATION_RULES.username,
               message: VALIDATION_MESSAGES.username,
             },
-          ]}>
+          ]}
+        >
           <Input prefix={<UserOutlined />} placeholder="Имя пользователя" />
         </Form.Item>
 
@@ -62,7 +60,8 @@ const Registration = () => {
               pattern: VALIDATION_RULES.email,
               message: VALIDATION_MESSAGES.email,
             },
-          ]}>
+          ]}
+        >
           <Input prefix={<MailOutlined />} placeholder="Email" />
         </Form.Item>
 
@@ -75,7 +74,8 @@ const Registration = () => {
               pattern: VALIDATION_RULES.password,
               message: VALIDATION_MESSAGES.password,
             },
-          ]}>
+          ]}
+        >
           <Input.Password prefix={<LockOutlined />} placeholder="Пароль" />
         </Form.Item>
 
@@ -93,11 +93,9 @@ const Registration = () => {
                 return Promise.reject(new Error('Пароли не совпадают'))
               },
             }),
-          ]}>
-          <Input.Password
-            prefix={<LockOutlined />}
-            placeholder="Подтвердите пароль"
-          />
+          ]}
+        >
+          <Input.Password prefix={<LockOutlined />} placeholder="Подтвердите пароль" />
         </Form.Item>
 
         <Form.Item>

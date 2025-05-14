@@ -6,4 +6,4 @@ export const apiMiddlewares = [
   userApiSlice.middleware,
   leaderBoardApiSlice.middleware,
   forumApi.middleware,
-] 
+]

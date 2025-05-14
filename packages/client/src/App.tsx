@@ -6,8 +6,7 @@ import { ConfigProvider, theme as antdTheme } from 'antd/lib'
 
 function App() {
   const { themeName } = useTheme()
-  const algorithm =
-    themeName === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm
+  const algorithm = themeName === 'light' ? antdTheme.defaultAlgorithm : antdTheme.darkAlgorithm
 
   return (
     <BrowserRouter future={{ v7_startTransition: true }}>
@@ -18,7 +17,8 @@ function App() {
             token: {
               colorPrimary: themeName === 'light' ? '#e5d1f2' : '#5f00b5',
             },
-          }}>
+          }}
+        >
           <AppRouter />
         </ConfigProvider>
       </NotificationProvider>

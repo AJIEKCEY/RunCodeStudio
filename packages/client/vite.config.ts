@@ -35,7 +35,7 @@ export default defineConfig({
       '@services': path.resolve(__dirname, './src/services'),
       '@types': path.resolve(__dirname, './src/types'),
       '@context': path.resolve(__dirname, './src/context'),
-    }
+    },
   },
   define: {
     __SERVER_PORT__: process.env.CLIENT_SERVER_PORT || 3000,

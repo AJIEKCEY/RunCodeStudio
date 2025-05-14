@@ -6,11 +6,7 @@ type Props = {
   style?: React.CSSProperties
 }
 
-export const Button = ({
-  onClick,
-  style,
-  children,
-}: React.PropsWithChildren<Props>) => (
+export const Button = ({ onClick, style, children }: React.PropsWithChildren<Props>) => (
   <button onClick={onClick} style={style} className={styles.button}>
     {children}
   </button>

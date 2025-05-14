@@ -20,11 +20,11 @@ export const createStore = (preloadedState?: Partial<ReturnType<typeof rootReduc
   return configureStore({
     reducer: rootReducer,
     preloadedState,
-    middleware: getDefaultMiddleware =>
+    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
       }).concat(userApiSlice.middleware, leaderBoardApiSlice.middleware, forumApi.middleware),
   })
 }
 
-export type AppStore = ReturnType<typeof createStore> 
+export type AppStore = ReturnType<typeof createStore>
