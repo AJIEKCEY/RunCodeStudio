@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useUpdateUserScoreMutation } from '../store/features/leaderboard/leaderBoardApiSlice'
 import { useGetUserQuery } from '../store/features/user/userApiSlice'
-import { useGeolocation } from './usegeolocation'
 import { formatDate } from '../utils/getFormattedCurrentDate'
+import { useGeolocation } from './useGeoLoc'
 
 export const useStoreScore = () => {
   const [score, setScore] = useState<number | null>(null)
