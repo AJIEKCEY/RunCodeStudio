@@ -8,7 +8,7 @@ export const forumApi = createApi({
   tagTypes: ['Comments', 'Posts'],
   endpoints: (builder) => ({
     getThreads: builder.query<Post[], void>({
-      query: () => 'posts',
+      query: () => API_URLS.forum.posts,
       transformResponse: (response: ThreadResponce) =>
         response.items.map((item) => ({
           ...item,
@@ -18,15 +18,15 @@ export const forumApi = createApi({
       providesTags: ['Posts'],
     }),
     getPost: builder.query<Post, number>({
-      query: (id) => `posts/${id}`,
+      query: (id) => API_URLS.forum.post(id),
       transformResponse: (res: { item: Post }) => res.item,
       providesTags: (result, error, id) => [{ type: 'Posts', id }],
     }),
     getCategories: builder.query<Category[], void>({
-      query: () => 'categories',
+      query: () => API_URLS.forum.categories,
     }),
     getComments: builder.query<IComment[], number>({
-      query: (postId) => `posts/${postId}/comments`,
+      query: (postId) => API_URLS.forum.comments(postId),
       providesTags: (result, error, postId) => [{ type: 'Comments', id: postId }],
     }),
     addThread: builder.mutation<
@@ -39,7 +39,7 @@ export const forumApi = createApi({
       }
     >({
       query: (newThread) => ({
-        url: 'posts',
+        url: API_URLS.forum.posts,
         method: 'POST',
         body: newThread,
       }),
@@ -50,12 +50,21 @@ export const forumApi = createApi({
       { text: string; postId: number; rootCommentId?: number }
     >({
       query: (commentData) => ({
-        url: 'comments',
+        url: API_URLS.forum.comments(commentData.postId),
         method: 'POST',
         body: commentData,
       }),
       invalidatesTags: (result, error, { postId }) =>
         error ? [] : [{ type: 'Comments', id: postId }],
+    }),
+    addReaction: builder.mutation<IComment, { commentId: number; type: 'like' | 'dislike' }>({
+      query: ({ commentId, type }) => ({
+        url: API_URLS.forum.reactions(commentId),
+        method: 'POST',
+        body: { type },
+      }),
+      invalidatesTags: (result, error, { commentId }) =>
+        error ? [] : [{ type: 'Comments', id: commentId }],
     }),
   }),
 })
@@ -67,4 +76,5 @@ export const {
   useGetPostQuery,
   useGetCommentsQuery,
   useAddCommentMutation,
+  useAddReactionMutation,
 } = forumApi

@@ -1,4 +1,5 @@
 import { Request as ExpressRequest } from 'express'
+import fetch, { Response, Headers, Request } from 'cross-fetch'
 
 export const createUrl = (req: ExpressRequest) => {
   const origin = `${req.protocol}://${req.get('host')}`
@@ -26,20 +27,18 @@ export const createFetchRequest = (req: ExpressRequest) => {
     }
   }
 
-  const init: {
-    method: string
-    headers: Headers
-    signal: AbortSignal
-    body?: any
-  } = {
+  const init = {
     method: req.method,
     headers,
     signal: controller.signal,
-  }
-
-  if (req.method !== 'GET' && req.method !== 'HEAD') {
-    init.body = req.body
+    body: req.method !== 'GET' && req.method !== 'HEAD' ? req.body : undefined,
   }
 
   return new Request(url.href, init)
 }
+
+// Добавляем глобальные полифиллы
+global.fetch = fetch as any
+global.Response = Response as any
+global.Headers = Headers as any
+global.Request = Request as any

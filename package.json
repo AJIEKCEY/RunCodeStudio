@@ -7,7 +7,7 @@
     "build:client": "lerna run build --scope=client",
     "build:all": "yarn build && yarn build:client",
     "dev:client": "lerna run dev --scope=client",
-    "dev:server": "lerna run dev --scope=server",
+    "dev:server": "lerna run dev --scope=@runcode/server",
     "dev": "lerna run dev",
     "test": "lerna run test",
     "test:client": "lerna run test --stream -- --verbose --scope=client",

@@ -29,6 +29,9 @@ export interface TypeDataTheme {
 export type GameSettings = {
   playerId: string
   themeId: string
+  theme: {
+    background: HTMLImageElement
+  }
   speed: number
   timeElapsed: number
   canvasWidth: number

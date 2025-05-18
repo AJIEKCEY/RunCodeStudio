@@ -1,4 +1,4 @@
-import { EntityProps, GameSettings, TypeDataTheme } from '../types'
+import { EntityProps, GameSettings, TypeDataTheme } from '@/pages/Game/CanvasGame/types'
 import { getThemeSprite } from './sprites'
 import { IBackgroundProps } from './types'
 
@@ -8,6 +8,7 @@ export class Background {
   private height: number
   private x: number
   private speed: number
+  private props: IBackgroundProps
 
   constructor(ctx: CanvasRenderingContext2D, props: IBackgroundProps) {
     this.ctx = ctx
@@ -15,6 +16,7 @@ export class Background {
     this.height = props.height
     this.x = 0
     this.speed = props.speed
+    this.props = props
   }
 
   update() {
@@ -24,10 +26,16 @@ export class Background {
     }
   }
 
-  draw(props: IBackgroundProps) {
+  draw() {
     const offsetX = this.x
-    const image = props.image as unknown as CanvasImageSource
+    const image = this.props.image as unknown as CanvasImageSource
     this.ctx.drawImage(image, offsetX, 0, this.width, this.height)
     this.ctx.drawImage(image, offsetX + this.width, 0, this.width, this.height)
+  }
+
+  animation(speed: number) {
+    this.speed = speed
+    this.update()
+    this.draw()
   }
 }

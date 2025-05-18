@@ -81,7 +81,7 @@ const LeaderBoard: React.FC = () => {
       </Title>
       <Table<leaderBoardDataTableType>
         data-testid="leaderbord-table"
-        style={{ paddingInline: '2rem' }}
+        style={{ paddingInline: '2rem', width: '100%' }}
         loading={isLoading}
         columns={columns}
         dataSource={leaderboard}

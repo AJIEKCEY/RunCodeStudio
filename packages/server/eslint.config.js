@@ -1,11 +1,9 @@
-import js from '@eslint/js'
-import tseslint from '@typescript-eslint/eslint-plugin'
-import tsparser from '@typescript-eslint/parser'
+const js = require('@eslint/js')
+const tseslint = require('@typescript-eslint/eslint-plugin')
+const tsparser = require('@typescript-eslint/parser')
 
-export default [
-  {
-    ignores: ['**/dist/**', 'dist/**', '**/dist/**/*'],
-  },
+module.exports = [
+  js.configs.recommended,
   {
     files: ['**/*.{js,ts}'],
     languageOptions: {
@@ -13,26 +11,43 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
+        project: './tsconfig.json',
       },
       globals: {
-        // Node.js
+        console: 'readonly',
         process: 'readonly',
+        __dirname: 'readonly',
         module: 'readonly',
         require: 'readonly',
-        exports: 'readonly',
-        __dirname: 'readonly',
-        __filename: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
       },
     },
     plugins: {
       '@typescript-eslint': tseslint,
     },
     rules: {
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-empty-function': 'off',
-      '@typescript-eslint/no-unnecessary-type-constraint': 'off',
-      'no-unused-vars': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
+      'no-unused-vars': 'off',
+    },
+  },
+  {
+    files: ['**/models/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
 ]

@@ -1,50 +1,29 @@
 import { Sequelize } from 'sequelize-typescript'
-import path from 'path'
-import dotenv from 'dotenv'
 import { User } from './models/User'
 import { Post } from './models/Post'
 import { Category } from './models/Category'
 import { Comment } from './models/Comment'
 import { Theme } from './models/Theme'
 import { Reaction } from './models/Reaction'
+import { config } from './config'
 
-const envPath = path.join(__dirname, '../../.env')
-console.info('Loading .env from:', envPath)
-dotenv.config({ path: envPath })
-
-const {
-  POSTGRES_USER,
-  POSTGRES_PASSWORD,
-  POSTGRES_DB,
-  POSTGRES_PORT,
-  POSTGRES_HOST,
-} = process.env
-
-console.info('Database connection config:', {
-  host: POSTGRES_HOST,
-  port: POSTGRES_PORT,
-  username: POSTGRES_USER,
-  database: POSTGRES_DB,
-})
+console.info('Database connection config:', config.postgres)
 
 export const sequelize = new Sequelize({
   dialect: 'postgres',
-  host: POSTGRES_HOST,
-  port: Number(POSTGRES_PORT),
-  username: POSTGRES_USER,
-  password: String(POSTGRES_PASSWORD),
-  database: POSTGRES_DB,
+  host: config.postgres.host,
+  port: config.postgres.port,
+  username: config.postgres.username,
+  password: config.postgres.password,
+  database: config.postgres.database,
   models: [User, Post, Category, Comment, Theme, Reaction],
 })
 
 export const checkDatabaseConnection = async (): Promise<boolean> => {
   try {
     console.info('Attempting to connect to database with config:', {
-      host: POSTGRES_HOST,
-      port: POSTGRES_PORT,
-      username: POSTGRES_USER,
-      database: POSTGRES_DB,
-      password: POSTGRES_PASSWORD ? '***' : undefined,
+      ...config.postgres,
+      password: '***',
     })
     await sequelize.authenticate()
     console.info('Database connection established successfully')

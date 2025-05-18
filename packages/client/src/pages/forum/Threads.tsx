@@ -2,10 +2,15 @@ import React, { useState } from 'react'
 import { Card, Space, Tag, Button, Typography } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { ClockCircleOutlined, TagOutlined, UserOutlined } from '@ant-design/icons'
-import { useGetThreadsQuery, useGetCategoriesQuery } from '../../store/features/forum/forumApiSlice'
+import {
+  useGetThreadsQuery,
+  useGetCategoriesQuery,
+  forumApi,
+} from '../../store/features/forum/forumApiSlice'
 import { Post } from '../../store/features/forum/types'
 import CreateThreadModal from './components/CreateThreadModal'
 import ForumNavigation from './components/ForumNavigation'
+import { PageInitArgs } from '../../store/store'
 
 const Threads: React.FC = () => {
   const navigate = useNavigate()
@@ -67,6 +72,13 @@ const Threads: React.FC = () => {
       />
     </div>
   )
+}
+
+export const initThreadsPage = async ({ dispatch }: PageInitArgs) => {
+  return Promise.all([
+    dispatch(forumApi.endpoints.getThreads.initiate()),
+    dispatch(forumApi.endpoints.getCategories.initiate()),
+  ])
 }
 
 export default Threads

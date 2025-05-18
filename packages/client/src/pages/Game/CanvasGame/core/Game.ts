@@ -1,5 +1,5 @@
-import { GameObject, GameSettings } from '../types'
-import { Backgournd } from './Background'
+import { GameObject, GameSettings, TypeDataTheme } from '@/pages/Game/CanvasGame/types'
+import { Background } from './Background'
 import { Coin } from './Coin'
 import { Obstacle } from './Obstacle'
 import { Player } from './Player'
@@ -10,7 +10,7 @@ export class Game {
   private canvas: HTMLCanvasElement
   private ctx: CanvasRenderingContext2D
   private player: Player
-  private theme: Backgournd
+  private theme: Background
   private obstacles: Obstacle[] = []
   private coins: Coin[] = []
   animationFrameId: number | null
@@ -39,7 +39,12 @@ export class Game {
       settings: this.settings,
     }
 
-    this.theme = new Backgournd(entityProps)
+    this.theme = new Background(this.ctx, {
+      width: this.settings.canvasWidth,
+      height: this.settings.canvasHeight,
+      speed: this.settings.speed,
+      image: this.settings.theme.background,
+    })
     this.player = new Player(entityProps)
 
     this.obstacles.push(new Obstacle(entityProps))

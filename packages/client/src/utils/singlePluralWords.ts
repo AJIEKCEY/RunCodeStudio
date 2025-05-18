@@ -11,3 +11,11 @@ export const getTimeWord = (count: number): string => {
 export const getScoreWord = (count: number): string => {
   return getPluralForm(count, ['очко', 'очка', 'очков'])
 }
+
+export const secondsWords = (count: number): string => {
+  return getPluralForm(count, ['секунда', 'секунды', 'секунд'])
+}
+
+export const coinsWords = (count: number): string => {
+  return getPluralForm(count, ['монета', 'монеты', 'монет'])
+}

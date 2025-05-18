@@ -23,11 +23,11 @@ const getComments = async (req: Request, res: Response): Promise<void> => {
     include: [
       {
         model: User,
-        attributes: ['id', 'firstname'], // Выбираем нужные поля
+        attributes: ['id', 'firstname'],
       },
       {
         model: Reaction,
-        as: 'reactions', // Добавляем alias для реакций
+        as: 'reactions',
         include: [
           {
             model: User,
@@ -37,7 +37,7 @@ const getComments = async (req: Request, res: Response): Promise<void> => {
       },
       {
         model: Comment,
-        as: 'replies', // Включаем ответы
+        as: 'replies',
         include: [
           {
             model: User,
@@ -45,7 +45,7 @@ const getComments = async (req: Request, res: Response): Promise<void> => {
           },
           {
             model: Reaction,
-            as: 'reactions', // Добавляем alias для реакций в ответах
+            as: 'reactions',
             include: [
               {
                 model: User,
@@ -55,8 +55,23 @@ const getComments = async (req: Request, res: Response): Promise<void> => {
           },
           {
             model: Comment,
-            as: 'replies', // Рекурсивно включаем ответы на ответы
-            include: [User], // Можно продолжать вкладывать
+            as: 'replies',
+            include: [
+              {
+                model: User,
+                attributes: ['id', 'firstname'],
+              },
+              {
+                model: Reaction,
+                as: 'reactions',
+                include: [
+                  {
+                    model: User,
+                    attributes: ['id', 'firstname'],
+                  },
+                ],
+              },
+            ],
           },
         ],
       },
@@ -67,7 +82,8 @@ const getComments = async (req: Request, res: Response): Promise<void> => {
 }
 
 const createComment = async (req: Request, res: Response): Promise<void> => {
-  const { text, postId, rootCommentId } = req.body
+  const { text, rootCommentId } = req.body
+  const postId = Number(req.params.postId)
   const userId = req.user?.id
 
   if (!userId) {
@@ -89,6 +105,16 @@ const createComment = async (req: Request, res: Response): Promise<void> => {
       {
         model: User,
         attributes: ['id', 'firstname'],
+      },
+      {
+        model: Reaction,
+        as: 'reactions',
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'firstname'],
+          },
+        ],
       },
     ],
   })
@@ -157,4 +183,69 @@ const deleteComment = async (req: Request, res: Response): Promise<void> => {
   res.status(204).send()
 }
 
-export { getComments, createComment, updateComment, deleteComment }
+const addReaction = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params
+  const { type } = req.body
+  const userId = req.user?.id
+
+  if (!userId) {
+    res.status(401).json({ message: 'Необходима авторизация' })
+    return
+  }
+
+  const comment = await Comment.findByPk(id)
+
+  if (!comment) {
+    res.status(404).json({ message: 'Комментарий не найден' })
+    return
+  }
+
+  // Проверяем, есть ли уже реакция от этого пользователя
+  const existingReaction = await Reaction.findOne({
+    where: {
+      comment_id: id,
+      user_id: userId,
+    },
+  })
+
+  if (existingReaction) {
+    // Если реакция того же типа, удаляем её
+    if (existingReaction.type === type) {
+      await existingReaction.destroy()
+    } else {
+      // Если реакция другого типа, обновляем её
+      await existingReaction.update({ type })
+    }
+  } else {
+    // Создаем новую реакцию
+    await Reaction.create({
+      comment_id: id,
+      user_id: userId,
+      type,
+    })
+  }
+
+  // Получаем обновленный комментарий со всеми реакциями
+  const updatedComment = await Comment.findByPk(id, {
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'firstname'],
+      },
+      {
+        model: Reaction,
+        as: 'reactions',
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'firstname'],
+          },
+        ],
+      },
+    ],
+  })
+
+  res.status(200).json(updatedComment)
+}
+
+export { getComments, createComment, updateComment, deleteComment, addReaction }

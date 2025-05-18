@@ -20,13 +20,13 @@ describe('Background class', () => {
   })
 
   it('Фон отрисовывается дважды для плавного зацикливания', () => {
-    background.draw(mockProps)
+    background.draw()
     expect(mockCtx.drawImage).toHaveBeenCalledTimes(2)
   })
 
   it('Корректное обновление позиции', () => {
     background.update()
-    background.draw(mockProps)
+    background.draw()
     expect(mockCtx.drawImage).toHaveBeenCalledWith(
       mockProps.image,
       -mockProps.speed,
