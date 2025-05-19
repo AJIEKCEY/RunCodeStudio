@@ -1,8 +1,9 @@
-import { GameObject, GameSettings, TypeDataTheme } from '@/pages/Game/CanvasGame/types'
-import { Background } from './Background'
+import { GameObject, GameSettings } from '@/pages/Game/CanvasGame/types'
 import { Coin } from './Coin'
 import { Obstacle } from './Obstacle'
 import { Player } from './Player'
+import { Background } from './Background'
+import { getThemeSprite } from './sprites'
 
 type IntervalType = ReturnType<typeof setInterval>
 
@@ -10,7 +11,7 @@ export class Game {
   private canvas: HTMLCanvasElement
   private ctx: CanvasRenderingContext2D
   private player: Player
-  private theme: Background
+  private theme: Background[]
   private obstacles: Obstacle[] = []
   private coins: Coin[] = []
   animationFrameId: number | null
@@ -39,12 +40,22 @@ export class Game {
       settings: this.settings,
     }
 
-    this.theme = new Background(this.ctx, {
-      width: this.settings.canvasWidth,
-      height: this.settings.canvasHeight,
-      speed: this.settings.speed,
-      image: this.settings.theme.background,
-    })
+    // Создаем фон со всеми слоями из темы
+    const themeLayers = getThemeSprite(settings.themeId)
+    this.theme = themeLayers.map(
+      (layer, index) =>
+        new Background(
+          this.ctx,
+          {
+            image: layer.image,
+            width: this.settings.canvasWidth,
+            height: this.settings.canvasHeight,
+            speed: this.settings.speed * layer.speedModifier,
+          },
+          index
+        )
+    )
+
     this.player = new Player(entityProps)
 
     this.obstacles.push(new Obstacle(entityProps))
@@ -139,7 +150,7 @@ export class Game {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
     if (this.player.isDead()) {
-      this.theme.animation(0)
+      this.theme.forEach((layer) => layer.animation(0))
       this.obstacles.forEach((obstacle) => obstacle.animation(0))
       this.coins.forEach((coin) => coin.animation(0))
 
@@ -150,7 +161,7 @@ export class Game {
       return
     }
 
-    this.theme.animation(this.speed)
+    this.theme.forEach((layer) => layer.animation(this.speed))
     this.player.animation(this.speed)
 
     this.obstacles.forEach((obstacle) => obstacle.animation(this.speed))

@@ -59,11 +59,14 @@ export class Coin {
     const coins: Coin[] = []
     const numberOfCoins = Math.floor(Math.random() * 3) + 1 // От 1 до 3 монет
     const startX = props.settings.canvasWidth + 50 // Начинаем чуть за экраном
-    const baseY = props.settings.canvasHeight / 2 // Чтобы не появлялись слишком низко
+
+    // Максимальная высота прыжка примерно 200 пикселей (velocityY = -10, gravity = 0.3)
+    const maxJumpHeight = 200
+    const baseY = maxJumpHeight * 0.8 // 80% от максимальной высоты прыжка
 
     for (let i = 0; i < numberOfCoins; i++) {
       const x = startX + i * 50 // Немного раздвигаем монетки по X
-      const y = Math.random() * baseY // Случайная высота
+      const y = Math.random() * baseY // Случайная высота в пределах 80% от максимальной высоты прыжка
 
       coins.push(new Coin({ ...props, x, y }))
     }

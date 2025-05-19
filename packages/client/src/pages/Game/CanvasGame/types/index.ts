@@ -30,13 +30,13 @@ export type GameSettings = {
   playerId: string
   themeId: string
   theme: {
-    background: HTMLImageElement
+    background: TypeDataTheme[]
   }
   speed: number
   timeElapsed: number
   canvasWidth: number
   canvasHeight: number
-  bgOfsetY: 120
+  bgOfsetY: number
 }
 
 //Общие пропсы

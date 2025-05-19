@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { Game } from './core/Game'
 import style from './game.module.css'
 import { useNotificationContext } from '../../../components/Notification/NotificationContext'
+import { getThemeSprite } from './core/sprites'
 
 interface CanvasGameProps {
   characterId: string
@@ -22,14 +23,20 @@ const CanvasGame = ({ characterId, onGameOver, onCoinsChange }: CanvasGameProps)
       refGame.current.destroy()
     }
 
+    const themeId = 'theme_1'
+    const themeLayers = getThemeSprite(themeId)
+
     const game = new Game(canvas, {
       playerId: characterId,
-      themeId: 'theme_2',
+      themeId,
       canvasWidth: window.innerWidth,
       canvasHeight: 720,
       speed: 4,
       timeElapsed: 0,
       bgOfsetY: 120,
+      theme: {
+        background: themeLayers,
+      },
     })
 
     refGame.current = game
@@ -45,7 +52,9 @@ const CanvasGame = ({ characterId, onGameOver, onCoinsChange }: CanvasGameProps)
     })
 
     return () => {
-      game.destroy()
+      if (refGame.current) {
+        refGame.current.destroy()
+      }
     }
   }, [characterId, onGameOver, onCoinsChange])
 

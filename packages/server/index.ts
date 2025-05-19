@@ -27,6 +27,15 @@ const startServer = async () => {
     app.use(express.json())
     app.use(sanitizeInput)
 
+    // Добавляем middleware аутентификации для всех маршрутов
+    app.use((req, _, next) => {
+      req.user = {
+        id: 1,
+        firstname: 'Demo User',
+      }
+      next()
+    })
+
     app.use('/api/v1', postRouter)
     app.use('/api/v1', commentsRouter)
     app.use('/api/v1', themeRouter)

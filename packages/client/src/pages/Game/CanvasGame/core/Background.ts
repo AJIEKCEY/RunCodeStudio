@@ -9,14 +9,16 @@ export class Background {
   private x: number
   private speed: number
   private props: IBackgroundProps
+  private layerId: number
 
-  constructor(ctx: CanvasRenderingContext2D, props: IBackgroundProps) {
+  constructor(ctx: CanvasRenderingContext2D, props: IBackgroundProps, layerId: number) {
     this.ctx = ctx
     this.width = props.width
     this.height = props.height
     this.x = 0
     this.speed = props.speed
     this.props = props
+    this.layerId = layerId
   }
 
   update() {
@@ -34,7 +36,7 @@ export class Background {
   }
 
   animation(speed: number) {
-    this.speed = speed
+    this.speed = speed * (this.layerId + 1) * 0.2
     this.update()
     this.draw()
   }

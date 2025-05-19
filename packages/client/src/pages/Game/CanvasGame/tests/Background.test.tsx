@@ -16,7 +16,7 @@ describe('Background class', () => {
       height: 600,
       speed: 5,
     }
-    background = new Background(mockCtx as CanvasRenderingContext2D, mockProps)
+    background = new Background(mockCtx as CanvasRenderingContext2D, mockProps, 0)
   })
 
   it('Фон отрисовывается дважды для плавного зацикливания', () => {
@@ -34,5 +34,20 @@ describe('Background class', () => {
       mockProps.width,
       mockProps.height
     )
+  })
+
+  it('Скорость корректно рассчитывается в зависимости от layerId', () => {
+    const baseSpeed = 10
+    const layer0 = new Background(mockCtx as CanvasRenderingContext2D, mockProps, 0)
+    const layer1 = new Background(mockCtx as CanvasRenderingContext2D, mockProps, 1)
+    const layer2 = new Background(mockCtx as CanvasRenderingContext2D, mockProps, 2)
+
+    layer0.animation(baseSpeed)
+    layer1.animation(baseSpeed)
+    layer2.animation(baseSpeed)
+
+    expect(layer0['speed']).toBe(baseSpeed * 0.2) // layerId + 1 = 1, поэтому 0.2
+    expect(layer1['speed']).toBe(baseSpeed * 0.4) // layerId + 1 = 2, поэтому 0.4
+    expect(layer2['speed']).toBe(baseSpeed * 0.6) // layerId + 1 = 3, поэтому 0.6
   })
 })
