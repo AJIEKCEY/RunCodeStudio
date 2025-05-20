@@ -9,3 +9,5 @@ export const API_URLS = {
   themes: `${SERVER_URL}/themes`,
   userTheme: (userId: number) => `${SERVER_URL}/users/${userId}/theme`,
 }
+
+export const CLOUD_URL = 'https://runcodestudio.ya-praktikum.tech'
