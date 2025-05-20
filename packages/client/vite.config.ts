@@ -11,7 +11,7 @@ export default defineConfig({
     include: ['antd'],
   },
   server: {
-    // hmr: false,
+    hmr: false,
     // hmr: {
     //   protocol: 'ws',
     //   host: 'localhost',
