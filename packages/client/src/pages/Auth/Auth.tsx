@@ -4,6 +4,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useAuth } from '../../hooks/useAuth'
 import { useSignInUserMutation } from '../../store/features/user/userApiSlice'
 import styles from './Auth.module.css'
+import { CLOUD_URL } from '../../config/api'
 
 const { Title } = Typography
 interface LoginFormValues {
@@ -37,7 +38,7 @@ const Auth = () => {
     signIn({ login: values.username, password: values.password })
   }
 
-  const REDIRECT_URI = `http://localhost:${__SERVER_PORT__}`
+  const REDIRECT_URI = CLOUD_URL
   const handleYandexLogin = async () => {
     try {
       const res = await fetch(

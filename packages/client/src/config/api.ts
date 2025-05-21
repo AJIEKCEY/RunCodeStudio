@@ -44,3 +44,5 @@ export const API_URLS = {
     reactions: (commentId: number) => `${BASE_API_URL}/comments/${commentId}/reactions`,
   },
 }
+
+export const CLOUD_URL = 'https://runcodestudio.ya-praktikum.tech'

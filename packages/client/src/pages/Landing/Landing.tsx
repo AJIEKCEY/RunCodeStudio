@@ -8,8 +8,9 @@ import { useAuth } from '../../hooks/useAuth'
 import { userApiSlice, useYandexAuthMutation } from '../../store/features/user/userApiSlice'
 import { useTheme } from '../../context/ThemeContext'
 import { PageInitArgs } from '../../store/store'
+import { CLOUD_URL } from '../../config/api'
 
-const REDIRECT_URI = `http://localhost:${__SERVER_PORT__}`
+const REDIRECT_URI = CLOUD_URL
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
