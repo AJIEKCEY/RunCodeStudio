@@ -1,6 +1,6 @@
 // Mock for API configuration
 export const API_HOST = 'localhost'
-export const API_PORT = '3005'
+export const API_PORT = '3001'
 export const API_VERSION = 'v1'
 
 // Получаем API_PATH из переменных окружения
