@@ -1,5 +1,5 @@
-// Импорт используется в объявлении типов
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// Импорт используется для расширения глобального пространства имен Express
+// @ts-expect-error - Request используется для расширения глобального пространства имен
 import { Request } from 'express'
 
 export interface IHttpError extends Error {

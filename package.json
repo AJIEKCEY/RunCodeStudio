@@ -5,6 +5,7 @@
     "bootstrap": "yarn && node init.js && lerna clean && yarn && lerna bootstrap",
     "build": "lerna run build",
     "build:client": "lerna run build --scope=client",
+    "build:server": "lerna run build --scope=@runcode/server",
     "build:all": "yarn build && yarn build:client",
     "dev:client": "lerna run dev --scope=client",
     "dev:server": "lerna run dev --scope=@runcode/server",
