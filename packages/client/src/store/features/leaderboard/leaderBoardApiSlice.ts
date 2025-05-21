@@ -39,8 +39,11 @@ export const leaderBoardApiSlice = createApi({
       },
     }),
 
-    updateUserScore: builder.mutation<unknown, leaderboardData>({
-      query: data => {
+    updateUserScore: builder.mutation<
+      unknown,
+      { data: leaderboardData; signal?: AbortSignal }
+    >({
+      query: ({ data, signal }) => {
         const hydratedData: leaderBoardRequest = {
           data,
           ratingFieldName: 'rundCodeStudionGameScore',
@@ -53,6 +56,7 @@ export const leaderBoardApiSlice = createApi({
           },
           method: 'POST',
           body: hydratedData,
+          signal,
         }
       },
 
