@@ -38,12 +38,12 @@ export const API_URLS = {
   userTheme: (userId: string | number) => `${BASE_API_URL}/users/${userId}/theme`,
   // Эндпоинты форума
   forum: {
-    posts: `${BASE_API_URL}/posts`,
-    post: (id: number) => `${BASE_API_URL}/posts/${id}`,
-    categories: `${BASE_API_URL}/categories`,
-    comments: (postId: number) => `${BASE_API_URL}/posts/${postId}/comments`,
-    comment: (commentId: number) => `${BASE_API_URL}/comments/${commentId}`,
-    reactions: (commentId: number) => `${BASE_API_URL}/comments/${commentId}/reactions`,
+    posts: `/posts`,
+    post: (id: number) => `/posts/${id}`,
+    categories: `/categories`,
+    comments: (postId: number) => `/posts/${postId}/comments`,
+    comment: (commentId: number) => `/comments/${commentId}`,
+    reactions: (commentId: number) => `/comments/${commentId}/reactions`,
   },
 }
 
