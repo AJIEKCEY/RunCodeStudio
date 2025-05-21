@@ -6,10 +6,11 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "build": "tsc --p ./tsconfig.prod.json",
+    "clean": "rimraf dist",
+    "build": "yarn clean && tsc --p ./tsconfig.prod.json",
     "preview": "node ./dist/index.js",
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node index.ts",
-    "lint": "eslint .",
+    "lint": "eslint \"**/*.ts\" --ignore-pattern dist/",
     "format": "prettier --write .",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "seed:users": "ts-node seeders/users/users.seeder.ts",
@@ -48,6 +49,7 @@
     "jest": "^28",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
+    "rimraf": "3.0.2",
     "ts-jest": "^28.0.8",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.2",

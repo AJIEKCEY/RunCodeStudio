@@ -1,7 +1,7 @@
 services:
   client:
     container_name: client
-    image: zhannaven/client:latest
+    image: ghcr.io/${GITHUB_OWNER}/runcodestudio/client:latest
     restart: always
     expose:
       - '3000'
@@ -12,7 +12,7 @@ services:
 
   server:
     container_name: server
-    image: zhannaven/server:latest
+    image: ghcr.io/${GITHUB_OWNER}/runcodestudio/server:latest
     restart: always
     expose:
       - '3001'
