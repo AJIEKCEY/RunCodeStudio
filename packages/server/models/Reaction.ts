@@ -1,5 +1,11 @@
-import { Model, DataTypes } from 'sequelize'
-import { sequelize } from '../db'
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  ForeignKey,
+  BelongsTo,
+} from 'sequelize-typescript'
 import { User } from './User'
 import { Comment } from './Comment'
 
@@ -11,45 +17,41 @@ export enum ReactionType {
   ANGRY = 'angry',
 }
 
+@Table({
+  tableName: 'reactions',
+  timestamps: true,
+})
 export class Reaction extends Model {
-  public id!: number
-  public type!: ReactionType
-  public user_id!: number
-  public comment_id!: number
+  @Column({
+    type: DataType.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  })
+  override id!: number
 
-  public readonly createdAt!: Date
-  public readonly updatedAt!: Date
+  @Column({
+    type: DataType.ENUM(...Object.values(ReactionType)),
+    allowNull: false,
+  })
+  type!: ReactionType
+
+  @ForeignKey(() => User)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  user_id!: number
+
+  @BelongsTo(() => User, 'user_id')
+  user!: User
+
+  @ForeignKey(() => Comment)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  comment_id!: number
+
+  @BelongsTo(() => Comment, 'comment_id')
+  comment!: Comment
 }
-
-Reaction.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    type: {
-      type: DataTypes.ENUM(...Object.values(ReactionType)),
-      allowNull: false,
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    comment_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  },
-  {
-    sequelize: sequelize,
-    tableName: 'reactions',
-    modelName: 'Reaction',
-  }
-)
-
-Reaction.belongsTo(User, { foreignKey: 'user_id' })
-Reaction.belongsTo(Comment, { foreignKey: 'comment_id' })
-
-User.hasMany(Reaction, { foreignKey: 'user_id' })
-Comment.hasMany(Reaction, { foreignKey: 'comment_id' })

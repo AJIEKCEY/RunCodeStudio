@@ -19,7 +19,9 @@ jobs:
         run: yarn
       - name: Initialize
         run: yarn lerna bootstrap
-      - name: Lint
-        run: yarn lint
+      - name: Lint Client
+        run: cd packages/client && yarn lint
+      - name: Lint Server
+        run: cd packages/server && yarn lint
       - name: Test
         run: yarn test

@@ -13,7 +13,7 @@ function UseFullScreen(container: React.MutableRefObject<HTMLElement | null>) {
     container.current
       ?.requestFullscreen()
       .then(() => setFullScreen(true))
-      .catch(err => message.error(`Ошибка ${err.message}`))
+      .catch((err) => message.error(`Ошибка ${err.message}`))
   }
 
   const onKeyDown = (e: KeyboardEvent) => {

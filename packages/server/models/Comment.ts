@@ -9,6 +9,7 @@ import {
 } from 'sequelize-typescript'
 import { User } from './User'
 import { Post } from './Post'
+import { Reaction } from './Reaction'
 
 interface CommentAttributes {
   text: string
@@ -76,4 +77,10 @@ export class Comment extends Model<Comment, CommentAttributes> {
     as: 'replies', // Это ключ, под которым будут вложенные ответы
   })
   declare replies: Comment[]
+
+  @HasMany(() => Reaction, {
+    foreignKey: 'comment_id',
+    as: 'reactions', // Это ключ, под которым будут реакции
+  })
+  declare reactions: Reaction[]
 }

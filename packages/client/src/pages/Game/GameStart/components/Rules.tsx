@@ -21,7 +21,8 @@ const Rules: React.FC = () => {
           textAlign: 'center',
           marginBottom: '0',
           marginTop: '30px',
-        }}>
+        }}
+      >
         Правила игры:
       </Typography.Title>
       <ul style={{ marginTop: '0' }}>

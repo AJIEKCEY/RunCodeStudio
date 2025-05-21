@@ -1,14 +1,17 @@
 {
-  "name": "server",
+  "name": "@runcode/server",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "build": "tsc --p ./tsconfig.prod.json",
     "preview": "node ./dist/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon index.ts",
+    "dev": "cross-env NODE_ENV=development nodemon --exec ts-node index.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest .",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "seed:users": "ts-node seeders/users/users.seeder.ts",
     "seed:categories": "ts-node seeders/categories/categories.seeder.ts",
     "seed:posts": "ts-node seeders/posts/posts.seeder.ts",
@@ -33,6 +36,7 @@
     "xss": "^1.0.15"
   },
   "devDependencies": {
+    "@eslint/js": "^8.57.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jest": "^28.1.8",
@@ -40,13 +44,18 @@
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "babel-jest": "^29.0.1",
-    "eslint": "^8.23.0",
+    "eslint": "^8.57.0",
     "jest": "^28",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "ts-jest": "^28.0.8",
     "ts-node": "^10.9.1",
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.2",
+    "typescript-eslint": "^0.0.1-alpha.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "volta": {
+    "node": "16.20.2",
+    "yarn": "1.22.22"
+  }
 }

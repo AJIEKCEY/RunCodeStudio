@@ -1,9 +1,12 @@
 ARG NODE_VERSION=18
 
-FROM node:${NODE_VERSION}-buster as development
+FROM node:${NODE_VERSION}-slim AS development
+WORKDIR /app
+COPY packages/server/package.json ./packages/server/
+WORKDIR /app/packages/server
+RUN yarn install
 WORKDIR /app
 COPY . .
-RUN yarn install
 RUN chmod +x ./scripts/wait-for-it.sh
 EXPOSE $SERVER_PORT
 CMD ["./scripts/wait-for-it.sh", "${POSTGRES_HOST}:${POSTGRES_PORT}", "--", "yarn", "dev"]

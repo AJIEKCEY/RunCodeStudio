@@ -1,9 +1,16 @@
-import { render, screen } from '@testing-library/react'
+import React from 'react'
+import { render, screen, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from '../../store/store'
 import LeaderBoard from './LeaderBoard'
+
+// Мокаем Request
+global.Request = jest.fn().mockImplementation((input, init) => ({
+  ...input,
+  ...init,
+})) as any
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -16,7 +23,7 @@ describe('LeaderBoard компонент', () => {
   beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: jest.fn().mockImplementation(query => ({
+      value: jest.fn().mockImplementation((query) => ({
         matches: false,
         media: query,
         onchange: null,
@@ -28,17 +35,21 @@ describe('LeaderBoard компонент', () => {
       })),
     })
   })
-  beforeEach(() => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/leader-board']}>
-          <Routes>
-            <Route path="/leader-board" element={<LeaderBoard />} />
-          </Routes>
-        </MemoryRouter>
-      </Provider>
-    )
+
+  beforeEach(async () => {
+    await act(async () => {
+      render(
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/leader-board']}>
+            <Routes>
+              <Route path="/leader-board" element={<LeaderBoard />} />
+            </Routes>
+          </MemoryRouter>
+        </Provider>
+      )
+    })
   })
+
   it('должен отрендерить заголовок и таблицу с результатами', () => {
     expect(screen.getByTestId('leaderbord-title')).toBeInTheDocument()
     expect(screen.getByTestId('leaderbord-table')).toBeInTheDocument()

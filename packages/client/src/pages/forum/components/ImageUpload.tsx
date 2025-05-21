@@ -7,10 +7,7 @@ type imageUploadProps = {
   fileList: UploadFile[]
   setFileList: (value: UploadFile[]) => void
 }
-const ImageUpload: React.FC<imageUploadProps> = ({
-  fileList,
-  setFileList,
-}: imageUploadProps) => {
+const ImageUpload: React.FC<imageUploadProps> = ({ fileList, setFileList }: imageUploadProps) => {
   const [previewOpen, setPreviewOpen] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
 
@@ -51,7 +48,8 @@ const ImageUpload: React.FC<imageUploadProps> = ({
         beforeUpload={beforeUpload}
         onChange={handleChange}
         onPreview={handlePreview}
-        fileList={fileList}>
+        fileList={fileList}
+      >
         {uploadButton}
       </Upload>
       {previewImage && (
@@ -60,8 +58,8 @@ const ImageUpload: React.FC<imageUploadProps> = ({
           preview={{
             mask: <span>предпросмотр</span>,
             visible: previewOpen,
-            onVisibleChange: visible => setPreviewOpen(visible),
-            afterOpenChange: visible => !visible && setPreviewImage(''),
+            onVisibleChange: (visible) => setPreviewOpen(visible),
+            afterOpenChange: (visible) => !visible && setPreviewImage(''),
           }}
           src={previewImage}
         />

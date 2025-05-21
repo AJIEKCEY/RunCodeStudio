@@ -42,7 +42,7 @@ function LayoutHeader() {
     <Layout.Header style={{ display: 'flex', alignItems: 'center' }}>
       <div className="demo-logo" />
       <Menu theme="dark" mode="horizontal" style={{ flex: 1, minWidth: 0 }}>
-        {items.map(item => (
+        {items.map((item) => (
           <Menu.Item key={item.key}>
             <Link to={item.path}>{item.title}</Link>
           </Menu.Item>

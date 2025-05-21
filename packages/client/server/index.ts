@@ -31,9 +31,7 @@ async function createServer() {
 
     app.use(vite.middlewares)
   } else {
-    app.use(
-      express.static(path.join(clientPath, 'dist/client'), { index: false })
-    )
+    app.use(express.static(path.join(clientPath, 'dist/client'), { index: false }))
   }
 
   app.use('/auth', authMiddleware)
@@ -43,37 +41,22 @@ async function createServer() {
 
     try {
       // Получаем файл client/index.html который мы правили ранее
-      let render: (
-        req: ExpressRequest
-      ) => Promise<{ html: string; initialState: unknown }>
+      let render: (req: ExpressRequest) => Promise<{ html: string; initialState: unknown }>
       let template: string
       if (vite) {
-        template = await fs.readFile(
-          path.resolve(clientPath, 'index.html'),
-          'utf-8'
-        )
+        template = await fs.readFile(path.resolve(clientPath, 'index.html'), 'utf-8')
 
         // Применяем встроенные HTML-преобразования vite и плагинов
         template = await vite.transformIndexHtml(url, template)
 
         // Загружаем модуль клиента, который писали выше,
         // он будет рендерить HTML-код
-        render = (
-          await vite.ssrLoadModule(
-            path.join(clientPath, 'src/entry-server.tsx')
-          )
-        ).render
+        render = (await vite.ssrLoadModule(path.join(clientPath, 'src/entry-server.tsx'))).render
       } else {
-        template = await fs.readFile(
-          path.join(clientPath, 'dist/client/index.html'),
-          'utf-8'
-        )
+        template = await fs.readFile(path.join(clientPath, 'dist/client/index.html'), 'utf-8')
 
         // Получаем путь до модуля клиента, чтобы не тащить средства сборки клиента на сервер
-        const pathToServer = path.join(
-          clientPath,
-          'dist/server/entry-server.js'
-        )
+        const pathToServer = path.join(clientPath, 'dist/server/entry-server.js')
 
         // Импортируем этот модуль и вызываем с начальным состоянием
         render = (await import(pathToServer)).render
@@ -86,9 +69,7 @@ async function createServer() {
         .replace(`<!--ssr-outlet-->`, appHtml)
         .replace(
           `<!--ssr-initial-state-->`,
-          `<script>window.APP_INITIAL_STATE = ${JSON.stringify(
-            initialState
-          )}</script>`
+          `<script>window.APP_INITIAL_STATE = ${JSON.stringify(initialState)}</script>`
         )
 
       // Завершаем запрос и отдаём HTML-страницу

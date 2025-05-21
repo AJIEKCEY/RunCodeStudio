@@ -16,4 +16,4 @@ export type AppStore = ReturnType<typeof createStore>
 export type PageInitArgs = {
   dispatch: AppDispatch
   state: RootState
-} 
+}

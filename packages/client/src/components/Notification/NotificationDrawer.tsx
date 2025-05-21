@@ -34,11 +34,7 @@ const NotificationDrawer = () => {
           {notification.length === 0 && 'Нет уведомлений'}
           {notification.map((el, index) => {
             return (
-              <NotificationItem
-                key={index}
-                title={el.title}
-                options={{ body: el.options?.body }}
-              />
+              <NotificationItem key={index} title={el.title} options={{ body: el.options?.body }} />
             )
           })}
         </div>
@@ -50,9 +46,7 @@ const NotificationDrawer = () => {
           />
           <div className={style['notification-switch-info']}>
             <h5 className={style.title}>{notificationStatus.title}</h5>
-            <h6 className={style.description}>
-              {notificationStatus.description}
-            </h6>
+            <h6 className={style.description}>{notificationStatus.description}</h6>
           </div>
         </div>
       </div>

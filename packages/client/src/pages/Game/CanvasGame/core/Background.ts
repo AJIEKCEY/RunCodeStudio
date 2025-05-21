@@ -1,47 +1,43 @@
-import { EntityProps, GameSettings, TypeDataTheme } from '../types'
+import { EntityProps, GameSettings, TypeDataTheme } from '@/pages/Game/CanvasGame/types'
 import { getThemeSprite } from './sprites'
+import { IBackgroundProps } from './types'
 
-export class Backgournd {
-  themesImages: TypeDataTheme[]
-  ctx: CanvasRenderingContext2D
-  settings: GameSettings
-  width: number
-  height: number
-  speed: number
+export class Background {
+  private ctx: CanvasRenderingContext2D
+  private width: number
+  private height: number
+  private x: number
+  private speed: number
+  private props: IBackgroundProps
+  private layerId: number
 
-  constructor(props: EntityProps) {
-    const { ctx, settings } = props
+  constructor(ctx: CanvasRenderingContext2D, props: IBackgroundProps, layerId: number) {
     this.ctx = ctx
-    this.themesImages = getThemeSprite(settings.themeId)
-    this.width = 2400
-    this.height = this.themesImages[0].image.height
-    this.speed = settings.speed
-    this.settings = settings
+    this.width = props.width
+    this.height = props.height
+    this.x = 0
+    this.speed = props.speed
+    this.props = props
+    this.layerId = layerId
   }
 
-  draw(props: TypeDataTheme) {
-    const offsetX = Math.round(props.x)
-    this.ctx.drawImage(props.image, offsetX, 0, this.width, this.height)
-    this.ctx.drawImage(
-      props.image,
-      offsetX + this.width,
-      0,
-      this.width,
-      this.height
-    )
-
-    if (props.x <= -this.width) {
-      props.x = 0
+  update() {
+    this.x -= this.speed
+    if (this.x <= -this.width) {
+      this.x = 0
     }
-
-    props.x -= this.speed * props.speedModifier
   }
 
-  animation = (speedGame: number) => {
-    this.speed = speedGame === 0 ? 0 : this.speed
+  draw() {
+    const offsetX = this.x
+    const image = this.props.image as unknown as CanvasImageSource
+    this.ctx.drawImage(image, offsetX, 0, this.width, this.height)
+    this.ctx.drawImage(image, offsetX + this.width, 0, this.width, this.height)
+  }
 
-    this.themesImages.forEach(layer => {
-      this.draw(layer)
-    })
+  animation(speed: number) {
+    this.speed = speed * (this.layerId + 1) * 0.2
+    this.update()
+    this.draw()
   }
 }

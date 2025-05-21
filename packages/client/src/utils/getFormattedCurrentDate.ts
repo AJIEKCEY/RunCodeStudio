@@ -1,9 +1,14 @@
-export function formatDate(date: Date): string {
-  const userLocale = navigator.language || 'en-US'
-  const formatter = new Intl.DateTimeFormat(userLocale, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  })
-  return formatter.format(date)
+export const getFormattedCurrentDate = (): string => {
+  const date = new Date()
+  const day = date.getDate().toString().padStart(2, '0')
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const year = date.getFullYear()
+  return `${day}.${month}.${year}`
+}
+
+export const formatDate = (date: Date): string => {
+  const day = date.getDate().toString().padStart(2, '0')
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const year = date.getFullYear()
+  return `${day}.${month}.${year}`
 }

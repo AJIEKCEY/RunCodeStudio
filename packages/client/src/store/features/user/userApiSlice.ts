@@ -1,11 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {
-  BadRequest,
-  ErrorResponse,
-  PractikumEndpoints,
-  UserLoginType,
-  UserProfile,
-} from './types'
+import { BadRequest, ErrorResponse, PractikumEndpoints, UserLoginType, UserProfile } from './types'
 import { isBadRequest } from '../../../utils/typeguard/isBadRequest'
 import { formDataToJson } from '../../../utils/formDatatoJson'
 
@@ -16,7 +10,7 @@ export const userApiSlice = createApi({
     credentials: 'include',
   }),
   tagTypes: ['user'],
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getUser: builder.query<UserProfile, unknown>({
       query: () => ({
         url: `${PractikumEndpoints.AUTH}/user`,
@@ -25,12 +19,12 @@ export const userApiSlice = createApi({
           accept: 'application/json',
         },
       }),
-      transformErrorResponse: response => console.info(response.status),
+      transformErrorResponse: (response) => console.info(response.status),
 
       providesTags: ['user'],
     }),
     signInUser: builder.mutation<UserLoginType | BadRequest, UserLoginType>({
-      query: data => ({
+      query: (data) => ({
         url: `${PractikumEndpoints.AUTH}/signin`,
         method: 'POST',
         headers: {
@@ -38,15 +32,12 @@ export const userApiSlice = createApi({
           accept: 'application/json',
         },
         body: data,
-        responseHandler: response =>
+        responseHandler: (response) =>
           response.status === 200 ? response.text() : response.json(),
       }),
       invalidatesTags: ['user'],
     }),
-    yandexAuth: builder.mutation<
-      UserProfile,
-      { code: string; redirect_uri: string }
-    >({
+    yandexAuth: builder.mutation<UserProfile, { code: string; redirect_uri: string }>({
       query: ({ code, redirect_uri }) => ({
         url: `${PractikumEndpoints.BASE}/oauth/yandex`,
         method: 'POST',
@@ -55,7 +46,7 @@ export const userApiSlice = createApi({
           accept: 'application/json',
         },
         body: { code, redirect_uri },
-        responseHandler: response =>
+        responseHandler: (response) =>
           response.status === 200 ? response.text() : response.json(),
       }),
       invalidatesTags: ['user'],
@@ -72,7 +63,7 @@ export const userApiSlice = createApi({
       invalidatesTags: ['user'],
     }),
     updateUserAvatar: builder.mutation<UserProfile | BadRequest, FormData>({
-      query: avatar => ({
+      query: (avatar) => ({
         url: `${PractikumEndpoints.USER}/profile/avatar`,
         method: 'PUT',
         body: avatar,
@@ -86,7 +77,7 @@ export const userApiSlice = createApi({
       invalidatesTags: ['user'],
     }),
     updateUserInfo: builder.mutation<UserProfile | BadRequest, FormData>({
-      query: data => ({
+      query: (data) => ({
         url: `${PractikumEndpoints.USER}/profile`,
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +95,7 @@ export const userApiSlice = createApi({
       invalidatesTags: ['user'],
     }),
     updateUserPassword: builder.mutation<UserProfile | BadRequest, FormData>({
-      query: data => ({
+      query: (data) => ({
         url: `${PractikumEndpoints.USER}/password`,
         headers: {
           'Content-Type': 'application/json',

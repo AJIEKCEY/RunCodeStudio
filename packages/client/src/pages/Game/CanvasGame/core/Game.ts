@@ -1,8 +1,9 @@
-import { GameObject, GameSettings } from '../types'
-import { Backgournd } from './Background'
+import { GameObject, GameSettings } from '@/pages/Game/CanvasGame/types'
 import { Coin } from './Coin'
 import { Obstacle } from './Obstacle'
 import { Player } from './Player'
+import { Background } from './Background'
+import { getThemeSprite } from './sprites'
 
 type IntervalType = ReturnType<typeof setInterval>
 
@@ -10,7 +11,7 @@ export class Game {
   private canvas: HTMLCanvasElement
   private ctx: CanvasRenderingContext2D
   private player: Player
-  private theme: Backgournd
+  private theme: Background[]
   private obstacles: Obstacle[] = []
   private coins: Coin[] = []
   animationFrameId: number | null
@@ -39,7 +40,22 @@ export class Game {
       settings: this.settings,
     }
 
-    this.theme = new Backgournd(entityProps)
+    // Создаем фон со всеми слоями из темы
+    const themeLayers = getThemeSprite(settings.themeId)
+    this.theme = themeLayers.map(
+      (layer, index) =>
+        new Background(
+          this.ctx,
+          {
+            image: layer.image,
+            width: this.settings.canvasWidth,
+            height: this.settings.canvasHeight,
+            speed: this.settings.speed * layer.speedModifier,
+          },
+          index
+        )
+    )
+
     this.player = new Player(entityProps)
 
     this.obstacles.push(new Obstacle(entityProps))
@@ -105,7 +121,7 @@ export class Game {
   }
 
   updateObstacleWithPlayer() {
-    this.obstacles.forEach(obstacle => {
+    this.obstacles.forEach((obstacle) => {
       if (this.checkCollision(this.player, obstacle)) {
         this.player.setAnimation('dead')
         this.speed = 0
@@ -116,7 +132,7 @@ export class Game {
       }
 
       this.obstacles = this.obstacles.filter(
-        obstacle => obstacle.getBounds().x + obstacle.getBounds().width >= 0
+        (obstacle) => obstacle.getBounds().x + obstacle.getBounds().width >= 0
       )
     })
   }
@@ -134,9 +150,9 @@ export class Game {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
     if (this.player.isDead()) {
-      this.theme.animation(0)
-      this.obstacles.forEach(obstacle => obstacle.animation(0))
-      this.coins.forEach(coin => coin.animation(0))
+      this.theme.forEach((layer) => layer.animation(0))
+      this.obstacles.forEach((obstacle) => obstacle.animation(0))
+      this.coins.forEach((coin) => coin.animation(0))
 
       this.player.animation(1)
 
@@ -145,12 +161,12 @@ export class Game {
       return
     }
 
-    this.theme.animation(this.speed)
+    this.theme.forEach((layer) => layer.animation(this.speed))
     this.player.animation(this.speed)
 
-    this.obstacles.forEach(obstacle => obstacle.animation(this.speed))
+    this.obstacles.forEach((obstacle) => obstacle.animation(this.speed))
     this.updateObstacleWithPlayer()
-    this.coins.forEach(coins => coins.animation(this.speed))
+    this.coins.forEach((coins) => coins.animation(this.speed))
     this.updateCoinWithPlayer()
 
     this.drawUI()
@@ -159,7 +175,7 @@ export class Game {
   }
 
   triggerGameOverCallback() {
-    this.gameOverCallback.forEach(el => el(true))
+    this.gameOverCallback.forEach((el) => el(true))
   }
   destroy() {
     if (this.animationFrameId) {

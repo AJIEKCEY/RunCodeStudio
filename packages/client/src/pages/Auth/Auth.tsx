@@ -58,11 +58,7 @@ const Auth = () => {
   }
 
   return (
-    <Flex
-      vertical={true}
-      justify={'center'}
-      align={'center'}
-      className={styles.container}>
+    <Flex vertical={true} justify={'center'} align={'center'} className={styles.container}>
       <Title level={2}>Авторизация</Title>
       {contextHolder}
       <Form
@@ -70,7 +66,8 @@ const Auth = () => {
         name="horizontal_login"
         layout="vertical"
         onFinish={onFinish}
-        className={styles.form}>
+        className={styles.form}
+      >
         <Form.Item
           name="username"
           rules={[
@@ -79,7 +76,8 @@ const Auth = () => {
               message: 'Имя пользователя обязательно',
             },
           ]}
-          className={styles.formItem}>
+          className={styles.formItem}
+        >
           <Input
             prefix={<UserOutlined />}
             placeholder="Имя пользователя"
@@ -94,21 +92,14 @@ const Auth = () => {
               message: 'Пароль обязателен',
             },
           ]}
-          className={styles.formItem}>
-          <Input.Password
-            prefix={<LockOutlined />}
-            placeholder="Пароль"
-            className={styles.input}
-          />
+          className={styles.formItem}
+        >
+          <Input.Password prefix={<LockOutlined />} placeholder="Пароль" className={styles.input} />
         </Form.Item>
 
         <Form.Item shouldUpdate className={styles.formItem}>
           {() => (
-            <Button
-              block
-              type="primary"
-              htmlType="submit"
-              className={styles.button}>
+            <Button block type="primary" htmlType="submit" className={styles.button}>
               Авторизоваться
             </Button>
           )}

@@ -20,7 +20,7 @@ export const leaderBoardApiSlice = createApi({
     credentials: 'include',
   }),
   tagTypes: ['leaderboard'],
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getLeaderBoard: builder.mutation<leaderBoardResponse[], paginationOptions>({
       query: (data?: paginationOptions) => {
         const hydratedData: leaderBoardResultrequest = {
@@ -40,7 +40,7 @@ export const leaderBoardApiSlice = createApi({
     }),
 
     updateUserScore: builder.mutation<unknown, leaderboardData>({
-      query: data => {
+      query: (data) => {
         const hydratedData: leaderBoardRequest = {
           data,
           ratingFieldName: 'rundCodeStudionGameScore',
@@ -61,5 +61,4 @@ export const leaderBoardApiSlice = createApi({
   }),
 })
 
-export const { useGetLeaderBoardMutation, useUpdateUserScoreMutation } =
-  leaderBoardApiSlice
+export const { useGetLeaderBoardMutation, useUpdateUserScoreMutation } = leaderBoardApiSlice
