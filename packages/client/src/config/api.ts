@@ -6,7 +6,7 @@ import { getEnvVariable } from './env'
 
 // Константы для API
 export const API_HOST = getEnvVariable('API_HOST', 'localhost')
-export const API_PORT = getEnvVariable('API_PORT', '3005')
+export const API_PORT = getEnvVariable('API_PORT', '3001')
 
 // Получаем API_PATH из переменных окружения
 // По умолчанию путь API может быть уже в формате /api/v1
@@ -25,9 +25,11 @@ export const API_VERSION = hasApiVersion ? '' : getEnvVariable('API_VERSION', 'v
 export const SERVER_URL = `http://${API_HOST}:${API_PORT}`
 
 // Формируем базовый URL API
-export const BASE_API_URL = hasApiVersion
-  ? `${SERVER_URL}/${API_PATH}`
-  : `${SERVER_URL}/${API_PATH}/${API_VERSION}`
+// export const BASE_API_URL = hasApiVersion
+//   ? `${SERVER_URL}/${API_PATH}`
+//   : `${SERVER_URL}/${API_PATH}/${API_VERSION}`
+
+export const BASE_API_URL = 'api/v1'
 
 // Объект с URL для API
 export const API_URLS = {
