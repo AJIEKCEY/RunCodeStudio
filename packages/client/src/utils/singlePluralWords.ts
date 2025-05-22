@@ -17,5 +17,5 @@ export const secondsWords = (count: number): string => {
 }
 
 export const coinsWords = (count: number): string => {
-  return getPluralForm(count, ['монета', 'монеты', 'монет'])
+  return getPluralForm(count, ['монету', 'монеты', 'монет'])
 }
