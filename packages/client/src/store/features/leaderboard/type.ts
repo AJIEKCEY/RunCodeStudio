@@ -10,6 +10,7 @@ export type leaderboardData = {
   nickname: string
   rundCodeStudionGameScore: number
   date: string
+  country: string | null
 }
 
 export type leaderBoardRequest = {
