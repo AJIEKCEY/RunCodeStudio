@@ -53,7 +53,7 @@ export type Thread = {
 
 export type Category = {
   id: number
-  title: string
+  name: string
 }
 
 export interface ForumState {
