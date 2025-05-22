@@ -51,13 +51,20 @@ export const userApiSlice = createApi({
       }),
       invalidatesTags: ['user'],
     }),
-    logoutUser: builder.mutation<UserProfile, unknown>({
+    logoutUser: builder.mutation<UserProfile | string, unknown>({
       query: () => ({
         url: `${PractikumEndpoints.AUTH}/logout`,
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           accept: 'application/json',
+        },
+        responseHandler: async (response) => {
+          try {
+            return await response.json()
+          } catch (e) {
+            return await response.text()
+          }
         },
       }),
       invalidatesTags: ['user'],
@@ -112,12 +119,37 @@ export const userApiSlice = createApi({
       },
       invalidatesTags: ['user'],
     }),
+    signUpUser: builder.mutation<
+      UserLoginType | BadRequest,
+      {
+        first_name: string
+        second_name: string
+        login: string
+        email: string
+        password: string
+        phone: string
+      }
+    >({
+      query: (data) => ({
+        url: `${PractikumEndpoints.AUTH}/signup`,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: 'application/json',
+        },
+        body: data,
+        responseHandler: (response) =>
+          response.status === 200 ? response.text() : response.json(),
+      }),
+      invalidatesTags: ['user'],
+    }),
   }),
 })
 
 export const {
   useGetUserQuery,
   useSignInUserMutation,
+  useSignUpUserMutation,
   useYandexAuthMutation,
   useLogoutUserMutation,
   useUpdateUserAvatarMutation,

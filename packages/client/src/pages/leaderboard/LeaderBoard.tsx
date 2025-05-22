@@ -1,18 +1,16 @@
 import { Table, TableColumnsType, Typography } from 'antd'
+const { Title, Text } = Typography
 import React, { useEffect, useState } from 'react'
 import {
   leaderBoardApiSlice,
   useGetLeaderBoardMutation,
 } from '../../store/features/leaderboard/leaderBoardApiSlice'
 import { PageInitArgs } from '../../store/store'
-import { leaderBoardResponse } from '../../store/features/leaderboard/type'
-
-const { Title, Text } = Typography
-
 export type leaderBoardDataTableType = {
   nickname: string
   score: number
   date: string
+  country?: string
 }
 
 const columns: TableColumnsType<leaderBoardDataTableType> = [
@@ -40,7 +38,7 @@ const columns: TableColumnsType<leaderBoardDataTableType> = [
   },
   {
     key: 'date',
-    title: 'Дата',
+    title: 'дата',
     dataIndex: 'date',
     showSorterTooltip: { title: 'Сортировать по дате' },
     sorter: (a, b) => {
@@ -49,6 +47,22 @@ const columns: TableColumnsType<leaderBoardDataTableType> = [
       return dateA.getTime() - dateB.getTime()
     },
     sortDirections: ['descend', 'ascend'],
+    align: 'right',
+    render: (date: string) => {
+      const normalizedDate = date.replace(/[/.]/g, '-').split('-')
+      if (Number(normalizedDate[1]) > 12) {
+        const tmp = normalizedDate[0]
+        normalizedDate[1] = normalizedDate[0]
+        normalizedDate[0] = tmp
+      }
+      if (normalizedDate[0].length == 2) normalizedDate.reverse()
+      return normalizedDate.join('-')
+    },
+  },
+  {
+    key: 'country',
+    title: 'страна',
+    dataIndex: 'country',
     align: 'right',
   },
 ]
@@ -60,13 +74,14 @@ const LeaderBoard: React.FC = () => {
   useEffect(() => {
     getLeaderBoardData({ cursor: 0, limit: 100 }).then((response) => {
       if ('data' in response && Array.isArray(response.data)) {
-        const mappedData: leaderBoardDataTableType[] = response.data.map(
-          (item: leaderBoardResponse) => ({
+        const mappedData: leaderBoardDataTableType[] = response.data.map((item) => {
+          return {
             nickname: item.data.nickname,
             score: item.data.rundCodeStudionGameScore,
             date: item.data.date,
-          })
-        )
+            country: item.data.country || 'Neverland',
+          }
+        })
         setLeaderBoard(mappedData)
       }
     })

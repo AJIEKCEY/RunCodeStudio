@@ -14,7 +14,7 @@ const Profile = () => {
       <UserAvatar
         src={isSuccess ? `https://ya-praktikum.tech/api/v2/resources/${user.avatar}` : ''}
       />
-      <UserInfo {...user} email="test@ya.ru" />
+      <UserInfo {...user} />
     </Flex>
   )
 }

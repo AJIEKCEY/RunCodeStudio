@@ -19,7 +19,8 @@
     "seed:comments": "ts-node seeders/comments/comments.seeder.ts",
     "seed:reactions": "ts-node seeders/reactions/reactions.seeder.ts",
     "seed:themes": "ts-node seeders/themes/themes.seeder.ts",
-    "seed": "yarn run seed:themes && yarn run seed:users && yarn run seed:categories && yarn run seed:posts && yarn run seed:comments && yarn run seed:reactions"
+    "seed": "yarn run seed:themes && yarn run seed:users && yarn run seed:categories && yarn run seed:posts && yarn run seed:comments && yarn run seed:reactions",
+    "seed:prod": "node seeders/themes/themes.seeder.js && node seeders/users/users.seeder.js && node seeders/categories/categories.seeder.js && node seeders/posts/posts.seeder.js && node seeders/comments/comments.seeder.js && node seeders/reactions/reactions.seeder.js"
   },
   "dependencies": {
     "ajv": "^8.17.1",

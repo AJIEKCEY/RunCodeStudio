@@ -108,7 +108,7 @@ const CreateThreadModal: React.FC<modalProps> = ({ isOpen, closeModal, categorie
                 ...categories.map((cat) => {
                   return {
                     value: cat.id,
-                    label: cat.title,
+                    label: cat.name,
                   }
                 }),
               ]}

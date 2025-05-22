@@ -8,7 +8,7 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 
 // Переменные окружения для API
 const API_HOST = process.env.VITE_API_HOST || 'localhost'
-const API_SERVER_PORT = process.env.VITE_API_SERVER_PORT || process.env.SERVER_PORT || 3005
+const API_SERVER_PORT = process.env.VITE_API_SERVER_PORT || process.env.SERVER_PORT || 3001
 const API_VERSION = process.env.VITE_API_VERSION || 'v1'
 const API_PATH = process.env.VITE_API_PATH || 'api'
 const API_URL = process.env.VITE_API_URL || `http://${API_HOST}:${API_SERVER_PORT}`

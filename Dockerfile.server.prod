@@ -23,5 +23,5 @@ RUN sed -i 's/\r$//' ./scripts/wait-for-it.sh && \
 RUN yarn install --production --frozen-lockfile
 
 EXPOSE 3001
-CMD ["sh", "-c", "./scripts/wait-for-it.sh postgres:5432 -- node index.js"]
+CMD ["sh", "-c", "./scripts/wait-for-it.sh postgres:5432 -- node index.js && yarn seed:prod"]
 

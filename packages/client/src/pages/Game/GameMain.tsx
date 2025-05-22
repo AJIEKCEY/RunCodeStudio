@@ -3,16 +3,14 @@ import GameStart from './GameStart/GameStart'
 import CanvasGame from './CanvasGame/CanvasGame'
 import GameOver from './GameOver/GameOver'
 import Characters from './GameStart/components/CharacterChoice/Characters'
-import { useUpdateUserScoreMutation } from '../../store/features/leaderboard/leaderBoardApiSlice'
-import { useGetUserQuery } from '../../store/features/user/userApiSlice'
-import { formatDate } from '../../utils/getFormattedCurrentDate'
+
+import { useStoreScore } from '../../hooks/useStoreScore'
 
 const Game = () => {
   const [stage, setStage] = useState<'start' | 'play' | 'over'>('start')
   const [selectedCharacter, setSelectedCharacter] = useState(Characters[0].id)
   const [coins, setCoins] = useState(0)
-  const [updateUserScore] = useUpdateUserScoreMutation()
-  const { data: user } = useGetUserQuery('')
+  const [storeScoreToLeaderboard] = useStoreScore()
 
   const handleGameStart = () => {
     setStage('play')
@@ -22,11 +20,7 @@ const Game = () => {
   const handleGameOver = (score: number) => {
     setStage('over')
     if (navigator.onLine) {
-      updateUserScore({
-        nickname: user?.display_name || 'Player',
-        date: formatDate(new Date()),
-        rundCodeStudionGameScore: score,
-      }).catch((error) => console.info(error))
+      storeScoreToLeaderboard(score)
     }
   }
 
