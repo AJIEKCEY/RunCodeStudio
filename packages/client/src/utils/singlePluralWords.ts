@@ -13,7 +13,7 @@ export const getScoreWord = (count: number): string => {
 }
 
 export const secondsWords = (count: number): string => {
-  return getPluralForm(count, ['секунда', 'секунды', 'секунд'])
+  return getPluralForm(count, ['секунду', 'секунды', 'секунд'])
 }
 
 export const coinsWords = (count: number): string => {
